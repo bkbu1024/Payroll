@@ -2,43 +2,34 @@
 
 namespace Payroll\Tests\Unit\Transaction;
 
-use Payroll\Tests\TestCase;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Faker\Factory;
 use Payroll\PaymentClassification\CommissionedClassification;
 use Payroll\PaymentSchedule\BiweeklySchedule;
-use Payroll\PaymentMethod\HoldMethod;
 use Payroll\Transaction\AddCommissionedEmployee;
 use Payroll\Transaction\AddEmployee;
 
-class AddCommissionedEmployeeTest extends TestCase
+class AddCommissionedEmployeeTest extends AbstractAddEmployeeTestCase
 {
-    /**
-     * @covers AddCommissionedEmployee::execute()
-     */
-    public function testExecute()
+    protected function setEmployee()
     {
-        $faker = Factory::create();
-        $name = $faker->name;
-        $salary = $faker->randomFloat(2, 750, 2250);
-        $commission = $faker->randomFloat(2, 75, 250);
+        $this->data['salary'] = $this->faker->randomFloat(2, 750, 2250);
+        $this->data['commission'] = $this->faker->randomFloat(2, 75, 250);
 
         $transaction = new AddCommissionedEmployee(
-            $name,
-            $faker->address,
-            $salary,
-            $commission);
+            $this->data['name'],
+            $this->data['address'],
+            $this->data['salary'],
+            $this->data['commission']);
 
-        $employee = $transaction->execute();
-        $this->assertEquals($name, $employee->name);
-        
-        $this->assertTrue($employee->getPaymentClassification() instanceof CommissionedClassification);
-        $this->assertEquals($salary, $employee->salary);
-        $this->assertEquals($commission, $employee->commission);
-        $this->assertEquals(AddEmployee::COMMISSION, $employee->type);
+        $this->employee = $transaction->execute();
+    }
 
-        $this->assertTrue($employee->getPaymentSchedule() instanceof BiweeklySchedule);
-        $this->assertTrue($employee->getPaymentMethod() instanceof HoldMethod);
+    protected function assertTypeSpecificData()
+    {
+        $this->assertEquals($this->data['salary'], $this->employee->salary);
+        $this->assertEquals($this->data['commission'], $this->employee->commission);
+        $this->assertEquals(AddEmployee::COMMISSION, $this->employee->type);
+
+        $this->assertTrue($this->employee->getPaymentSchedule() instanceof BiweeklySchedule);
+        $this->assertTrue($this->employee->getPaymentClassification() instanceof CommissionedClassification);
     }
 }

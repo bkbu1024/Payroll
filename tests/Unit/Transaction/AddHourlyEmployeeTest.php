@@ -2,40 +2,31 @@
 
 namespace Payroll\Tests\Unit\Transaction;
 
-use Payroll\Tests\TestCase;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Faker\Factory;
 use Payroll\PaymentClassification\HourlyClassification;
 use Payroll\PaymentSchedule\WeeklySchedule;
-use Payroll\PaymentMethod\HoldMethod;
 use Payroll\Transaction\AddEmployee;
 use Payroll\Transaction\AddHourlyEmployee;
 
-class AddHourlyEmployeeTest extends TestCase
+class AddHourlyEmployeeTest extends AbstractAddEmployeeTestCase
 {
-    /**
-     * @covers AddHourlyEmployee::execute()
-     */
-    public function testExecute()
+    protected function setEmployee()
     {
-        $faker = Factory::create();
-        $name = $faker->name;
-        $hourlyRate = $faker->randomFloat(2, 7.5, 32);
+        $this->data['hourlyRate'] = $this->faker->randomFloat(2, 12, 30);
 
         $transaction = new AddHourlyEmployee(
-            $name,
-            $faker->address,
-            $hourlyRate);
+            $this->data['name'],
+            $this->data['address'],
+            $this->data['hourlyRate']);
 
-        $employee = $transaction->execute();
-        $this->assertEquals($name, $employee->name);
-        
-        $this->assertTrue($employee->getPaymentClassification() instanceof HourlyClassification);
-        $this->assertEquals($hourlyRate, $employee->hourly_rate);
-        $this->assertEquals(AddEmployee::HOURLY, $employee->type);
+        $this->employee = $transaction->execute();
+    }
 
-        $this->assertTrue($employee->getPaymentSchedule() instanceof WeeklySchedule);
-        $this->assertTrue($employee->getPaymentMethod() instanceof HoldMethod);
+    protected function assertTypeSpecificData()
+    {
+        $this->assertEquals($this->data['hourlyRate'], $this->employee->hourly_rate);
+        $this->assertEquals(AddEmployee::HOURLY, $this->employee->type);
+
+        $this->assertTrue($this->employee->getPaymentSchedule() instanceof WeeklySchedule);
+        $this->assertTrue($this->employee->getPaymentClassification() instanceof HourlyClassification);
     }
 }

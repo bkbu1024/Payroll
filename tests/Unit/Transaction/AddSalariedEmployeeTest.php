@@ -2,40 +2,31 @@
 
 namespace Payroll\Tests\Unit\Transaction;
 
-use Payroll\Tests\TestCase;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Faker\Factory;
 use Payroll\PaymentClassification\SalariedClassification;
 use Payroll\PaymentSchedule\MonthlySchedule;
-use Payroll\PaymentMethod\HoldMethod;
-use Payroll\Transaction\AddEmployee;
 use Payroll\Transaction\AddSalariedEmployee;
+use Payroll\Transaction\AddEmployee;
 
-class AddSalariedEmployeeTest extends TestCase
+class AddSalariedEmployeeTest extends AbstractAddEmployeeTestCase
 {
-    /**
-     * @covers AddSalariedEmployee::execute()
-     */
-    public function testExecute()
+    protected function setEmployee()
     {
-        $faker = Factory::create();
-        $name = $faker->name;
-        $salary = $faker->randomFloat(2, 1250, 3750);
+        $this->data['salary'] = $this->faker->randomFloat(2, 1250, 3750);
 
         $transaction = new AddSalariedEmployee(
-            $name,
-            $faker->address,
-            $salary);
+            $this->data['name'],
+            $this->data['address'],
+            $this->data['salary']);
 
-        $employee = $transaction->execute();
-        $this->assertEquals($name, $employee->name);
-        
-        $this->assertTrue($employee->getPaymentClassification() instanceof SalariedClassification);
-        $this->assertEquals($salary, $employee->salary);
-        $this->assertEquals(AddEmployee::SALARIED, $employee->type);
+        $this->employee = $transaction->execute();
+    }
 
-        $this->assertTrue($employee->getPaymentSchedule() instanceof MonthlySchedule);
-        $this->assertTrue($employee->getPaymentMethod() instanceof HoldMethod);
+    protected function assertTypeSpecificData()
+    {
+        $this->assertEquals($this->data['salary'], $this->employee->salary);
+        $this->assertEquals(AddEmployee::SALARIED, $this->employee->type);
+
+        $this->assertTrue($this->employee->getPaymentClassification() instanceof SalariedClassification);
+        $this->assertTrue($this->employee->getPaymentSchedule() instanceof MonthlySchedule);
     }
 }
