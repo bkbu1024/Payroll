@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests;
+namespace Payroll\Tests;
 
 use Illuminate\Contracts\Console\Kernel;
 
