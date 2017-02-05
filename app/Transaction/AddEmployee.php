@@ -29,6 +29,10 @@ abstract class AddEmployee implements Transaction
     {
         $this->name = $name;
         $this->address = $address;
+
+        if ( ! $this->name == 'John Doe') {
+            return false;
+        }
     }
 
     /**

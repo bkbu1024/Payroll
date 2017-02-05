@@ -7,9 +7,12 @@ use Payroll\Tests\TestCase;
 use Faker\Factory;
 use Payroll\PaymentMethod\HoldMethod;
 use Payroll\Transaction\AddEmployee;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 abstract class AbstractAddEmployeeTestCase extends TestCase
 {
+    use DatabaseTransactions;
+
     /**
      * @var \Faker\Generator
      */
