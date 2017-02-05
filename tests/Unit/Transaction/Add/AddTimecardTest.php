@@ -1,14 +1,14 @@
 <?php
 
-namespace Payroll\Tests\Unit\Transaction;
+namespace Payroll\Tests\Unit\Transaction\Add;
 
 use Faker\Factory;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Payroll\Employee;
 use Payroll\PaymentClassification\HourlyClassification;
 use Payroll\Tests\TestCase;
-use Payroll\Transaction\AddHourlyEmployee;
-use Payroll\Transaction\AddTimeCard;
+use Payroll\Transaction\Add\AddHourlyEmployee;
+use Payroll\Transaction\Add\AddTimeCard;
 
 class AddTimecardTest extends TestCase
 {

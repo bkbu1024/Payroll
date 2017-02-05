@@ -1,9 +1,10 @@
 <?php
 
-namespace Payroll\Transaction;
+namespace Payroll\Transaction\Add;
 
 use Payroll\PaymentMethod\HoldMethod;
 use Payroll\Employee;
+use Payroll\Transaction\Transaction;
 
 abstract class AddEmployee implements Transaction
 {

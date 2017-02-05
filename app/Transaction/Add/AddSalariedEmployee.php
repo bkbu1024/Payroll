@@ -1,16 +1,16 @@
 <?php
 
-namespace Payroll\Transaction;
+namespace Payroll\Transaction\Add;
 
-use Payroll\PaymentSchedule\WeeklySchedule;
-use Payroll\PaymentClassification\HourlyClassification;
+use Payroll\PaymentSchedule\MonthlySchedule;
+use Payroll\PaymentClassification\SalariedClassification;
 
-class AddHourlyEmployee extends AddEmployee
+class AddSalariedEmployee extends AddEmployee
 {
     /**
      * @var
      */
-    private $hourlyRate;
+    private $salary;
 
     /**
      * AddSalariedEmployee constructor.
@@ -21,23 +21,23 @@ class AddHourlyEmployee extends AddEmployee
     public function __construct($name, $address, $hourlyRate)
     {
         parent::__construct($name, $address);
-        $this->hourlyRate = $hourlyRate;
+        $this->salary = $hourlyRate;
     }
 
     /**
-     * @return HourlyClassification
+     * @return SalariedClassification
      */
     protected function getPaymentClassification()
     {
-        return new HourlyClassification($this->hourlyRate);
+        return new SalariedClassification($this->salary);
     }
 
     /**
-     * @return WeeklySchedule
+     * @return MonthlySchedule
      */
     protected function getPaymentSchedule()
     {
-        return new WeeklySchedule;
+        return new MonthlySchedule;
     }
 
     /**
@@ -46,8 +46,8 @@ class AddHourlyEmployee extends AddEmployee
     protected function createEmployee()
     {
         $employee = parent::createEmployee();
-        $employee->hourly_rate = $this->hourlyRate;
-        $employee->type = self::HOURLY;
+        $employee->salary = $this->salary;
+        $employee->type = self::SALARIED;
         $employee->save();
 
         return $employee;

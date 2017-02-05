@@ -1,17 +1,14 @@
 <?php
 
-namespace Payroll\Tests\Unit\Transaction;
+namespace Payroll\Tests\Unit\Transaction\Add;
 
 use Faker\Factory;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Payroll\Employee;
 use Payroll\PaymentClassification\CommissionedClassification;
-use Payroll\PaymentClassification\HourlyClassification;
 use Payroll\Tests\TestCase;
-use Payroll\Transaction\AddCommissionedEmployee;
-use Payroll\Transaction\AddHourlyEmployee;
-use Payroll\Transaction\AddSalesReceipt;
-use Payroll\Transaction\AddTimeCard;
+use Payroll\Transaction\Add\AddCommissionedEmployee;
+use Payroll\Transaction\Add\AddSalesReceipt;
 
 class AddSalesReceiptTest extends TestCase
 {

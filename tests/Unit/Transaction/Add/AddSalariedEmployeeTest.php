@@ -1,11 +1,11 @@
 <?php
 
-namespace Payroll\Tests\Unit\Transaction;
+namespace Payroll\Tests\Unit\Transaction\Add;
 
 use Payroll\PaymentClassification\SalariedClassification;
 use Payroll\PaymentSchedule\MonthlySchedule;
-use Payroll\Transaction\AddSalariedEmployee;
-use Payroll\Transaction\AddEmployee;
+use Payroll\Transaction\Add\AddSalariedEmployee;
+use Payroll\Transaction\Add\AddEmployee;
 
 class AddSalariedEmployeeTest extends AbstractAddEmployeeTestCase
 {

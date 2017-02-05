@@ -1,6 +1,6 @@
 <?php
 
-namespace Payroll\Transaction;
+namespace Payroll\Transaction\Add;
 
 use Payroll\PaymentSchedule\BiweeklySchedule;
 use Payroll\PaymentClassification\CommissionedClassification;

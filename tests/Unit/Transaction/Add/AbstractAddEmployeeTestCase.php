@@ -1,12 +1,12 @@
 <?php
 
-namespace Payroll\Tests\Unit\Transaction;
+namespace Payroll\Tests\Unit\Transaction\Add;
 
 use Payroll\Employee;
 use Payroll\Tests\TestCase;
 use Faker\Factory;
 use Payroll\PaymentMethod\HoldMethod;
-use Payroll\Transaction\AddEmployee;
+use Payroll\Transaction\Add\AddEmployee;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 abstract class AbstractAddEmployeeTestCase extends TestCase

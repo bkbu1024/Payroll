@@ -1,10 +1,11 @@
 <?php
 
-namespace Payroll\Transaction;
+namespace Payroll\Transaction\Add;
 
 use Payroll\Employee;
 use Payroll\PaymentClassification\HourlyClassification;
 use Payroll\TimeCard;
+use Payroll\Transaction\Transaction;
 
 class AddTimeCard implements Transaction
 {

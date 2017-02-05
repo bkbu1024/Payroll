@@ -1,12 +1,11 @@
 <?php
 
-namespace Payroll\Transaction;
+namespace Payroll\Transaction\Add;
 
 use Payroll\Employee;
 use Payroll\PaymentClassification\CommissionedClassification;
-use Payroll\PaymentClassification\HourlyClassification;
 use Payroll\SalesReceipt;
-use Payroll\TimeCard;
+use Payroll\Transaction\Transaction;
 
 class AddSalesReceipt implements Transaction
 {
