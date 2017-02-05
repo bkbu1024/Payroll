@@ -2,14 +2,20 @@
 
 namespace Payroll\PaymentClassification;
 
-use Payroll\Employee;
-
 class SalariedClassification extends PaymentClassification
 {
     /**
      * @var float
      */
     private $salary;
+
+    /**
+     * @return float
+     */
+    public function getSalary()
+    {
+        return $this->salary;
+    }
 
     /**
      * SalariedClassification constructor.

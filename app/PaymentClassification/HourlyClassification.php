@@ -12,13 +12,21 @@ class HourlyClassification extends PaymentClassification
     private $hourlyRate;
 
     /**
+     * @return float
+     */
+    public function getHourlyRate()
+    {
+        return $this->hourlyRate;
+    }
+
+    /**
      * HourlyClassification constructor.
      *
-     * @param float $salary
+     * @param float $hourlyRate
      */
-    public function __construct($salary)
+    public function __construct($hourlyRate)
     {
-        $this->hourlyRate = $salary;
+        $this->hourlyRate = $hourlyRate;
     }
 
     /**

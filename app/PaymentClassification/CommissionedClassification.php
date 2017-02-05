@@ -16,6 +16,22 @@ class CommissionedClassification extends PaymentClassification
     private $commissionRate;
 
     /**
+     * @return float
+     */
+    public function getSalary()
+    {
+        return $this->salary;
+    }
+
+    /**
+     * @return float
+     */
+    public function getCommissionRate()
+    {
+        return $this->commissionRate;
+    }
+
+    /**
      * CommissionedClassification constructor.
      * @param float $salary
      * @param float $commissionRate
