@@ -50,7 +50,7 @@ class AddTimeCard implements Transaction
             'date' => $this->date,
             'hours' => $this->hours, ]);
 
-        $this->employee->addTimeCard($timeCard);
+        $paymentClassification->addTimeCard($timeCard);
 
         return $timeCard;
     }

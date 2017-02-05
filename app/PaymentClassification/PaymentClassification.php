@@ -2,10 +2,33 @@
 
 namespace Payroll\PaymentClassification;
 
-interface PaymentClassification
+use Payroll\Employee;
+
+abstract class PaymentClassification
 {
+    /**
+     * @var Employee
+     */
+    protected $employee = null;
+
+    /**
+     * @return Employee
+     */
+    public function getEmployee()
+    {
+        return $this->employee;
+    }
+
+    /**
+     * @param Employee $employee
+     */
+    public function setEmployee($employee)
+    {
+        $this->employee = $employee;
+    }
+
     /**
      * @return float
      */
-    public function calculatePay();
+    abstract public function calculatePay();
 }

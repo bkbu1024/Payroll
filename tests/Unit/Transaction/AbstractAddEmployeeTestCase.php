@@ -62,5 +62,6 @@ abstract class AbstractAddEmployeeTestCase extends TestCase
         $this->assertEquals($this->data['name'], $this->employee->name);
         $this->assertEquals($this->data['address'], $this->employee->address);
         $this->assertTrue($this->employee->getPaymentMethod() instanceof HoldMethod);
+        $this->assertTrue($this->employee->getPaymentClassification()->getEmployee() != null);
     }
 }

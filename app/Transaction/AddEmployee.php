@@ -29,10 +29,6 @@ abstract class AddEmployee implements Transaction
     {
         $this->name = $name;
         $this->address = $address;
-
-        if ( ! $this->name == 'John Doe') {
-            return false;
-        }
     }
 
     /**
@@ -58,6 +54,8 @@ abstract class AddEmployee implements Transaction
         $employee->setPaymentClassification($classification);
         $employee->setPaymentSchedule($schedule);
         $employee->setPaymentMethod($method);
+
+        $classification->setEmployee($employee);
 
         return $employee;
     }

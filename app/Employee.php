@@ -76,22 +76,4 @@ class Employee extends Model
     {
         return $this->hasMany(TimeCard::class);
     }
-
-    /**
-     * @param TimeCard $timeCard
-     */
-    public function addTimeCard(TimeCard $timeCard)
-    {
-        $timeCard->employee_id = $this->employee_id;
-        $this->timeCards()->save($timeCard);
-    }
-
-    /**
-     * @param string $date
-     * @return mixed
-     */
-    public function getTimeCard($date)
-    {
-        return $this->timeCards()->where('date', $date)->get()->first();
-    }
 }
