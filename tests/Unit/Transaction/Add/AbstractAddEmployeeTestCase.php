@@ -6,7 +6,6 @@ use Payroll\Employee;
 use Payroll\Tests\TestCase;
 use Faker\Factory;
 use Payroll\PaymentMethod\HoldMethod;
-use Payroll\Transaction\Add\AddEmployee;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 abstract class AbstractAddEmployeeTestCase extends TestCase
@@ -26,25 +25,19 @@ abstract class AbstractAddEmployeeTestCase extends TestCase
     /**
      * @var Employee
      */
-    protected $employee = Null;
+    protected $employee = null;
 
     public function __construct()
     {
         $this->faker = Factory::create();
         $this->data = [
             'name' => $this->faker->name,
-            'address' => $this->faker->address
+            'address' => $this->faker->address,
         ];
     }
 
-    /**
-     * @return void
-     */
     abstract protected function setEmployee();
 
-    /**
-     * @return void
-     */
     abstract protected function assertTypeSpecificData();
 
     public function testExecute()
