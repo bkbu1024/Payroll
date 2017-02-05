@@ -15,20 +15,20 @@ class AddCommissionedEmployee extends AddEmployee
     /**
      * @var float
      */
-    private $commission;
+    private $commissionRate;
 
     /**
      * AddCommissionedEmployee constructor.
      * @param $name
      * @param $address
      * @param $hourlyRate
-     * @param $commission
+     * @param $commissionRate
      */
-    public function __construct($name, $address, $hourlyRate, $commission)
+    public function __construct($name, $address, $hourlyRate, $commissionRate)
     {
         parent::__construct($name, $address);
         $this->salary = $hourlyRate;
-        $this->commission = $commission;
+        $this->commissionRate = $commissionRate;
     }
 
     /**
@@ -36,7 +36,7 @@ class AddCommissionedEmployee extends AddEmployee
      */
     protected function getPaymentClassification()
     {
-        return new CommissionedClassification($this->salary, $this->commission);
+        return new CommissionedClassification($this->salary, $this->commissionRate);
     }
 
     /**
@@ -54,7 +54,7 @@ class AddCommissionedEmployee extends AddEmployee
     {
         $employee = parent::createEmployee();
         $employee->salary = $this->salary;
-        $employee->commission = $this->commission;
+        $employee->commission_rate = $this->commissionRate;
         $employee->type = self::COMMISSION;
         $employee->save();
 

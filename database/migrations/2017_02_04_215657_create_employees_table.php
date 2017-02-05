@@ -19,7 +19,7 @@ class CreateEmployeesTable extends Migration
             $table->string('address');
             $table->float('salary')->nullable()->unsigned();
             $table->float('hourly_rate')->nullable()->unsigned();
-            $table->float('commission')->nullable()->unsigned();
+            $table->float('commission_rate')->nullable()->unsigned();
             $table->enum('type', [\Payroll\Transaction\AddEmployee::SALARIED, \Payroll\Transaction\AddEmployee::HOURLY, \Payroll\Transaction\AddEmployee::COMMISSION]);
             $table->timestamps();
         });

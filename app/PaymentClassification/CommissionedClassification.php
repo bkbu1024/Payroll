@@ -2,7 +2,7 @@
 
 namespace Payroll\PaymentClassification;
 
-use Payroll\Employee;
+use Payroll\SalesReceipt;
 
 class CommissionedClassification extends PaymentClassification
 {
@@ -13,17 +13,17 @@ class CommissionedClassification extends PaymentClassification
     /**
      * @var float
      */
-    private $commission;
+    private $commissionRate;
 
     /**
      * CommissionedClassification constructor.
      * @param float $salary
-     * @param float $commission
+     * @param float $commissionRate
      */
-    public function __construct($salary, $commission)
+    public function __construct($salary, $commissionRate)
     {
         $this->salary = $salary;
-        $this->commission = $commission;
+        $this->commissionRate = $commissionRate;
     }
 
     /**
@@ -32,5 +32,32 @@ class CommissionedClassification extends PaymentClassification
     public function calculatePay()
     {
         return 0;
+    }
+
+
+    /**
+     * @param SalesReceipt $salesReceipt
+     */
+    public function addSalesReceipt(SalesReceipt $salesReceipt)
+    {
+        $salesReceipt->employee_id = $this->employee->id;
+        $this->employee->salesReceipts()->save($salesReceipt);
+    }
+
+    /**
+     * @param $date
+     * @return mixed
+     */
+    public function getSalesReceipt($date)
+    {
+        return $this->employee->salesReceipts()->where('date', $date)->get()->first();
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function salesReceipts()
+    {
+        return $this->employee->salesReceipts();
     }
 }

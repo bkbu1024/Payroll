@@ -72,8 +72,19 @@ class Employee extends Model
         $this->paymentMethod = $paymentMethod;
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function timeCards()
     {
         return $this->hasMany(TimeCard::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function salesReceipts()
+    {
+        return $this->hasMany(SalesReceipt::class);
     }
 }

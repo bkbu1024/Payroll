@@ -12,13 +12,13 @@ class AddCommissionedEmployeeTest extends AbstractAddEmployeeTestCase
     protected function setEmployee()
     {
         $this->data['salary'] = $this->faker->randomFloat(2, 750, 2250);
-        $this->data['commission'] = $this->faker->randomFloat(2, 75, 250);
+        $this->data['commissionRate'] = $this->faker->randomFloat(2, 2, 15);
 
         $transaction = new AddCommissionedEmployee(
             $this->data['name'],
             $this->data['address'],
             $this->data['salary'],
-            $this->data['commission']);
+            $this->data['commissionRate']);
 
         $this->employee = $transaction->execute();
     }
@@ -26,7 +26,7 @@ class AddCommissionedEmployeeTest extends AbstractAddEmployeeTestCase
     protected function assertTypeSpecificData()
     {
         $this->assertEquals($this->data['salary'], $this->employee->salary);
-        $this->assertEquals($this->data['commission'], $this->employee->commission);
+        $this->assertEquals($this->data['commissionRate'], $this->employee->commission_rate);
         $this->assertEquals(AddEmployee::COMMISSION, $this->employee->type);
 
         $this->assertTrue($this->employee->getPaymentSchedule() instanceof BiweeklySchedule);

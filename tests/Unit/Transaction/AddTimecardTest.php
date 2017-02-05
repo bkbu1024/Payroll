@@ -20,11 +20,14 @@ class AddTimecardTest extends TestCase
         /**
          * @var Employee
          */
-        $employee = (new AddHourlyEmployee($faker->name, $faker->address, 23))->execute();
+        $employee = (new AddHourlyEmployee($faker->name, $faker->address, $faker->randomFloat(2, 10, 35)))->execute();
 
         $transaction = new AddTimeCard((new \DateTime())->format('Y-m-d'), 8.0, $employee);
         $transaction->execute();
 
+        /**
+         * @var HourlyClassification $paymentClassification
+         */
         $paymentClassification = $employee->getPaymentClassification();
         $this->assertTrue($paymentClassification instanceof HourlyClassification);
 
