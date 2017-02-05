@@ -47,9 +47,6 @@ abstract class AbstractAddEmployeeTestCase extends TestCase
      */
     abstract protected function assertTypeSpecificData();
 
-    /**
-     * @covers AddEmployee::execute()
-     */
     public function testExecute()
     {
         $this->setEmployee();

@@ -12,9 +12,6 @@ use Payroll\Transaction\Change\ChangeHourlyPaymentClassification;
 
 class ChangeHourlyPaymentClassificationTest extends TestCase
 {
-    /**
-     * @covers ChangeHourlyEmployee::execute()
-     */
     public function testExecute()
     {
         $faker = Factory::create();

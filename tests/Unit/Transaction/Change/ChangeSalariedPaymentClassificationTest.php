@@ -4,21 +4,14 @@ namespace Payroll\Tests\Unit\Transaction\Add;
 
 use Faker\Factory;
 use Payroll\Employee;
-use Payroll\PaymentClassification\HourlyClassification;
 use Payroll\PaymentClassification\SalariedClassification;
 use Payroll\PaymentSchedule\MonthlySchedule;
-use Payroll\PaymentSchedule\WeeklySchedule;
 use Payroll\Tests\TestCase;
-use Payroll\Transaction\Add\AddCommissionedEmployee;
 use Payroll\Transaction\Add\AddHourlyEmployee;
-use Payroll\Transaction\Change\ChangeHourlyPaymentClassification;
 use Payroll\Transaction\Change\ChangeSalariedPaymentClassification;
 
 class ChangeSalariedPaymentClassificationTest extends TestCase
 {
-    /**
-     * @covers ChangeHourlyEmployee::execute()
-     */
     public function testExecute()
     {
         $faker = Factory::create();
@@ -30,19 +23,19 @@ class ChangeSalariedPaymentClassificationTest extends TestCase
         $salary = $faker->randomFloat(2, 1200, 3400);
         $transaction = new ChangeSalariedPaymentClassification($employee, $salary);
         /**
-         * @var Employee $changedEmployee
+         * @var Employee
          */
         $changedEmployee = $transaction->execute();
 
         /**
-         * @var SalariedClassification $paymentClassification
+         * @var SalariedClassification
          */
         $paymentClassification = $changedEmployee->getPaymentClassification();
         $this->assertTrue($paymentClassification instanceof SalariedClassification);
         $this->assertEquals($salary, $paymentClassification->getSalary());
 
         /**
-         * @var MonthlySchedule $paymentSchedule
+         * @var MonthlySchedule
          */
         $paymentSchedule = $changedEmployee->getPaymentSchedule();
         $this->assertTrue($paymentSchedule instanceof MonthlySchedule);
