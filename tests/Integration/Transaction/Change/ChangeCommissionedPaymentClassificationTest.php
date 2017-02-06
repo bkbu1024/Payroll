@@ -2,52 +2,51 @@
 
 namespace Payroll\Tests\Integration\Transaction\Change;
 
-use Faker\Factory;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Payroll\Contract\Employee;
 use Payroll\PaymentClassification\CommissionedClassification;
 use Payroll\PaymentSchedule\BiweeklySchedule;
-use Payroll\Tests\TestCase;
 use Payroll\Transaction\Add\AddEmployee;
 use Payroll\Transaction\Add\AddHourlyEmployee;
 use Payroll\Transaction\Change\ChangeCommissionedPaymentClassification;
 
-class ChangeCommissionedPaymentClassificationTest extends TestCase
+class ChangeCommissionedPaymentClassificationTest extends AbstractChangeEmployeeTestCase
 {
-    use DatabaseTransactions;
-
-    public function testExecute()
+    protected function setEmployee()
     {
-        $faker = Factory::create();
+        $name = $this->faker->name;
+        $address = $this->faker->address;
+        $hourlyRate = $this->faker->randomFloat(2, 10, 30);
 
-        $name = $faker->name;
-        $address = $faker->address;
-        $hourlyRate = $faker->randomFloat(2, 10, 30);
+        $this->employee = (new AddHourlyEmployee($name, $address, $hourlyRate))->execute();
+    }
 
-        $employee = (new AddHourlyEmployee($name, $address, $hourlyRate))->execute();
-
-        $salary = $faker->randomFloat(2, 800, 2200);
-        $commissionRate = $faker->randomFloat(2, 10, 32);
-        $transaction = new ChangeCommissionedPaymentClassification($employee, $salary, $commissionRate);
+    protected function change()
+    {
+        $this->data['salary'] = $this->faker->randomFloat(2, 800, 2200);
+        $this->data['commissionRate '] = $this->faker->randomFloat(2, 10, 32);
+        $transaction = new ChangeCommissionedPaymentClassification($this->employee, $this->data['salary'], $this->data['commissionRate ']);
 
         /**
          * @var Employee
          */
-        $changedEmployee = $transaction->execute();
+        $this->changedEmployee = $transaction->execute();
+    }
 
+    protected function assertTypeSpecificData()
+    {
         /**
          * @var CommissionedClassification $paymentClassification
          */
-        $paymentClassification = $changedEmployee->getPaymentClassification();
+        $paymentClassification = $this->changedEmployee->getPaymentClassification();
         $this->assertTrue($paymentClassification instanceof CommissionedClassification);
-        $this->assertEquals($salary, $paymentClassification->getSalary());
-        $this->assertEquals($commissionRate, $paymentClassification->getCommissionRate());
+        $this->assertEquals($this->data['salary'], $paymentClassification->getSalary());
+        $this->assertEquals($this->data['commissionRate '], $paymentClassification->getCommissionRate());
 
         /**
          * @var BiweeklySchedule $paymentSchedule
          */
-        $paymentSchedule = $changedEmployee->getPaymentSchedule();
+        $paymentSchedule = $this->changedEmployee->getPaymentSchedule();
         $this->assertTrue($paymentSchedule instanceof BiweeklySchedule);
-        $this->assertEquals(AddEmployee::COMMISSION, $changedEmployee->getType());
+        $this->assertEquals(AddEmployee::COMMISSION, $this->changedEmployee->getType());
     }
 }
