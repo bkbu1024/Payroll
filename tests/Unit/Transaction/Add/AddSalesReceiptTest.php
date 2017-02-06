@@ -4,6 +4,7 @@ namespace Payroll\Tests\Unit\Transaction\Add;
 
 use Faker\Factory;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Payroll\Contract\SalesReceipt;
 use Payroll\Employee;
 use Payroll\PaymentClassification\CommissionedClassification;
 use Payroll\Tests\TestCase;
@@ -39,8 +40,11 @@ class AddSalesReceiptTest extends TestCase
         $paymentClassification = $employee->getPaymentClassification();
         $this->assertTrue($paymentClassification instanceof CommissionedClassification);
 
+        /**
+         * @var SalesReceipt $salesReceipt
+         */
         $salesReceipt = $paymentClassification->getSalesReceipt((new \DateTime())->format('Y-m-d'));
-        $this->assertEquals($amount, $salesReceipt->amount);
-        $this->assertEquals($employee->getId(), $salesReceipt->employee_id);
+        $this->assertEquals($amount, $salesReceipt->getAmount());
+        $this->assertEquals($employee->getId(), $salesReceipt->getEmployeeId());
     }
 }

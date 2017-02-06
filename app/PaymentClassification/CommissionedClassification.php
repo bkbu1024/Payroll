@@ -2,7 +2,8 @@
 
 namespace Payroll\PaymentClassification;
 
-use Payroll\SalesReceipt;
+use Illuminate\Database\Eloquent\Collection;
+use Payroll\Contract\SalesReceipt;
 
 class CommissionedClassification extends PaymentClassification
 {
@@ -55,7 +56,7 @@ class CommissionedClassification extends PaymentClassification
      */
     public function addSalesReceipt(SalesReceipt $salesReceipt)
     {
-        $salesReceipt->employee_id = $this->employee->getId();
+        $salesReceipt->setEmployeeId($this->employee->getId());
         $this->employee->addSalesReceipt($salesReceipt);
     }
 
@@ -69,10 +70,10 @@ class CommissionedClassification extends PaymentClassification
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return Collection
      */
-    public function salesReceipts()
+    public function getSalesReceipts()
     {
-        return $this->employee->salesReceipts();
+        return $this->employee->getSalesReceipts();
     }
 }

@@ -25,6 +25,8 @@ class Employee extends Model implements Contract\Employee
      */
     protected $paymentMethod;
 
+
+
     public function getId()
     {
         return $this->id;
@@ -174,7 +176,7 @@ class Employee extends Model implements Contract\Employee
      */
     protected function salesReceipts()
     {
-        return $this->hasMany(SalesReceipt::class);
+        return $this->hasMany(\Payroll\SalesReceipt::class);
     }
 
     /**
