@@ -1,37 +1,33 @@
 <?php
 
-namespace Payroll\Tests\Unit\Transaction\Add;
+namespace Payroll\Tests\Unit\Transaction\Change;
 
 use Faker\Factory;
 use Payroll\Employee;
+use Payroll\PaymentMethod\HoldMethod;
 use Payroll\PaymentMethod\MailMethod;
 use Payroll\Tests\TestCase;
-use Payroll\Transaction\Add\AddHourlyEmployee;
 use Payroll\Transaction\Change\ChangeMailMethod;
 
-class ChangeMailMethodTest extends TestCase
+class ChangeMailMethodTest extends AbstractChangeEmployeeTestCase
 {
-    public function testExecute()
+    protected function assertTypeSpecificData()
     {
-        $faker = Factory::create();
-        $address = $faker->address;
-
-        $employee = (new AddHourlyEmployee(
-            $faker->name,
-            $address,
-            $faker->randomFloat(2, 10, 30)))->execute();
-
-        $transaction = new ChangeMailMethod($employee, $address);
-        /**
-         * @var Employee
-         */
-        $changedEmployee = $transaction->execute();
-
         /**
          * @var MailMethod
          */
-        $paymentMethod = $changedEmployee->getPaymentMethod();
+        $paymentMethod = $this->changedEmployee->getPaymentMethod();
         $this->assertTrue($paymentMethod instanceof MailMethod);
-        $this->assertEquals($address, $paymentMethod->getAddress());
+        $this->assertEquals($this->data['address'], $paymentMethod->getAddress());
+    }
+
+    protected function change()
+    {
+        $this->data['address'] = $this->faker->address;
+        $transaction = new ChangeMailMethod($this->employee, $this->data['address']);
+        /**
+         * @var Employee
+         */
+        $this->changedEmployee = $transaction->execute();
     }
 }

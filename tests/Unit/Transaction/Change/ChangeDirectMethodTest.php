@@ -1,40 +1,29 @@
 <?php
 
-namespace Payroll\Tests\Unit\Transaction\Add;
+namespace Payroll\Tests\Unit\Transaction\Change;
 
-use Faker\Factory;
 use Payroll\Employee;
 use Payroll\PaymentMethod\DirectMethod;
-use Payroll\Tests\TestCase;
-use Payroll\Transaction\Add\AddHourlyEmployee;
 use Payroll\Transaction\Change\ChangeDirectMethod;
 
-class ChangeDirectMethodTest extends TestCase
+class ChangeDirectMethodTest extends AbstractChangeEmployeeTestCase
 {
-    public function testExecute()
+    protected function assertTypeSpecificData()
     {
-        $faker = Factory::create();
-        $address = $faker->address;
-
-        $employee = (new AddHourlyEmployee(
-            $faker->name,
-            $address,
-            $faker->randomFloat(2, 10, 30)))->execute();
-
-        $bank = $faker->company;
-        $account = $faker->bankAccountNumber;
-        $transaction = new ChangeDirectMethod($employee, $bank, $account);
-        /**
-         * @var Employee
-         */
-        $changedEmployee = $transaction->execute();
-
         /**
          * @var DirectMethod
          */
-        $paymentMethod = $changedEmployee->getPaymentMethod();
+        $paymentMethod = $this->changedEmployee->getPaymentMethod();
         $this->assertTrue($paymentMethod instanceof DirectMethod);
-        $this->assertEquals($bank, $paymentMethod->getBank());
-        $this->assertEquals($account, $paymentMethod->getAccount());
+        $this->assertEquals($this->data['bank'], $paymentMethod->getBank());
+        $this->assertEquals($this->data['account'], $paymentMethod->getAccount());
+    }
+
+    protected function change()
+    {
+        $this->data['bank'] = $this->faker->company;
+        $this->data['account'] = $this->faker->bankAccountNumber;
+        $transaction = new ChangeDirectMethod($this->employee, $this->data['bank'], $this->data['account']);
+        $this->changedEmployee = $transaction->execute();
     }
 }

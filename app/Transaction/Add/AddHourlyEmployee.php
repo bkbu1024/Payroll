@@ -16,12 +16,12 @@ class AddHourlyEmployee extends AddEmployee
      * AddSalariedEmployee constructor.
      * @param $name
      * @param $address
-     * @param $salary
+     * @param $hourlyRate
      */
-    public function __construct($name, $address, $salary)
+    public function __construct($name, $address, $hourlyRate)
     {
         parent::__construct($name, $address);
-        $this->hourlyRate = $salary;
+        $this->hourlyRate = $hourlyRate;
     }
 
     /**

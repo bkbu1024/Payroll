@@ -8,11 +8,11 @@ use Payroll\PaymentMethod\DirectMethod;
 class ChangeDirectMethod extends ChangePaymentMethod
 {
     /**
-     * @var
+     * @var string
      */
     private $bank;
     /**
-     * @var
+     * @var string
      */
     private $account;
 

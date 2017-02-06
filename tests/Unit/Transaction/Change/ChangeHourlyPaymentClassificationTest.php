@@ -1,44 +1,47 @@
 <?php
 
-namespace Payroll\Tests\Unit\Transaction\Add;
+namespace Payroll\Tests\Unit\Transaction\Change;
 
-use Faker\Factory;
-use Payroll\Employee;
 use Payroll\PaymentClassification\HourlyClassification;
+use Payroll\PaymentClassification\SalariedClassification;
+use Payroll\PaymentSchedule\MonthlySchedule;
 use Payroll\PaymentSchedule\WeeklySchedule;
-use Payroll\Tests\TestCase;
-use Payroll\Transaction\Add\AddCommissionedEmployee;
 use Payroll\Transaction\Change\ChangeHourlyPaymentClassification;
 
-class ChangeHourlyPaymentClassificationTest extends TestCase
+class ChangeHourlyPaymentClassificationTest extends AbstractChangeEmployeeTestCase
 {
-    public function testExecute()
+    protected function change()
     {
-        $faker = Factory::create();
-        $employee = (new AddCommissionedEmployee(
-            $faker->name,
-            $faker->address,
-            $faker->randomFloat(2, 700, 2500),
-            $faker->randomFloat(2, 10, 30)))->execute();
+        $hourlyRate = $this->faker->randomFloat(2, 10, 30);
+        $transaction = new ChangeHourlyPaymentClassification($this->employee, $hourlyRate);
 
-        $hourlyRate = $faker->randomFloat(2, 10, 33);
-        $transaction = new ChangeHourlyPaymentClassification($employee, $hourlyRate);
-        /**
-         * @var Employee $changedEmployee
-         */
-        $changedEmployee = $transaction->execute();
+        $this->changedEmployee = $transaction->execute();
+        $this->data['hourlyRate'] = $hourlyRate;
+    }
 
+    protected function setEmployee()
+    {
+        parent::setEmployee();
+        $this->data['salary'] = $this->faker->randomFloat(2, 1200, 3000);
+        $this->employee->salary = $this->data['salary'];
+
+        $this->employee->setPaymentClassification(new SalariedClassification($this->data['salary']));
+        $this->employee->setPaymentSchedule(new MonthlySchedule());
+    }
+
+    protected function assertTypeSpecificData()
+    {
         /**
-         * @var HourlyClassification $paymentClassification
+         * @var HourlyClassification
          */
-        $paymentClassification = $changedEmployee->getPaymentClassification();
+        $paymentClassification = $this->changedEmployee->getPaymentClassification();
         $this->assertTrue($paymentClassification instanceof HourlyClassification);
-        $this->assertEquals($hourlyRate, $paymentClassification->getHourlyRate());
+        $this->assertEquals($this->data['hourlyRate'], $paymentClassification->getHourlyRate());
 
         /**
-         * @var WeeklySchedule $paymentSchedule
+         * @var WeeklySchedule
          */
-        $paymentSchedule = $changedEmployee->getPaymentSchedule();
+        $paymentSchedule = $this->changedEmployee->getPaymentSchedule();
         $this->assertTrue($paymentSchedule instanceof WeeklySchedule);
     }
 }

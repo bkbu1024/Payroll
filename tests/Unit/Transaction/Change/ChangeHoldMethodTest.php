@@ -1,37 +1,28 @@
 <?php
 
-namespace Payroll\Tests\Unit\Transaction\Add;
+namespace Payroll\Tests\Unit\Transaction\Change;
 
 use Faker\Factory;
 use Payroll\Employee;
 use Payroll\PaymentMethod\HoldMethod;
 use Payroll\PaymentMethod\PaymentMethod;
 use Payroll\Tests\TestCase;
-use Payroll\Transaction\Add\AddHourlyEmployee;
 use Payroll\Transaction\Change\ChangeHoldMethod;
 
-class ChangeHoldMethodTest extends TestCase
+class ChangeHoldMethodTest extends AbstractChangeEmployeeTestCase
 {
-    public function testExecute()
+    protected function assertTypeSpecificData()
     {
-        $faker = Factory::create();
-        $address = $faker->address;
-
-        $employee = (new AddHourlyEmployee(
-            $faker->name,
-            $address,
-            $faker->randomFloat(2, 10, 30)))->execute();
-
-        $transaction = new ChangeHoldMethod($employee);
-        /**
-         * @var Employee
-         */
-        $changedEmployee = $transaction->execute();
-
         /**
          * @var PaymentMethod
          */
-        $paymentMethod = $changedEmployee->getPaymentMethod();
+        $paymentMethod = $this->changedEmployee->getPaymentMethod();
         $this->assertTrue($paymentMethod instanceof HoldMethod);
+    }
+
+    protected function change()
+    {
+        $transaction = new ChangeHoldMethod($this->employee);
+        $this->changedEmployee = $transaction->execute();
     }
 }

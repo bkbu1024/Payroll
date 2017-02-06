@@ -13,11 +13,11 @@ use Payroll\PaymentSchedule\WeeklySchedule;
 class ChangeCommissionedPaymentClassification extends ChangePaymentClassification
 {
     /**
-     * @var
+     * @var float
      */
     private $salary;
     /**
-     * @var
+     * @var float
      */
     private $commissionRate;
 

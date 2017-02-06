@@ -21,13 +21,13 @@ class AddCommissionedEmployee extends AddEmployee
      * AddCommissionedEmployee constructor.
      * @param $name
      * @param $address
-     * @param $salary
+     * @param $hourlyRate
      * @param $commissionRate
      */
-    public function __construct($name, $address, $salary, $commissionRate)
+    public function __construct($name, $address, $hourlyRate, $commissionRate)
     {
         parent::__construct($name, $address);
-        $this->salary = $salary;
+        $this->salary = $hourlyRate;
         $this->commissionRate = $commissionRate;
     }
 
