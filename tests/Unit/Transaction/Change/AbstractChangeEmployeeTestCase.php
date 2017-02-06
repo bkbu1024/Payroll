@@ -40,8 +40,8 @@ abstract class AbstractChangeEmployeeTestCase extends TestCase
     protected function setEmployee()
     {
         $employee = new Employee;
-        $employee->name = $this->faker->name;
-        $employee->address = $this->faker->address;
+        $employee->setName($this->faker->name);
+        $employee->setAddress($this->faker->address);
         $employee->setPaymentMethod(new HoldMethod);
 
         $this->employee = $employee;

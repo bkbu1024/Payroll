@@ -2,14 +2,14 @@
 
 namespace Payroll\Transaction\Change;
 
-use Payroll\Employee;
+use Payroll\Contract\Employee;
 use Payroll\PaymentMethod\DirectMethod;
 use Payroll\PaymentMethod\MailMethod;
 
 class ChangeMailMethod extends ChangePaymentMethod
 {
     /**
-     * @var
+     * @var string
      */
     private $address;
 

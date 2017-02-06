@@ -2,13 +2,11 @@
 
 namespace Payroll\Tests\Unit\Transaction\Change;
 
-use Faker\Factory;
-use Payroll\Employee;
 use Payroll\PaymentClassification\CommissionedClassification;
 use Payroll\PaymentClassification\HourlyClassification;
 use Payroll\PaymentSchedule\BiweeklySchedule;
 use Payroll\PaymentSchedule\WeeklySchedule;
-use Payroll\Tests\TestCase;
+use Payroll\Transaction\Add\AddEmployee;
 use Payroll\Transaction\Change\ChangeCommissionedPaymentClassification;
 
 class ChangeCommissionedPaymentClassificationTest extends AbstractChangeEmployeeTestCase
@@ -27,9 +25,9 @@ class ChangeCommissionedPaymentClassificationTest extends AbstractChangeEmployee
     protected function setEmployee()
     {
         parent::setEmployee();
-        $this->data['hourlyRate'] = $this->faker->randomFloat(2, 10, 30);;
-        $this->employee->hourly_rate = $this->data['hourlyRate'];
-        $this->employee->setPaymentSchedule(new WeeklySchedule);
+        $this->data['hourlyRate'] = $this->faker->randomFloat(2, 10, 30);
+        $this->employee->setHourlyRate($this->data['hourlyRate']);
+        $this->employee->setPaymentSchedule(new WeeklySchedule());
         $this->employee->setPaymentClassification(
             new HourlyClassification($this->data['hourlyRate']));
     }
@@ -37,7 +35,7 @@ class ChangeCommissionedPaymentClassificationTest extends AbstractChangeEmployee
     protected function assertTypeSpecificData()
     {
         /**
-         * @var CommissionedClassification
+         * @var CommissionedClassification $paymentClassification
          */
         $paymentClassification = $this->changedEmployee->getPaymentClassification();
         $this->assertTrue($paymentClassification instanceof CommissionedClassification);
@@ -49,5 +47,7 @@ class ChangeCommissionedPaymentClassificationTest extends AbstractChangeEmployee
          */
         $paymentSchedule = $this->changedEmployee->getPaymentSchedule();
         $this->assertTrue($paymentSchedule instanceof BiweeklySchedule);
+
+        $this->assertEquals(AddEmployee::COMMISSION, $this->changedEmployee->getType());
     }
 }

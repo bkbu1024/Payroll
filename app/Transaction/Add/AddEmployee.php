@@ -67,8 +67,8 @@ abstract class AddEmployee implements Transaction
     protected function createEmployee()
     {
         $employee = new Employee;
-        $employee->name = $this->name;
-        $employee->address = $this->address;
+        $employee->setName($this->name);
+        $employee->setAddress($this->address);
 
         return $employee;
     }

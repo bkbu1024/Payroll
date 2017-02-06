@@ -2,7 +2,7 @@
 
 namespace Payroll\Transaction\Change;
 
-use Payroll\Employee;
+use Payroll\Contract\Employee;
 use Payroll\PaymentMethod\PaymentMethod;
 
 abstract class ChangePaymentMethod extends ChangeEmployee

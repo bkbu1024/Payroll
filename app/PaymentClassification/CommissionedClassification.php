@@ -50,23 +50,22 @@ class CommissionedClassification extends PaymentClassification
         return 0;
     }
 
-
     /**
      * @param SalesReceipt $salesReceipt
      */
     public function addSalesReceipt(SalesReceipt $salesReceipt)
     {
-        $salesReceipt->employee_id = $this->employee->id;
-        $this->employee->salesReceipts()->save($salesReceipt);
+        $salesReceipt->employee_id = $this->employee->getId();
+        $this->employee->addSalesReceipt($salesReceipt);
     }
 
     /**
      * @param $date
-     * @return mixed
+     * @return SalesReceipt
      */
     public function getSalesReceipt($date)
     {
-        return $this->employee->salesReceipts()->where('date', $date)->get()->first();
+        return $this->employee->getSalesReceiptBy($date);
     }
 
     /**

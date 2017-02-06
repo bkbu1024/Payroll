@@ -4,10 +4,11 @@ namespace Payroll\Tests\Integration\Transaction\Change;
 
 use Faker\Factory;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Payroll\Employee;
+use Payroll\Contract\Employee;
 use Payroll\PaymentClassification\CommissionedClassification;
 use Payroll\PaymentSchedule\BiweeklySchedule;
 use Payroll\Tests\TestCase;
+use Payroll\Transaction\Add\AddEmployee;
 use Payroll\Transaction\Add\AddHourlyEmployee;
 use Payroll\Transaction\Change\ChangeCommissionedPaymentClassification;
 
@@ -35,7 +36,7 @@ class ChangeCommissionedPaymentClassificationTest extends TestCase
         $changedEmployee = $transaction->execute();
 
         /**
-         * @var CommissionedClassification
+         * @var CommissionedClassification $paymentClassification
          */
         $paymentClassification = $changedEmployee->getPaymentClassification();
         $this->assertTrue($paymentClassification instanceof CommissionedClassification);
@@ -43,9 +44,10 @@ class ChangeCommissionedPaymentClassificationTest extends TestCase
         $this->assertEquals($commissionRate, $paymentClassification->getCommissionRate());
 
         /**
-         * @var BiweeklySchedule
+         * @var BiweeklySchedule $paymentSchedule
          */
         $paymentSchedule = $changedEmployee->getPaymentSchedule();
         $this->assertTrue($paymentSchedule instanceof BiweeklySchedule);
+        $this->assertEquals(AddEmployee::COMMISSION, $changedEmployee->getType());
     }
 }

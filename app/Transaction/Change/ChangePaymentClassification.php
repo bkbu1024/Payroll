@@ -18,12 +18,18 @@ abstract class ChangePaymentClassification extends ChangeEmployee
     abstract protected function getPaymentSchedule();
 
     /**
+     * @return string
+     */
+    abstract protected function getType();
+
+    /**
      * @return \Payroll\Employee
      */
     protected function change()
     {
         $this->employee->setPaymentClassification($this->getPaymentClassification());
         $this->employee->setPaymentSchedule($this->getPaymentSchedule());
+        $this->employee->setType($this->getType());
 
         return $this->employee;
     }

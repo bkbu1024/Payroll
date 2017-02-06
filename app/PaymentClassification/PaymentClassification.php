@@ -2,7 +2,7 @@
 
 namespace Payroll\PaymentClassification;
 
-use Payroll\Employee;
+use Payroll\Contract\Employee;
 
 abstract class PaymentClassification
 {
@@ -22,7 +22,7 @@ abstract class PaymentClassification
     /**
      * @param Employee $employee
      */
-    public function setEmployee($employee)
+    public function setEmployee(Employee $employee)
     {
         $this->employee = $employee;
     }

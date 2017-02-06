@@ -2,11 +2,8 @@
 
 namespace Payroll\Tests\Unit\Transaction\Change;
 
-use Faker\Factory;
 use Payroll\Employee;
-use Payroll\PaymentMethod\HoldMethod;
 use Payroll\PaymentMethod\MailMethod;
-use Payroll\Tests\TestCase;
 use Payroll\Transaction\Change\ChangeMailMethod;
 
 class ChangeMailMethodTest extends AbstractChangeEmployeeTestCase
@@ -14,7 +11,7 @@ class ChangeMailMethodTest extends AbstractChangeEmployeeTestCase
     protected function assertTypeSpecificData()
     {
         /**
-         * @var MailMethod
+         * @var MailMethod $paymentMethod
          */
         $paymentMethod = $this->changedEmployee->getPaymentMethod();
         $this->assertTrue($paymentMethod instanceof MailMethod);

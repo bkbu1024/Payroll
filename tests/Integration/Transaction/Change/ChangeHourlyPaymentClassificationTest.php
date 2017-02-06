@@ -3,11 +3,12 @@
 namespace Payroll\Tests\Integration\Transaction\Change;
 
 use Faker\Factory;
-use Payroll\Employee;
+use Payroll\Contract\Employee;
 use Payroll\PaymentClassification\HourlyClassification;
 use Payroll\PaymentSchedule\WeeklySchedule;
 use Payroll\Tests\TestCase;
 use Payroll\Transaction\Add\AddCommissionedEmployee;
+use Payroll\Transaction\Add\AddEmployee;
 use Payroll\Transaction\Change\ChangeHourlyPaymentClassification;
 
 class ChangeHourlyPaymentClassificationTest extends TestCase
@@ -40,5 +41,7 @@ class ChangeHourlyPaymentClassificationTest extends TestCase
          */
         $paymentSchedule = $changedEmployee->getPaymentSchedule();
         $this->assertTrue($paymentSchedule instanceof WeeklySchedule);
+
+        $this->assertEquals(AddEmployee::HOURLY, $changedEmployee->getType());
     }
 }

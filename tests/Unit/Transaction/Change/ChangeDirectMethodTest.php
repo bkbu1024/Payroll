@@ -2,7 +2,6 @@
 
 namespace Payroll\Tests\Unit\Transaction\Change;
 
-use Payroll\Employee;
 use Payroll\PaymentMethod\DirectMethod;
 use Payroll\Transaction\Change\ChangeDirectMethod;
 
@@ -11,7 +10,7 @@ class ChangeDirectMethodTest extends AbstractChangeEmployeeTestCase
     protected function assertTypeSpecificData()
     {
         /**
-         * @var DirectMethod
+         * @var DirectMethod $paymentMethod
          */
         $paymentMethod = $this->changedEmployee->getPaymentMethod();
         $this->assertTrue($paymentMethod instanceof DirectMethod);

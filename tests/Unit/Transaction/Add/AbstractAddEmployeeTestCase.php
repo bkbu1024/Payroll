@@ -2,7 +2,7 @@
 
 namespace Payroll\Tests\Unit\Transaction\Add;
 
-use Payroll\Employee;
+use Payroll\Contract\Employee;
 use Payroll\Tests\TestCase;
 use Faker\Factory;
 use Payroll\PaymentMethod\HoldMethod;

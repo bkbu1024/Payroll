@@ -2,16 +2,15 @@
 
 namespace Payroll\Transaction\Change;
 
-use Payroll\Employee;
-use Payroll\PaymentClassification\HourlyClassification;
+use Payroll\Contract\Employee;
 use Payroll\PaymentClassification\SalariedClassification;
 use Payroll\PaymentSchedule\MonthlySchedule;
-use Payroll\PaymentSchedule\WeeklySchedule;
+use Payroll\Transaction\Add\AddEmployee;
 
 class ChangeSalariedPaymentClassification extends ChangePaymentClassification
 {
     /**
-     * @var
+     * @var float
      */
     private $salary;
 
@@ -44,5 +43,13 @@ class ChangeSalariedPaymentClassification extends ChangePaymentClassification
     protected function getPaymentSchedule()
     {
         return new MonthlySchedule;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getType()
+    {
+        return AddEmployee::SALARIED;
     }
 }

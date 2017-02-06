@@ -23,8 +23,8 @@ class AddSalariedEmployeeTest extends AbstractAddEmployeeTestCase
 
     protected function assertTypeSpecificData()
     {
-        $this->assertEquals($this->data['salary'], $this->employee->salary);
-        $this->assertEquals(AddEmployee::SALARIED, $this->employee->type);
+        $this->assertEquals($this->data['salary'], $this->employee->getSalary());
+        $this->assertEquals(AddEmployee::SALARIED, $this->employee->getType());
 
         $this->assertTrue($this->employee->getPaymentClassification() instanceof SalariedClassification);
         $this->assertTrue($this->employee->getPaymentSchedule() instanceof MonthlySchedule);

@@ -33,6 +33,6 @@ class AddTimecardTest extends TestCase
 
         $timeCard = $paymentClassification->getTimeCard((new \DateTime())->format('Y-m-d'));
         $this->assertEquals(8.0, $timeCard->hours);
-        $this->assertEquals($employee->id, $timeCard->employee_id);
+        $this->assertEquals($employee->getId(), $timeCard->employee_id);
     }
 }

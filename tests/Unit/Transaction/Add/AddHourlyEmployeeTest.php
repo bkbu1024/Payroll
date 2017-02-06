@@ -23,8 +23,8 @@ class AddHourlyEmployeeTest extends AbstractAddEmployeeTestCase
 
     protected function assertTypeSpecificData()
     {
-        $this->assertEquals($this->data['hourlyRate'], $this->employee->hourly_rate);
-        $this->assertEquals(AddEmployee::HOURLY, $this->employee->type);
+        $this->assertEquals($this->data['hourlyRate'], $this->employee->getHourlyRate());
+        $this->assertEquals(AddEmployee::HOURLY, $this->employee->getType());
 
         $this->assertTrue($this->employee->getPaymentSchedule() instanceof WeeklySchedule);
         $this->assertTrue($this->employee->getPaymentClassification() instanceof HourlyClassification);

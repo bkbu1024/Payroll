@@ -2,7 +2,7 @@
 
 namespace Payroll\Transaction\Add;
 
-use Payroll\Employee;
+use Payroll\Contract\Employee;
 use Payroll\PaymentClassification\HourlyClassification;
 use Payroll\TimeCard;
 use Payroll\Transaction\Transaction;
@@ -10,11 +10,11 @@ use Payroll\Transaction\Transaction;
 class AddTimeCard implements Transaction
 {
     /**
-     * @var
+     * @var \DateTime
      */
     private $date;
     /**
-     * @var
+     * @var float
      */
     private $hours;
     /**

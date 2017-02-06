@@ -2,11 +2,8 @@
 
 namespace Payroll\Tests\Unit\Transaction\Change;
 
-use Faker\Factory;
-use Payroll\Employee;
 use Payroll\PaymentMethod\HoldMethod;
 use Payroll\PaymentMethod\PaymentMethod;
-use Payroll\Tests\TestCase;
 use Payroll\Transaction\Change\ChangeHoldMethod;
 
 class ChangeHoldMethodTest extends AbstractChangeEmployeeTestCase

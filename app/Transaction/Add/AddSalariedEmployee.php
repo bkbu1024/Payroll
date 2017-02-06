@@ -46,8 +46,8 @@ class AddSalariedEmployee extends AddEmployee
     protected function createEmployee()
     {
         $employee = parent::createEmployee();
-        $employee->salary = $this->salary;
-        $employee->type = self::SALARIED;
+        $employee->setSalary($this->salary);
+        $employee->setType(self::SALARIED);
         $employee->save();
 
         return $employee;

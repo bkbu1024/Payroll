@@ -25,9 +25,9 @@ class AddCommissionedEmployeeTest extends AbstractAddEmployeeTestCase
 
     protected function assertTypeSpecificData()
     {
-        $this->assertEquals($this->data['salary'], $this->employee->salary);
-        $this->assertEquals($this->data['commissionRate'], $this->employee->commission_rate);
-        $this->assertEquals(AddEmployee::COMMISSION, $this->employee->type);
+        $this->assertEquals($this->data['salary'], $this->employee->getSalary());
+        $this->assertEquals($this->data['commissionRate'], $this->employee->getCommissionRate());
+        $this->assertEquals(AddEmployee::COMMISSION, $this->employee->getType());
 
         $this->assertTrue($this->employee->getPaymentSchedule() instanceof BiweeklySchedule);
         $this->assertTrue($this->employee->getPaymentClassification() instanceof CommissionedClassification);

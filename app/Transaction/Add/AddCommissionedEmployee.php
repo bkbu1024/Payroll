@@ -53,9 +53,9 @@ class AddCommissionedEmployee extends AddEmployee
     protected function createEmployee()
     {
         $employee = parent::createEmployee();
-        $employee->salary = $this->salary;
-        $employee->commission_rate = $this->commissionRate;
-        $employee->type = self::COMMISSION;
+        $employee->setSalary($this->salary);
+        $employee->setCommissionRate($this->commissionRate);
+        $employee->setType(self::COMMISSION);
         $employee->save();
 
         return $employee;

@@ -41,6 +41,6 @@ class AddSalesReceiptTest extends TestCase
 
         $salesReceipt = $paymentClassification->getSalesReceipt((new \DateTime())->format('Y-m-d'));
         $this->assertEquals($amount, $salesReceipt->amount);
-        $this->assertEquals($employee->id, $salesReceipt->employee_id);
+        $this->assertEquals($employee->getId(), $salesReceipt->employee_id);
     }
 }

@@ -2,13 +2,10 @@
 
 namespace Payroll\Transaction\Change;
 
-use Payroll\Employee;
+use Payroll\Contract\Employee;
 use Payroll\PaymentClassification\CommissionedClassification;
-use Payroll\PaymentClassification\HourlyClassification;
-use Payroll\PaymentClassification\SalariedClassification;
 use Payroll\PaymentSchedule\BiweeklySchedule;
-use Payroll\PaymentSchedule\MonthlySchedule;
-use Payroll\PaymentSchedule\WeeklySchedule;
+use Payroll\Transaction\Add\AddEmployee;
 
 class ChangeCommissionedPaymentClassification extends ChangePaymentClassification
 {
@@ -52,5 +49,13 @@ class ChangeCommissionedPaymentClassification extends ChangePaymentClassificatio
     protected function getPaymentSchedule()
     {
         return new BiweeklySchedule;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getType()
+    {
+        return AddEmployee::COMMISSION;
     }
 }

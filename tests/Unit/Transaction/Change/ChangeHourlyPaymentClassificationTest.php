@@ -6,6 +6,7 @@ use Payroll\PaymentClassification\HourlyClassification;
 use Payroll\PaymentClassification\SalariedClassification;
 use Payroll\PaymentSchedule\MonthlySchedule;
 use Payroll\PaymentSchedule\WeeklySchedule;
+use Payroll\Transaction\Add\AddEmployee;
 use Payroll\Transaction\Change\ChangeHourlyPaymentClassification;
 
 class ChangeHourlyPaymentClassificationTest extends AbstractChangeEmployeeTestCase
@@ -23,7 +24,7 @@ class ChangeHourlyPaymentClassificationTest extends AbstractChangeEmployeeTestCa
     {
         parent::setEmployee();
         $this->data['salary'] = $this->faker->randomFloat(2, 1200, 3000);
-        $this->employee->salary = $this->data['salary'];
+        $this->employee->setSalary($this->data['salary']);
 
         $this->employee->setPaymentClassification(new SalariedClassification($this->data['salary']));
         $this->employee->setPaymentSchedule(new MonthlySchedule());
@@ -32,7 +33,7 @@ class ChangeHourlyPaymentClassificationTest extends AbstractChangeEmployeeTestCa
     protected function assertTypeSpecificData()
     {
         /**
-         * @var HourlyClassification
+         * @var HourlyClassification $paymentClassification
          */
         $paymentClassification = $this->changedEmployee->getPaymentClassification();
         $this->assertTrue($paymentClassification instanceof HourlyClassification);
@@ -43,5 +44,7 @@ class ChangeHourlyPaymentClassificationTest extends AbstractChangeEmployeeTestCa
          */
         $paymentSchedule = $this->changedEmployee->getPaymentSchedule();
         $this->assertTrue($paymentSchedule instanceof WeeklySchedule);
+
+        $this->assertEquals(AddEmployee::HOURLY, $this->changedEmployee->getType());
     }
 }

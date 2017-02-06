@@ -2,7 +2,7 @@
 
 namespace Payroll\Transaction\Add;
 
-use Payroll\Employee;
+use Payroll\Contract\Employee;
 use Payroll\PaymentClassification\CommissionedClassification;
 use Payroll\SalesReceipt;
 use Payroll\Transaction\Transaction;
@@ -10,11 +10,11 @@ use Payroll\Transaction\Transaction;
 class AddSalesReceipt implements Transaction
 {
     /**
-     * @var
+     * @var \DateTime
      */
     private $date;
     /**
-     * @var
+     * @var float
      */
     private $amount;
     /**

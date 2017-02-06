@@ -46,8 +46,8 @@ class AddHourlyEmployee extends AddEmployee
     protected function createEmployee()
     {
         $employee = parent::createEmployee();
-        $employee->hourly_rate = $this->hourlyRate;
-        $employee->type = self::HOURLY;
+        $employee->setHourlyRate($this->hourlyRate);
+        $employee->setType(self::HOURLY);
         $employee->save();
 
         return $employee;
