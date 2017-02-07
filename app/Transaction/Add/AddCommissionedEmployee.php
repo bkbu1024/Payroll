@@ -3,7 +3,7 @@
 namespace Payroll\Transaction\Add;
 
 use Payroll\Contract\Employee;
-use Payroll\Factory\Employee as Employee1;
+use Payroll\Factory\Employee as EmployeeFactory;
 use Payroll\PaymentClassification\Factory as ClassificationFactory;
 use Payroll\PaymentSchedule\Factory as ScheduleFactory;
 use Payroll\PaymentClassification\PaymentClassification;
@@ -63,7 +63,7 @@ class AddCommissionedEmployee extends AddEmployee
         $employee = parent::createEmployee();
         $employee->setSalary($this->salary);
         $employee->setCommissionRate($this->commissionRate);
-        $employee->setType(Employee1::COMMISSION);
+        $employee->setType(EmployeeFactory::COMMISSION);
         $employee->save();
 
         return $employee;

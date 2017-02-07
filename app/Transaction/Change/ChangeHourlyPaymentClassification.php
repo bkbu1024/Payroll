@@ -3,10 +3,9 @@
 namespace Payroll\Transaction\Change;
 
 use Payroll\Contract\Employee;
-use Payroll\Factory\Employee as Employee1;
+use Payroll\Factory\Employee as EmployeeFactory;
 use Payroll\PaymentClassification\HourlyClassification;
 use Payroll\PaymentSchedule\WeeklySchedule;
-use Payroll\Transaction\Add\AddEmployee;
 
 class ChangeHourlyPaymentClassification extends ChangePaymentClassification
 {
@@ -51,6 +50,6 @@ class ChangeHourlyPaymentClassification extends ChangePaymentClassification
      */
     protected function getType()
     {
-        return Employee1::HOURLY;
+        return EmployeeFactory::HOURLY;
     }
 }
