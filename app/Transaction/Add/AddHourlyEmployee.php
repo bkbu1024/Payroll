@@ -2,6 +2,7 @@
 
 namespace Payroll\Transaction\Add;
 
+use Payroll\Employee;
 use Payroll\PaymentSchedule\WeeklySchedule;
 use Payroll\PaymentClassification\HourlyClassification;
 
@@ -41,7 +42,7 @@ class AddHourlyEmployee extends AddEmployee
     }
 
     /**
-     * @return \Payroll\Employee
+     * @return Employee
      */
     protected function createEmployee()
     {

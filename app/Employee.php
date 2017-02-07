@@ -100,6 +100,8 @@ class Employee extends Model implements Contract\Employee
         $this->type = $type;
     }
 
+
+
     // --------------- END getters and setters
 
     /**

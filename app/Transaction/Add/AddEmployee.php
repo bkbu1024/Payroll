@@ -2,8 +2,11 @@
 
 namespace Payroll\Transaction\Add;
 
-use Payroll\PaymentMethod\HoldMethod;
-use Payroll\Employee;
+use Payroll\Factory\Employee as EmployeeFactory;
+use Payroll\PaymentClassification\PaymentClassification;
+use Payroll\PaymentMethod\Factory;
+use Payroll\Contract\Employee;
+use Payroll\PaymentSchedule\PaymentSchedule;
 use Payroll\Transaction\Transaction;
 
 abstract class AddEmployee implements Transaction
@@ -33,12 +36,12 @@ abstract class AddEmployee implements Transaction
     }
 
     /**
-     * @return \Payroll\PaymentClassification\PaymentClassification
+     * @return PaymentClassification
      */
     abstract protected function getPaymentClassification();
 
     /**
-     * @return \Payroll\PaymentSchedule\PaymentSchedule
+     * @return PaymentSchedule
      */
     abstract protected function getPaymentSchedule();
 
@@ -49,7 +52,7 @@ abstract class AddEmployee implements Transaction
     {
         $classification = $this->getPaymentClassification();
         $schedule = $this->getPaymentSchedule();
-        $method = new HoldMethod;
+        $method = Factory::createDefault();
 
         $employee = $this->createEmployee();
         $employee->setPaymentClassification($classification);
@@ -66,7 +69,7 @@ abstract class AddEmployee implements Transaction
      */
     protected function createEmployee()
     {
-        $employee = new Employee;
+        $employee = EmployeeFactory::createEmployee();
         $employee->setName($this->name);
         $employee->setAddress($this->address);
 
