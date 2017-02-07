@@ -2,20 +2,28 @@
 
 namespace Payroll\Contract;
 
-interface SalesReceipt
-{
-    public function getId();
-    public function getEmployeeId();
-    public function getDate();
-    public function getAmount();
+use Payroll\Contract\Relation\HasEmployee;
+use Payroll\Contract\Base\Identifiable;
 
-    public function setId($id);
-    public function setEmployeeId($employeeId);
+interface SalesReceipt extends Identifiable, HasEmployee
+{
+    /**
+     * @return string
+     */
+    public function getDate();
+
+    /**
+     * @return float
+     */
+    public function getAmount();
 
     /**
      * @param string $date
      */
     public function setDate($date);
 
+    /**
+     * @param float $amount
+     */
     public function setAmount($amount);
 }

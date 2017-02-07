@@ -2,23 +2,16 @@
 
 namespace Payroll\Contract;
 
-use Illuminate\Database\Eloquent\Collection;
+use Payroll\Contract\Base\Identifiable;
+use Payroll\Contract\Base\Nameable;
+use Payroll\Contract\Relation\HasSalesReceipts;
+use Payroll\Contract\Relation\HasTimeCards;
 use Payroll\PaymentClassification\PaymentClassification;
 use Payroll\PaymentMethod\PaymentMethod;
 use Payroll\PaymentSchedule\PaymentSchedule;
 
-interface Employee
+interface Employee extends Identifiable, Nameable, HasTimeCards, HasSalesReceipts
 {
-    /**
-     * @return int
-     */
-    public function getId();
-
-    /**
-     * @return string
-     */
-    public function getName();
-
     /**
      * @return string
      */
@@ -58,16 +51,6 @@ interface Employee
      * @return PaymentSchedule
      */
     public function getPaymentSchedule();
-
-    /**
-     * @param int $id
-     */
-    public function setId($id);
-
-    /**
-     * @param string $name
-     */
-    public function setName($name);
 
     /**
      * @param string $address
@@ -110,38 +93,4 @@ interface Employee
     public function setPaymentSchedule(PaymentSchedule $paymentSchedule);
 
     // ------------------------ END getters and setters
-
-    /**
-     * @param SalesReceipt $salesReceipt
-     * @return void
-     */
-    public function addSalesReceipt(SalesReceipt $salesReceipt);
-
-    /**
-     * @param string $date
-     * @return mixed
-     */
-    public function getSalesReceiptBy($date);
-
-    /**
-     * @return Collection
-     */
-    public function getSalesReceipts();
-
-    /**
-     * @param TimeCard $timeCard
-     * @return void
-     */
-    public function addTimeCard(TimeCard $timeCard);
-
-    /**
-     * @param string $date
-     * @return TimeCard
-     */
-    public function getTimeCardBy($date);
-
-    /**
-     * @return Collection
-     */
-    public function getTimeCards();
 }

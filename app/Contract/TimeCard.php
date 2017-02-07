@@ -2,18 +2,28 @@
 
 namespace Payroll\Contract;
 
-interface TimeCard
+use Payroll\Contract\Relation\HasEmployee;
+use Payroll\Contract\Base\Identifiable;
+
+interface TimeCard extends Identifiable, HasEmployee
 {
-    public function getId();
-    public function getEmployeeId();
+    /**
+     * @return string
+     */
     public function getDate();
+
+    /**
+     * @return float
+     */
     public function getHours();
-    public function setId($id);
-    public function setEmployeeId($employeeId);
 
     /**
      * @param string $date
      */
     public function setDate($date);
+
+    /**
+     * @param float $hours
+     */
     public function setHours($hours);
 }
