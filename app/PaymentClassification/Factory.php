@@ -15,14 +15,17 @@ class Factory
      */
     public static function createClassification(Employee $employee)
     {
+        $classification = null;
         if ($employee->getType() == AddEmployee::COMMISSION) {
-            return new CommissionedClassification($employee->getSalary(), $employee->getCommissionRate());
+            $classification = new CommissionedClassification($employee->getSalary(), $employee->getCommissionRate());
         } elseif ($employee->getType() == AddEmployee::SALARIED) {
-            return new SalariedClassification($employee->getSalary());
+            $classification = new SalariedClassification($employee->getSalary());
         } elseif ($employee->getType() == AddEmployee::HOURLY) {
-            return new HourlyClassification($employee->getHourlyRate());
+            $classification =new HourlyClassification($employee->getHourlyRate());
         }
 
-        throw new Exception('Never should reach here');
+        $classification->setEmployee($employee);
+
+        return $classification;
     }
 }

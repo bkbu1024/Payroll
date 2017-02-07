@@ -4,7 +4,10 @@ namespace Payroll;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Payroll\PaymentClassification\Factory as ClassificationFactory;
 use Payroll\PaymentClassification\PaymentClassification;
+use Payroll\PaymentMethod\HoldMethod;
+use Payroll\PaymentSchedule\Factory as ScheduleFactory;
 use Payroll\PaymentSchedule\PaymentSchedule;
 use Payroll\PaymentMethod\PaymentMethod;
 use Payroll\Contract\SalesReceipt;
@@ -26,8 +29,6 @@ class Employee extends Model implements Contract\Employee
      * @var PaymentMethod
      */
     protected $paymentMethod;
-
-
 
     public function getId()
     {
@@ -106,6 +107,10 @@ class Employee extends Model implements Contract\Employee
      */
     public function getPaymentClassification()
     {
+        if ( ! $this->paymentClassification) {
+            $this->paymentClassification = ClassificationFactory::createClassification($this);
+        }
+
         return $this->paymentClassification;
     }
 
@@ -122,6 +127,10 @@ class Employee extends Model implements Contract\Employee
      */
     public function getPaymentSchedule()
     {
+        if ( ! $this->paymentSchedule) {
+            $this->paymentSchedule = ScheduleFactory::createSchedule($this);
+        }
+
         return $this->paymentSchedule;
     }
 
@@ -138,6 +147,10 @@ class Employee extends Model implements Contract\Employee
      */
     public function getPaymentMethod()
     {
+        if ( ! $this->paymentMethod) {
+            $this->paymentMethod = new HoldMethod;
+        }
+
         return $this->paymentMethod;
     }
 
