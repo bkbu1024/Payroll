@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use Payroll\PaymentClassification\PaymentClassification;
 use Payroll\PaymentSchedule\PaymentSchedule;
 use Payroll\PaymentMethod\PaymentMethod;
+use Payroll\Contract\SalesReceipt;
+use Payroll\Contract\TimeCard;
 
 class Employee extends Model implements Contract\Employee
 {
@@ -160,7 +162,7 @@ class Employee extends Model implements Contract\Employee
      */
     protected function timeCards()
     {
-        return $this->hasMany(TimeCard::class);
+        return $this->hasMany(\Payroll\TimeCard::class);
     }
 
     /**
@@ -184,7 +186,12 @@ class Employee extends Model implements Contract\Employee
      */
     public function addSalesReceipt(SalesReceipt $salesReceipt)
     {
-        $this->salesReceipts()->save($salesReceipt);
+        $receipt = new \Payroll\SalesReceipt();
+        $receipt->setEmployeeId($salesReceipt->getEmployeeId());
+        $receipt->setAmount($salesReceipt->getAmount());
+        $receipt->setDate($salesReceipt->getDate());
+
+        $this->salesReceipts()->save($receipt);
     }
 
     /**
@@ -201,7 +208,12 @@ class Employee extends Model implements Contract\Employee
      */
     public function addTimeCard(TimeCard $timeCard)
     {
-        $this->timeCards()->save($timeCard);
+        $card = new \Payroll\TimeCard();
+        $card->setDate($timeCard->getDate());
+        $card->setEmployeeId($timeCard->getEmployeeId());
+        $card->setHours($timeCard->getHours());
+
+        $this->timeCards()->save($card);
     }
 
     /**

@@ -6,8 +6,6 @@ use Illuminate\Database\Eloquent\Collection;
 use Payroll\PaymentClassification\PaymentClassification;
 use Payroll\PaymentMethod\PaymentMethod;
 use Payroll\PaymentSchedule\PaymentSchedule;
-use Payroll\SalesReceipt;
-use Payroll\TimeCard;
 
 interface Employee
 {

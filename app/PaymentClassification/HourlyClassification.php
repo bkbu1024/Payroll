@@ -42,7 +42,7 @@ class HourlyClassification extends PaymentClassification
      */
     public function addTimeCard(TimeCard $timeCard)
     {
-        $timeCard->employee_id = $this->employee->id;
+        $timeCard->setEmployeeId($this->employee->getId());
         $this->employee->addTimeCard($timeCard);
     }
 
@@ -61,6 +61,6 @@ class HourlyClassification extends PaymentClassification
      */
     public function timeCards()
     {
-        return $this->employee->timeCards();
+        return $this->employee->getTimeCards();
     }
 }
