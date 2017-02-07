@@ -2,6 +2,7 @@
 
 namespace Payroll\Contract;
 
+use Payroll\Contract\Base\CanSave;
 use Payroll\Contract\Base\Identifiable;
 use Payroll\Contract\Base\Nameable;
 use Payroll\Contract\Relation\HasSalesReceipts;
@@ -10,7 +11,7 @@ use Payroll\PaymentClassification\PaymentClassification;
 use Payroll\PaymentMethod\PaymentMethod;
 use Payroll\PaymentSchedule\PaymentSchedule;
 
-interface Employee extends Identifiable, Nameable, HasTimeCards, HasSalesReceipts
+interface Employee extends Identifiable, Nameable, HasTimeCards, HasSalesReceipts, CanSave
 {
     /**
      * @return string

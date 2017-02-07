@@ -2,9 +2,8 @@
 
 namespace Payroll\PaymentSchedule;
 
+use Exception;
 use Payroll\Contract\Employee;
-use Payroll\PaymentClassification\HourlyClassification;
-use Payroll\Transaction\Add\AddEmployee;
 
 class Factory
 {
@@ -12,14 +11,36 @@ class Factory
      * @param Employee $employee
      * @return PaymentSchedule
      */
-    public static function createSchedule(Employee $employee)
+    public static function createScheduleByEmployee(Employee $employee)
     {
-        if ($employee->getType() == AddEmployee::SALARIED) {
-            return new MonthlySchedule;
-        } elseif ($employee->getType() == AddEmployee::HOURLY) {
-            return new WeeklySchedule;
-        } elseif ($employee->getType() == AddEmployee::COMMISSION) {
+        $schedule = self::createScheduleByData([
+            'salary' => $employee->getSalary(),
+            'commissionRate' => $employee->getCommissionRate(),
+            'hourlyRate' => $employee->getHourlyRate(),
+        ]);
+
+        return $schedule;
+    }
+
+    /**
+     * @param string[] $data
+     * @return PaymentClassification
+     * @throws Exception
+     */
+    public static function createScheduleByData(array $data)
+    {
+        $salary = array_get($data, 'salary');
+        $commissionRate = array_get($data, 'commissionRate');
+        $hourlyRate = array_get($data, 'hourlyRate');
+
+        if ($salary && $commissionRate) {
             return new BiweeklySchedule;
+        } elseif ($salary) {
+            return new MonthlySchedule;
+        } elseif ($hourlyRate) {
+            return new WeeklySchedule;
         }
+
+        throw new Exception('Never should reach here');
     }
 }

@@ -3,8 +3,7 @@
 namespace Payroll\PaymentClassification;
 
 use Payroll\Contract\Employee;
-use Payroll\Transaction\Add\AddEmployee;
-use \Exception;
+use Exception;
 
 class Factory
 {
@@ -13,19 +12,38 @@ class Factory
      * @return CommissionedClassification|HourlyClassification|SalariedClassification
      * @throws Exception
      */
-    public static function createClassification(Employee $employee)
+    public static function createClassificationByEmployee(Employee $employee)
     {
-        $classification = null;
-        if ($employee->getType() == AddEmployee::COMMISSION) {
-            $classification = new CommissionedClassification($employee->getSalary(), $employee->getCommissionRate());
-        } elseif ($employee->getType() == AddEmployee::SALARIED) {
-            $classification = new SalariedClassification($employee->getSalary());
-        } elseif ($employee->getType() == AddEmployee::HOURLY) {
-            $classification =new HourlyClassification($employee->getHourlyRate());
-        }
+        $classification = self::createClassificationByData([
+            'salary' => $employee->getSalary(),
+            'commissionRate' => $employee->getCommissionRate(),
+            'hourlyRate' => $employee->getHourlyRate(),
+        ]);
 
         $classification->setEmployee($employee);
 
         return $classification;
+    }
+
+    /**
+     * @param string[] $data
+     * @return PaymentClassification
+     * @throws Exception
+     */
+    public static function createClassificationByData(array $data)
+    {
+        $salary = array_get($data, 'salary');
+        $commissionRate = array_get($data, 'commissionRate');
+        $hourlyRate = array_get($data, 'hourlyRate');
+
+        if ($salary && $commissionRate) {
+            return new CommissionedClassification($salary, $commissionRate);
+        } elseif ($salary) {
+            return new SalariedClassification($salary);
+        } elseif ($hourlyRate) {
+            return new HourlyClassification($hourlyRate);
+        }
+
+        throw new Exception('Never should reach here');
     }
 }

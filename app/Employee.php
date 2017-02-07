@@ -110,7 +110,7 @@ class Employee extends Model implements Contract\Employee
     public function getPaymentClassification()
     {
         if ( ! $this->paymentClassification) {
-            $this->paymentClassification = ClassificationFactory::createClassification($this);
+            $this->paymentClassification = ClassificationFactory::createClassificationByEmployee($this);
         }
 
         return $this->paymentClassification;
@@ -130,7 +130,7 @@ class Employee extends Model implements Contract\Employee
     public function getPaymentSchedule()
     {
         if ( ! $this->paymentSchedule) {
-            $this->paymentSchedule = ScheduleFactory::createSchedule($this);
+            $this->paymentSchedule = ScheduleFactory::createScheduleByEmployee($this);
         }
 
         return $this->paymentSchedule;

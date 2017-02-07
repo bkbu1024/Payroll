@@ -2,8 +2,11 @@
 
 namespace Payroll\Transaction\Add;
 
-use Payroll\PaymentSchedule\MonthlySchedule;
-use Payroll\PaymentClassification\SalariedClassification;
+use Payroll\Contract\Employee;
+use Payroll\PaymentClassification\Factory as ClassificationFactory;
+use Payroll\PaymentClassification\PaymentClassification;
+use Payroll\PaymentSchedule\Factory as ScheduleFactory;
+use Payroll\PaymentSchedule\PaymentSchedule;
 
 class AddSalariedEmployee extends AddEmployee
 {
@@ -25,23 +28,27 @@ class AddSalariedEmployee extends AddEmployee
     }
 
     /**
-     * @return SalariedClassification
+     * @return PaymentClassification
      */
     protected function getPaymentClassification()
     {
-        return new SalariedClassification($this->salary);
+        return ClassificationFactory::createClassificationByData([
+            'salary' => $this->salary
+        ]);
     }
 
     /**
-     * @return MonthlySchedule
+     * @return PaymentSchedule
      */
     protected function getPaymentSchedule()
     {
-        return new MonthlySchedule;
+        return ScheduleFactory::createScheduleByData([
+            'salary' => $this->salary
+        ]);
     }
 
     /**
-     * @return \Payroll\Employee
+     * @return Employee
      */
     protected function createEmployee()
     {

@@ -2,15 +2,18 @@
 
 namespace Payroll\Transaction\Add;
 
+use DateTime;
+use Exception;
 use Payroll\Contract\Employee;
-use Payroll\PaymentClassification\CommissionedClassification;
-use Payroll\SalesReceipt;
+use Payroll\Factory\Employee as EmployeeFactory;
+use Payroll\Factory\SalesReceipt as SalesReceiptFactory;
+use Payroll\Contract\SalesReceipt;
 use Payroll\Transaction\Transaction;
 
 class AddSalesReceipt implements Transaction
 {
     /**
-     * @var \DateTime
+     * @var DateTime
      */
     private $date;
     /**
@@ -37,22 +40,19 @@ class AddSalesReceipt implements Transaction
 
     /**
      * @return SalesReceipt
-     * @throws \Exception
+     * @throws Exception
      */
     public function execute()
     {
-        /**
-         * @var CommissionedClassification $paymentClassification
-         */
-        $paymentClassification = $this->employee->getPaymentClassification();
-        if ( ! $paymentClassification instanceof CommissionedClassification) {
-            throw new \Exception('Tried to add sales receipt to non-commissioned employee');
+        if ($this->employee->getType() != EmployeeFactory::COMMISSION) {
+            throw new Exception('Tried to add sales receipt to non-commissioned employee');
         }
 
-        $salesReceipt = new SalesReceipt([
+        $salesReceipt = SalesReceiptFactory::createSalesReceipt([
             'date' => $this->date,
-            'amount' => $this->amount, ]);
+            'amount' => $this->amount]);
 
+        $paymentClassification = $this->employee->getPaymentClassification();
         $paymentClassification->addSalesReceipt($salesReceipt);
 
         return $salesReceipt;

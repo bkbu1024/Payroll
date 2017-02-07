@@ -2,9 +2,11 @@
 
 namespace Payroll\Transaction\Add;
 
-use Payroll\Employee;
-use Payroll\PaymentSchedule\WeeklySchedule;
-use Payroll\PaymentClassification\HourlyClassification;
+use Payroll\Contract\Employee;
+use Payroll\PaymentClassification\Factory as ClassificationFactory;
+use Payroll\PaymentClassification\PaymentClassification;
+use Payroll\PaymentSchedule\Factory as ScheduleFactory;
+use Payroll\PaymentSchedule\PaymentSchedule;
 
 class AddHourlyEmployee extends AddEmployee
 {
@@ -26,19 +28,22 @@ class AddHourlyEmployee extends AddEmployee
     }
 
     /**
-     * @return HourlyClassification
+     * @return PaymentClassification
      */
     protected function getPaymentClassification()
     {
-        return new HourlyClassification($this->hourlyRate);
+        return ClassificationFactory::createClassificationByData([
+            'hourlyRate' => $this->hourlyRate]);
     }
 
     /**
-     * @return WeeklySchedule
+     * @return PaymentSchedule
      */
     protected function getPaymentSchedule()
     {
-        return new WeeklySchedule;
+        return ScheduleFactory::createScheduleByData([
+            'hourlyRate' => $this->hourlyRate
+        ]);
     }
 
     /**

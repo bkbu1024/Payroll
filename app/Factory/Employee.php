@@ -6,6 +6,10 @@ use Payroll\Employee as EmployeeModel;
 
 class Employee
 {
+    const SALARIED = 'SALARIED';
+    const HOURLY = 'HOURLY';
+    const COMMISSION = 'COMMISSION';
+
     /**
      * @return EmployeeModel
      */
