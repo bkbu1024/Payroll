@@ -4,6 +4,7 @@ namespace Unit\PaymentSchedule;
 
 use Exception;
 use Payroll\Employee;
+use Payroll\Factory\Employee as EmployeeFactory;
 use Payroll\PaymentClassification\CommissionedClassification;
 use Payroll\PaymentSchedule\BiweeklySchedule;
 use Payroll\PaymentSchedule\Factory;
@@ -53,8 +54,7 @@ class FactoryTest extends TestCase
 
     public function testCreateScheduleBySalariedEmployee()
     {
-        $employee = new Employee;
-        $employee->salary = 2400;
+        $employee = factory(Employee::class)->create(['type' => EmployeeFactory::SALARIED]);
 
         $classification = Factory::createScheduleByEmployee($employee);
         $this->assertTrue($classification instanceof MonthlySchedule);
@@ -62,9 +62,7 @@ class FactoryTest extends TestCase
 
     public function testCreateScheduleByCommissionedEmployee()
     {
-        $employee = new Employee;
-        $employee->salary = 1500;
-        $employee->commission_rate = 10;
+        $employee = factory(Employee::class)->create(['type' => EmployeeFactory::COMMISSION]);
 
         $classification = Factory::createScheduleByEmployee($employee);
         $this->assertTrue($classification instanceof BiweeklySchedule);
@@ -72,8 +70,7 @@ class FactoryTest extends TestCase
 
     public function testCreateScheduleByHourlyEmployee()
     {
-        $employee = new Employee;
-        $employee->hourly_rate = 23;
+        $employee = factory(Employee::class)->create(['type' => EmployeeFactory::HOURLY]);
 
         $classification = Factory::createScheduleByEmployee($employee);
         $this->assertTrue($classification instanceof WeeklySchedule);

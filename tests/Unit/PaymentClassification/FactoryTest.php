@@ -4,6 +4,7 @@ namespace Unit\PaymentClassification;
 
 use Exception;
 use Payroll\Employee;
+use Payroll\Factory\Employee as EmployeeFactory;
 use Payroll\PaymentClassification\CommissionedClassification;
 use Payroll\PaymentClassification\Factory;
 use Payroll\PaymentClassification\HourlyClassification;
@@ -50,8 +51,7 @@ class FactoryTest extends TestCase
 
     public function testCreateClassificationBySalariedEmployee()
     {
-        $employee = new Employee;
-        $employee->salary = 2400;
+        $employee = factory(Employee::class)->create(['type' => EmployeeFactory::SALARIED]);
 
         $classification = Factory::createClassificationByEmployee($employee);
         $this->assertTrue($classification instanceof SalariedClassification);
@@ -59,9 +59,7 @@ class FactoryTest extends TestCase
 
     public function testCreateClassificationByCommissionedEmployee()
     {
-        $employee = new Employee;
-        $employee->salary = 1500;
-        $employee->commission_rate = 10;
+        $employee = factory(Employee::class)->create(['type' => EmployeeFactory::COMMISSION]);
 
         $classification = Factory::createClassificationByEmployee($employee);
         $this->assertTrue($classification instanceof CommissionedClassification);
@@ -69,8 +67,7 @@ class FactoryTest extends TestCase
 
     public function testCreateClassificationByHourlyEmployee()
     {
-        $employee = new Employee;
-        $employee->hourly_rate = 23;
+        $employee = factory(Employee::class)->create(['type' => EmployeeFactory::HOURLY]);
 
         $classification = Factory::createClassificationByEmployee($employee);
         $this->assertTrue($classification instanceof HourlyClassification);

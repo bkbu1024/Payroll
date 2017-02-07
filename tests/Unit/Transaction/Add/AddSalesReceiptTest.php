@@ -27,14 +27,7 @@ class AddSalesReceiptTest extends TestCase
 
     public function testExecute()
     {
-        $employee = new Employee;
-        $employee->name = $this->faker->name;
-        $employee->address = $this->faker->address;
-        $employee->salary = $this->faker->randomFloat(2, 1000, 2000);
-        $employee->commission_rate = $this->faker->randomFloat(2, 10, 20);
-        $employee->type = EmployeeFactory::COMMISSION;
-        $employee->save();
-
+        $employee = factory(Employee::class)->create(['type' => EmployeeFactory::COMMISSION]);
         $amount = $this->faker->randomFloat(2, 320, 1250);
         $transaction = new AddSalesReceipt(
             (new \DateTime())->format('Y-m-d'),
@@ -59,13 +52,7 @@ class AddSalesReceiptTest extends TestCase
 
     public function testExecuteInvalidUser()
     {
-        $employee = new Employee;
-        $employee->name = $this->faker->name;
-        $employee->address = $this->faker->address;
-        $employee->hourly_rate = $this->faker->randomFloat(2, 10, 20);
-        $employee->type = EmployeeFactory::HOURLY;
-        $employee->save();
-
+        $employee = factory(Employee::class)->create(['type' => EmployeeFactory::HOURLY]);
         $amount = $this->faker->randomFloat(2, 320, 1250);
         $transaction = new AddSalesReceipt(
             (new \DateTime())->format('Y-m-d'),
