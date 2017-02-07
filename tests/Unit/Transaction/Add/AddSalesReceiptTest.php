@@ -1,34 +1,41 @@
 <?php
 
-namespace Payroll\Tests\Unit\Transaction\Add;
+namespace Payroll\Tests\Unit\Transaction;
 
-use Exception;
 use Faker\Factory;
+use Faker\Generator;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Payroll\Contract\SalesReceipt;
 use Payroll\Employee;
+use Payroll\Factory\Employee as EmployeeFactory;
 use Payroll\PaymentClassification\CommissionedClassification;
 use Payroll\Tests\TestCase;
-use Payroll\Transaction\Add\AddCommissionedEmployee;
-use Payroll\Transaction\Add\AddSalariedEmployee;
 use Payroll\Transaction\Add\AddSalesReceipt;
 
 class AddSalesReceiptTest extends TestCase
 {
     use DatabaseTransactions;
 
+    /**
+    * @var Generator
+    */
+    protected $faker;
+
+    public function __construct()
+    {
+        $this->faker = Factory::create();
+    }
+
     public function testExecute()
     {
-        $faker = Factory::create();
-        /**
-         * @var Employee
-         */
-        $employee = (new AddCommissionedEmployee(
-            $faker->name, $faker->address,
-            $faker->randomFloat(2, 10, 35),
-            $faker->randomFloat(2, 30, 125)))->execute();
+        $employee = new Employee;
+        $employee->name = $this->faker->name;
+        $employee->address = $this->faker->address;
+        $employee->salary = $this->faker->randomFloat(2, 1000, 2000);
+        $employee->commission_rate = $this->faker->randomFloat(2, 10, 20);
+        $employee->type = EmployeeFactory::COMMISSION;
+        $employee->save();
 
-        $amount = $faker->randomFloat(2, 320, 1250);
+        $amount = $this->faker->randomFloat(2, 320, 1250);
         $transaction = new AddSalesReceipt(
             (new \DateTime())->format('Y-m-d'),
             $amount,
@@ -37,40 +44,38 @@ class AddSalesReceiptTest extends TestCase
         $transaction->execute();
 
         /**
-         * @var CommissionedClassification $paymentClassification
+         * @var CommissionedClassification
          */
         $paymentClassification = $employee->getPaymentClassification();
         $this->assertTrue($paymentClassification instanceof CommissionedClassification);
 
         /**
-         * @var SalesReceipt $salesReceipt
+         * @var SalesReceipt
          */
         $salesReceipt = $paymentClassification->getSalesReceipt((new \DateTime())->format('Y-m-d'));
         $this->assertEquals($amount, $salesReceipt->getAmount());
         $this->assertEquals($employee->getId(), $salesReceipt->getEmployeeId());
     }
 
-    public function testExecuteInvalidEmployee()
+    public function testExecuteInvalidUser()
     {
-        $faker = Factory::create();
-        /**
-         * @var Employee
-         */
-        $employee = (new AddSalariedEmployee(
-            $faker->name, $faker->address,
-            $faker->randomFloat(2, 1000, 3000)))->execute();
+        $employee = new Employee;
+        $employee->name = $this->faker->name;
+        $employee->address = $this->faker->address;
+        $employee->hourly_rate = $this->faker->randomFloat(2, 10, 20);
+        $employee->type = EmployeeFactory::HOURLY;
+        $employee->save();
 
-        $amount = $faker->randomFloat(2, 320, 1250);
+        $amount = $this->faker->randomFloat(2, 320, 1250);
+        $transaction = new AddSalesReceipt(
+            (new \DateTime())->format('Y-m-d'),
+            $amount,
+            $employee);
 
         try {
-            $transaction = new AddSalesReceipt(
-                (new \DateTime())->format('Y-m-d'),
-                $amount,
-                $employee);
-
             $transaction->execute();
             $this->fail();
-        } catch (Exception $ex) {
+        } catch (\Exception $ex) {
             $this->assertEquals('Tried to add sales receipt to non-commissioned employee', $ex->getMessage());
         }
     }

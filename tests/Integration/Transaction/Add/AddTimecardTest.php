@@ -1,34 +1,28 @@
 <?php
 
-namespace Payroll\Tests\Unit\Transaction;
+namespace Payroll\Tests\Integration\Transaction\Add;
 
+use Exception;
 use Faker\Factory;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Payroll\Employee;
 use Payroll\PaymentClassification\HourlyClassification;
 use Payroll\Tests\TestCase;
-use Payroll\Factory\Employee as EmployeeFactory;
+use Payroll\Transaction\Add\AddHourlyEmployee;
+use Payroll\Transaction\Add\AddSalariedEmployee;
 use Payroll\Transaction\Add\AddTimeCard;
 
-class AddTimeCardTest extends TestCase
+class AddTimecardTest extends TestCase
 {
-    /**
-     * @var Generator
-     */
-    protected $faker;
-
-    public function __construct()
-    {
-        $this->faker = Factory::create();
-    }
+    use DatabaseTransactions;
 
     public function testExecute()
     {
-        $employee = new Employee;
-        $employee->name = $this->faker->name;
-        $employee->address = $this->faker->address;
-        $employee->hourly_rate = $this->faker->randomFloat(2, 10, 30);
-        $employee->type = EmployeeFactory::HOURLY;
-        $employee->save();
+        $faker = Factory::create();
+        /**
+         * @var Employee
+         */
+        $employee = (new AddHourlyEmployee($faker->name, $faker->address, $faker->randomFloat(2, 10, 35)))->execute();
 
         $transaction = new AddTimeCard((new \DateTime())->format('Y-m-d'), 8.0, $employee);
         $transaction->execute();
@@ -46,21 +40,18 @@ class AddTimeCardTest extends TestCase
 
     public function testExecuteInvalidUser()
     {
-        $employee = new Employee;
-        $employee->name = $this->faker->name;
-        $employee->address = $this->faker->address;
-        $employee->salary = $this->faker->randomFloat(2, 1000, 3000);
-        $employee->type = EmployeeFactory::SALARIED;
-        $employee->save();
-
-        $transaction = new AddTimeCard((new \DateTime())->format('Y-m-d'), 8.0, $employee);
+        $faker = Factory::create();
+        /**
+         * @var Employee
+         */
+        $employee = (new AddSalariedEmployee($faker->name, $faker->address, $faker->randomFloat(2, 1000, 3500)))->execute();
 
         try {
+            $transaction = new AddTimeCard((new \DateTime())->format('Y-m-d'), 8.0, $employee);
             $transaction->execute();
             $this->fail();
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             $this->assertEquals('Tried to add time card to non-hourly employee', $ex->getMessage());
         }
-
     }
 }
