@@ -6,11 +6,12 @@ use Payroll\SalesReceipt as SalesReceiptModel;
 
 class SalesReceipt
 {
+    /**
+     * @param array $data
+     * @return SalesReceiptModel
+     */
     public static function createSalesReceipt(array $data)
     {
-        return new SalesReceiptModel([
-            'date' => array_get($data, 'date'),
-            'amount' => array_get($data, 'amount')
-        ]);
+        return new SalesReceiptModel($data);
     }
 }

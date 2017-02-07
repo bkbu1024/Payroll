@@ -2,6 +2,7 @@
 
 namespace Payroll\Tests\Integration\Transaction\Change;
 
+use Payroll\Factory\Employee;
 use Payroll\PaymentClassification\HourlyClassification;
 use Payroll\PaymentSchedule\WeeklySchedule;
 use Payroll\Transaction\Add\AddCommissionedEmployee;
@@ -41,6 +42,6 @@ class ChangeHourlyPaymentClassificationTest extends AbstractChangeEmployeeTestCa
         $paymentSchedule = $this->changedEmployee->getPaymentSchedule();
         $this->assertTrue($paymentSchedule instanceof WeeklySchedule);
 
-        $this->assertEquals(AddEmployee::HOURLY, $this->changedEmployee->getType());
+        $this->assertEquals(Employee::HOURLY, $this->changedEmployee->getType());
     }
 }

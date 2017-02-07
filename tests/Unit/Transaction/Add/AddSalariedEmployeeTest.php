@@ -2,10 +2,10 @@
 
 namespace Payroll\Tests\Unit\Transaction\Add;
 
+use Payroll\Factory\Employee as EmployeeFactory;
 use Payroll\PaymentClassification\SalariedClassification;
 use Payroll\PaymentSchedule\MonthlySchedule;
 use Payroll\Transaction\Add\AddSalariedEmployee;
-use Payroll\Transaction\Add\AddEmployee;
 
 class AddSalariedEmployeeTest extends AbstractAddEmployeeTestCase
 {
@@ -24,7 +24,7 @@ class AddSalariedEmployeeTest extends AbstractAddEmployeeTestCase
     protected function assertTypeSpecificData()
     {
         $this->assertEquals($this->data['salary'], $this->employee->getSalary());
-        $this->assertEquals(AddEmployee::SALARIED, $this->employee->getType());
+        $this->assertEquals(EmployeeFactory::SALARIED, $this->employee->getType());
 
         $this->assertTrue($this->employee->getPaymentClassification() instanceof SalariedClassification);
         $this->assertTrue($this->employee->getPaymentSchedule() instanceof MonthlySchedule);

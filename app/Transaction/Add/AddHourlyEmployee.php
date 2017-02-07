@@ -3,6 +3,7 @@
 namespace Payroll\Transaction\Add;
 
 use Payroll\Contract\Employee;
+use Payroll\Factory\Employee as Employee1;
 use Payroll\PaymentClassification\Factory as ClassificationFactory;
 use Payroll\PaymentClassification\PaymentClassification;
 use Payroll\PaymentSchedule\Factory as ScheduleFactory;
@@ -53,7 +54,7 @@ class AddHourlyEmployee extends AddEmployee
     {
         $employee = parent::createEmployee();
         $employee->setHourlyRate($this->hourlyRate);
-        $employee->setType(self::HOURLY);
+        $employee->setType(Employee1::HOURLY);
         $employee->save();
 
         return $employee;

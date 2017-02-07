@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use Payroll\Transaction\Add\AddEmployee;
+use Payroll\Factory\Employee as EmployeeFactory;
 
 class CreateEmployeesTable extends Migration
 {
@@ -21,7 +21,7 @@ class CreateEmployeesTable extends Migration
             $table->float('salary')->nullable()->unsigned();
             $table->float('hourly_rate')->nullable()->unsigned();
             $table->float('commission_rate')->nullable()->unsigned();
-            $table->enum('type', [AddEmployee::SALARIED, AddEmployee::HOURLY, AddEmployee::COMMISSION]);
+            $table->enum('type', [EmployeeFactory::SALARIED, EmployeeFactory::HOURLY, EmployeeFactory::COMMISSION]);
             $table->timestamps();
         });
     }

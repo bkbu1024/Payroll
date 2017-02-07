@@ -3,8 +3,9 @@
 namespace Payroll\Transaction\Add;
 
 use Payroll\Contract\Employee;
-use Payroll\PaymentClassification\HourlyClassification;
-use Payroll\TimeCard;
+use Payroll\Factory\Employee as EmployeeFactory;
+use Payroll\Factory\TimeCard as TimeCardFactory;
+use Payroll\Contract\TimeCard;
 use Payroll\Transaction\Transaction;
 
 class AddTimeCard implements Transaction
@@ -42,15 +43,15 @@ class AddTimeCard implements Transaction
      */
     public function execute()
     {
-        $paymentClassification = $this->employee->getPaymentClassification();
-        if ( ! $paymentClassification instanceof HourlyClassification) {
+        if ($this->employee->getType() != EmployeeFactory::HOURLY) {
             throw new \Exception('Tried to add time card to non-hourly employee');
         }
 
-        $timeCard = new TimeCard([
+        $timeCard = TimeCardFactory::createTimeCard([
             'date' => $this->date,
-            'hours' => $this->hours, ]);
+            'hours' => $this->hours]);
 
+        $paymentClassification = $this->employee->getPaymentClassification();
         $paymentClassification->addTimeCard($timeCard);
 
         return $timeCard;

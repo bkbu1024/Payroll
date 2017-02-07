@@ -3,6 +3,7 @@
 namespace Payroll\Tests\Integration\Transaction\Change;
 
 use Payroll\Contract\Employee;
+use Payroll\Factory\Employee as Employee1;
 use Payroll\PaymentClassification\CommissionedClassification;
 use Payroll\PaymentSchedule\BiweeklySchedule;
 use Payroll\Transaction\Add\AddEmployee;
@@ -47,6 +48,6 @@ class ChangeCommissionedPaymentClassificationTest extends AbstractChangeEmployee
          */
         $paymentSchedule = $this->changedEmployee->getPaymentSchedule();
         $this->assertTrue($paymentSchedule instanceof BiweeklySchedule);
-        $this->assertEquals(AddEmployee::COMMISSION, $this->changedEmployee->getType());
+        $this->assertEquals(Employee1::COMMISSION, $this->changedEmployee->getType());
     }
 }

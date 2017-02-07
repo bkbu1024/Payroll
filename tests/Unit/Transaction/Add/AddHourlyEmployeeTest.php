@@ -2,6 +2,7 @@
 
 namespace Payroll\Tests\Unit\Transaction\Add;
 
+use Payroll\Factory\Employee;
 use Payroll\PaymentClassification\HourlyClassification;
 use Payroll\PaymentSchedule\WeeklySchedule;
 use Payroll\Transaction\Add\AddEmployee;
@@ -24,7 +25,7 @@ class AddHourlyEmployeeTest extends AbstractAddEmployeeTestCase
     protected function assertTypeSpecificData()
     {
         $this->assertEquals($this->data['hourlyRate'], $this->employee->getHourlyRate());
-        $this->assertEquals(AddEmployee::HOURLY, $this->employee->getType());
+        $this->assertEquals(Employee::HOURLY, $this->employee->getType());
 
         $this->assertTrue($this->employee->getPaymentSchedule() instanceof WeeklySchedule);
         $this->assertTrue($this->employee->getPaymentClassification() instanceof HourlyClassification);

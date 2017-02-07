@@ -2,6 +2,7 @@
 
 namespace Payroll\Tests\Unit\Transaction\Add;
 
+use Payroll\Factory\Employee;
 use Payroll\PaymentClassification\CommissionedClassification;
 use Payroll\PaymentSchedule\BiweeklySchedule;
 use Payroll\Transaction\Add\AddCommissionedEmployee;
@@ -27,7 +28,7 @@ class AddCommissionedEmployeeTest extends AbstractAddEmployeeTestCase
     {
         $this->assertEquals($this->data['salary'], $this->employee->getSalary());
         $this->assertEquals($this->data['commissionRate'], $this->employee->getCommissionRate());
-        $this->assertEquals(AddEmployee::COMMISSION, $this->employee->getType());
+        $this->assertEquals(Employee::COMMISSION, $this->employee->getType());
 
         $this->assertTrue($this->employee->getPaymentSchedule() instanceof BiweeklySchedule);
         $this->assertTrue($this->employee->getPaymentClassification() instanceof CommissionedClassification);

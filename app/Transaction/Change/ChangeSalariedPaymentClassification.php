@@ -3,9 +3,9 @@
 namespace Payroll\Transaction\Change;
 
 use Payroll\Contract\Employee;
+use Payroll\Factory\Employee as EmployeeFactory;
 use Payroll\PaymentClassification\SalariedClassification;
 use Payroll\PaymentSchedule\MonthlySchedule;
-use Payroll\Transaction\Add\AddEmployee;
 
 class ChangeSalariedPaymentClassification extends ChangePaymentClassification
 {
@@ -50,6 +50,6 @@ class ChangeSalariedPaymentClassification extends ChangePaymentClassification
      */
     protected function getType()
     {
-        return AddEmployee::SALARIED;
+        return EmployeeFactory::SALARIED;
     }
 }

@@ -11,10 +11,6 @@ use Payroll\Transaction\Transaction;
 
 abstract class AddEmployee implements Transaction
 {
-    const SALARIED = 'SALARIED';
-    const HOURLY = 'HOURLY';
-    const COMMISSION = 'COMMISSION';
-
     /**
      * @var string
      */

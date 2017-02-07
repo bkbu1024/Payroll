@@ -3,6 +3,7 @@
 namespace Payroll\Transaction\Change;
 
 use Payroll\Contract\Employee;
+use Payroll\Factory\Employee as Employee1;
 use Payroll\PaymentClassification\CommissionedClassification;
 use Payroll\PaymentSchedule\BiweeklySchedule;
 use Payroll\Transaction\Add\AddEmployee;
@@ -56,6 +57,6 @@ class ChangeCommissionedPaymentClassification extends ChangePaymentClassificatio
      */
     protected function getType()
     {
-        return AddEmployee::COMMISSION;
+        return Employee1::COMMISSION;
     }
 }
