@@ -4,8 +4,10 @@ namespace Payroll\Transaction\Change;
 
 use Payroll\Contract\Employee;
 use Payroll\Factory\Employee as EmployeeFactory;
-use Payroll\PaymentClassification\CommissionedClassification;
-use Payroll\PaymentSchedule\BiweeklySchedule;
+use Payroll\PaymentClassification\Factory as ClassificationFactory;
+use Payroll\PaymentSchedule\Factory as ScheduleFactory;
+use Payroll\PaymentClassification\PaymentClassification;
+use Payroll\PaymentSchedule\PaymentSchedule;
 
 class ChangeCommissionedPaymentClassification extends ChangePaymentClassification
 {
@@ -33,22 +35,29 @@ class ChangeCommissionedPaymentClassification extends ChangePaymentClassificatio
     }
 
     /**
-     * @return CommissionedClassification
+     * @return PaymentClassification
      */
     protected function getPaymentClassification()
     {
-        $paymentClassification = new CommissionedClassification($this->salary, $this->commissionRate);
+        $paymentClassification = ClassificationFactory::createClassificationByData([
+            'salary' => $this->salary,
+            'commissionRate' => $this->commissionRate
+        ]);
+
         $paymentClassification->setEmployee($this->employee);
 
         return $paymentClassification;
     }
 
     /**
-     * @return BiweeklySchedule
+     * @return PaymentSchedule
      */
     protected function getPaymentSchedule()
     {
-        return new BiweeklySchedule;
+        return ScheduleFactory::createScheduleByData([
+            'salary' => $this->salary,
+            'commissionRate' => $this->commissionRate
+        ]);
     }
 
     /**

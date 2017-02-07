@@ -3,7 +3,6 @@
 namespace Payroll\Transaction\Change;
 
 use Payroll\Contract\Employee;
-use Payroll\Transaction\Payroll;
 use Payroll\Transaction\Transaction;
 
 abstract class ChangeEmployee implements Transaction
