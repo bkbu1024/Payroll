@@ -3,9 +3,11 @@
 namespace Payroll\Transaction\Change;
 
 use Payroll\Contract\Employee;
+use Payroll\PaymentClassification\PaymentClassification;
+use Payroll\PaymentSchedule\PaymentSchedule;
 use Payroll\Factory\Employee as EmployeeFactory;
-use Payroll\PaymentClassification\SalariedClassification;
-use Payroll\PaymentSchedule\MonthlySchedule;
+use Payroll\PaymentClassification\Factory as ClassificationFactory;
+use Payroll\PaymentSchedule\Factory as ScheduleFactory;
 
 class ChangeSalariedPaymentClassification extends ChangePaymentClassification
 {
@@ -27,22 +29,27 @@ class ChangeSalariedPaymentClassification extends ChangePaymentClassification
     }
 
     /**
-     * @return SalariedClassification
+     * @return PaymentClassification
      */
     protected function getPaymentClassification()
     {
-        $paymentClassification = new SalariedClassification($this->salary);
+        $paymentClassification = ClassificationFactory::createClassificationByData([
+            'salary' => $this->salary
+        ]);
+
         $paymentClassification->setEmployee($this->employee);
 
         return $paymentClassification;
     }
 
     /**
-     * @return MonthlySchedule
+     * @return PaymentSchedule
      */
     protected function getPaymentSchedule()
     {
-        return new MonthlySchedule;
+        return ScheduleFactory::createScheduleByData([
+            'salary' => $this->salary
+        ]);
     }
 
     /**

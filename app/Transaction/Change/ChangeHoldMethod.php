@@ -2,15 +2,16 @@
 
 namespace Payroll\Transaction\Change;
 
-use Payroll\PaymentMethod\HoldMethod;
+use Payroll\PaymentMethod\Factory as MethodFactory;
+use Payroll\PaymentMethod\PaymentMethod;
 
 class ChangeHoldMethod extends ChangePaymentMethod
 {
     /**
-     * @return HoldMethod
+     * @return PaymentMethod
      */
     protected function getPaymentMethod()
     {
-        return new HoldMethod;
+        return MethodFactory::createByData();
     }
 }

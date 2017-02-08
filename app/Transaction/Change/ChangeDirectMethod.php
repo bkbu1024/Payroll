@@ -3,7 +3,8 @@
 namespace Payroll\Transaction\Change;
 
 use Payroll\Contract\Employee;
-use Payroll\PaymentMethod\DirectMethod;
+use Payroll\PaymentMethod\PaymentMethod;
+use Payroll\PaymentMethod\Factory as MethodFactory;
 
 class ChangeDirectMethod extends ChangePaymentMethod
 {
@@ -30,10 +31,13 @@ class ChangeDirectMethod extends ChangePaymentMethod
     }
 
     /**
-     * @return DirectMethod
+     * @return PaymentMethod
      */
     protected function getPaymentMethod()
     {
-        return new DirectMethod($this->bank, $this->account);
+        return MethodFactory::createByData([
+            'bank' => $this->bank,
+            'account' => $this->account
+        ]);
     }
 }

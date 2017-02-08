@@ -3,8 +3,8 @@
 namespace Payroll\Transaction\Change;
 
 use Payroll\Contract\Employee;
-use Payroll\PaymentMethod\DirectMethod;
-use Payroll\PaymentMethod\MailMethod;
+use Payroll\PaymentMethod\Factory as MethodFactory;
+use Payroll\PaymentMethod\PaymentMethod;
 
 class ChangeMailMethod extends ChangePaymentMethod
 {
@@ -26,10 +26,12 @@ class ChangeMailMethod extends ChangePaymentMethod
     }
 
     /**
-     * @return DirectMethod
+     * @return PaymentMethod
      */
     protected function getPaymentMethod()
     {
-        return new MailMethod($this->address);
+        return MethodFactory::createByData([
+            'address' => $this->address
+        ]);
     }
 }

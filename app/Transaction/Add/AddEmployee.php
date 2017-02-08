@@ -48,7 +48,7 @@ abstract class AddEmployee implements Transaction
     {
         $classification = $this->getPaymentClassification();
         $schedule = $this->getPaymentSchedule();
-        $method = MethodFactory::createDefault();
+        $method = MethodFactory::createByData();
 
         $employee = $this->createEmployee();
         $employee->setPaymentClassification($classification);
