@@ -38,7 +38,7 @@ $factory->define(Payroll\Employee::class, function (Faker\Generator $faker, arra
             break;
 
         case Employee::HOURLY:
-            $data['hourly_rate'] = $faker->randomFloat(2, 15, 30);
+            $data['hourly_rate'] = (array_get($attributes, 'hourlyRate')) ? $attributes['hourlyRate'] : $faker->randomFloat(2, 15, 30);
             break;
 
         case Employee::COMMISSION:
@@ -48,4 +48,12 @@ $factory->define(Payroll\Employee::class, function (Faker\Generator $faker, arra
     }
 
     return $data;
+});
+
+$factory->define(Payroll\TimeCard::class, function (Faker\Generator $faker, array $attributes) {
+    return [
+        'employee_id' => $attributes['employee_id'],
+        'date' => $attributes['date'],
+        'hours' => $attributes['hours'],
+    ];
 });

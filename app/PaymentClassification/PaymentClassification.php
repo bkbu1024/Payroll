@@ -3,6 +3,7 @@
 namespace Payroll\PaymentClassification;
 
 use Payroll\Contract\Employee;
+use Payroll\Contract\Paycheck;
 
 abstract class PaymentClassification
 {
@@ -30,5 +31,5 @@ abstract class PaymentClassification
     /**
      * @return float
      */
-    abstract public function calculatePay();
+    abstract public function calculatePay(Paycheck $payCheck);
 }

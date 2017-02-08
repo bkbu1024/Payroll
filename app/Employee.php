@@ -4,6 +4,7 @@ namespace Payroll;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Payroll\Contract\Paycheck;
 use Payroll\PaymentClassification\Factory as ClassificationFactory;
 use Payroll\PaymentClassification\PaymentClassification;
 use Payroll\PaymentMethod\HoldMethod;
@@ -241,8 +242,25 @@ class Employee extends Model implements Contract\Employee
         return $this->timeCards()->where('date', $date)->get()->first();
     }
 
+    /**
+     * @param string $payDate
+     * @return bool
+     */
     public function isPayDay($payDate)
     {
         return $this->paymentSchedule->isPayDay($payDate);
     }
+
+    /**
+     * @param Paycheck $paycheck
+     */
+    public function payDay(Paycheck $paycheck)
+    {
+        $netPay = $this->paymentClassification->calculatePay();
+        $paycheck->setNetPay($netPay);
+        $paycheck->setEmployeeId($this->id);
+        $paycheck->setType($this->paymentMethod->getType());
+        $this->paymentMethod->pay();
+    }
+
 }

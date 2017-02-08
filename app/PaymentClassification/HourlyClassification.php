@@ -2,6 +2,8 @@
 
 namespace Payroll\PaymentClassification;
 
+use DateTime;
+use Payroll\Contract\Paycheck;
 use Payroll\Contract\TimeCard;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -31,11 +33,52 @@ class HourlyClassification extends PaymentClassification
     }
 
     /**
+     * @param Paycheck $payCheck
      * @return float
      */
-    public function calculatePay()
+    public function calculatePay(Paycheck $payCheck)
     {
-        return 0;
+        $timeCards = $this->employee->getTimeCards();
+        $netPay = 0;
+
+        foreach ($timeCards as $timeCard) {
+            /**
+             * @var TimeCard $timeCard
+             */
+            if ($this->isInPayPeriod($timeCard->getDate(), $payCheck->getDate())) {
+                $netPay += $this->calculatePayForTimeCard($timeCard);
+            }
+        }
+
+        return $netPay;
+    }
+
+    /**
+     * @param string $timeCardDate
+     * @param string $payDate
+     * @return bool
+     */
+    protected function isInPayPeriod($timeCardDate, $payDate)
+    {
+        $endDate = new DateTime($payDate);
+        $startDate = clone $endDate;
+        $startDate = $startDate->modify('-6 days');
+
+        return (strtotime($timeCardDate) >= $startDate->getTimestamp()
+            && strtotime($timeCardDate) <= $endDate->getTimestamp());
+    }
+
+    /**
+     * @param TimeCard $timeCard
+     * @return float
+     */
+    protected function calculatePayForTimeCard(TimeCard $timeCard)
+    {
+        $hours = $timeCard->getHours();
+        $overtime = max(0, $hours - 8);
+        $straightTime =  $hours - $overtime;
+
+        return $straightTime * $this->hourlyRate + $overtime * $this->hourlyRate * 1.5;
     }
 
     /**

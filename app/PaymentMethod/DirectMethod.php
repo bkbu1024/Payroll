@@ -39,4 +39,14 @@ class DirectMethod implements PaymentMethod
         $this->bank = $bank;
         $this->account = $account;
     }
+
+    public function pay()
+    {
+        // TODO: Implement pay() method.
+    }
+
+    public function getType()
+    {
+        return 'DIRECT';
+    }
 }

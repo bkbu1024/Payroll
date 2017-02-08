@@ -25,4 +25,14 @@ class MailMethod implements PaymentMethod
     {
         $this->address = $address;
     }
+
+    public function pay()
+    {
+        // TODO: Implement pay() method.
+    }
+
+    public function getType()
+    {
+        return 'MAIL';
+    }
 }

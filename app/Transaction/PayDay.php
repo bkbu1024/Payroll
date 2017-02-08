@@ -36,4 +36,13 @@ class PayDay implements Transaction
             }
         }
     }
+
+    /**
+     * @param $employeeId
+     * @return Paycheck
+     */
+    public function getPayCheck($employeeId)
+    {
+        return array_get($this->paychecks, $employeeId);
+    }
 }
