@@ -2,7 +2,7 @@
 
 namespace Payroll\Transaction;
 
-use Payroll\Employee;
+use Payroll\Contract\Employee;
 use Payroll\Contract\Paycheck;
 use Payroll\Factory\Employee as EmployeeFactory;
 use Payroll\Factory\Paycheck as PaycheckFactory;

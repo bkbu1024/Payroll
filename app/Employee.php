@@ -5,6 +5,7 @@ namespace Payroll;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Payroll\Contract\Paycheck;
+use Payroll\Factory\Paycheck as PaycheckFactory;
 use Payroll\Paycheck as PaycheckModel;
 use Payroll\PaymentClassification\Factory as ClassificationFactory;
 use Payroll\PaymentClassification\PaymentClassification;
@@ -270,7 +271,7 @@ class Employee extends Model implements Contract\Employee
      */
     public function addPaycheck(Paycheck $paycheck)
     {
-        $check = new PaycheckModel();
+        $check = PaycheckFactory::create();
         $check->setDate($paycheck->getDate());
         $check->setEmployeeId($paycheck->getEmployeeId());
         $check->setNetPay($paycheck->getNetPay());

@@ -6,8 +6,16 @@ use Payroll\Paycheck as PaycheckModel;
 
 class Paycheck
 {
-    public static function create($date)
+    /**
+     * @param string|null $date
+     * @return PaycheckModel
+     */
+    public static function create($date = null)
     {
-        return new PaycheckModel(['date' => $date]);
+        if ($date) {
+            return new PaycheckModel(['date' => $date]);
+        } else {
+            return new PaycheckModel;
+        }
     }
 }
