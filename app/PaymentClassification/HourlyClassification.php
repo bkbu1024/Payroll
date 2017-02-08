@@ -2,7 +2,8 @@
 
 namespace Payroll\PaymentClassification;
 
-use Payroll\TimeCard;
+use Payroll\Contract\TimeCard;
+use Illuminate\Database\Eloquent\Collection;
 
 class HourlyClassification extends PaymentClassification
 {
@@ -57,7 +58,7 @@ class HourlyClassification extends PaymentClassification
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return Collection
      */
     public function timeCards()
     {

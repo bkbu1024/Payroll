@@ -2,8 +2,8 @@
 
 namespace Payroll\Contract\Relation;
 
-use Illuminate\Support\Collection;
 use Payroll\Contract\TimeCard;
+use Illuminate\Support\Collection;
 
 interface HasTimeCards
 {

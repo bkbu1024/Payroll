@@ -2,12 +2,13 @@
 
 namespace Payroll\Transaction\Add;
 
-use Payroll\Factory\Employee as EmployeeFactory;
-use Payroll\PaymentClassification\PaymentClassification;
-use Payroll\PaymentMethod\Factory as MethodFactory;
 use Payroll\Contract\Employee;
-use Payroll\PaymentSchedule\PaymentSchedule;
 use Payroll\Transaction\Transaction;
+use Payroll\PaymentClassification\PaymentClassification;
+use Payroll\PaymentSchedule\PaymentSchedule;
+use Payroll\Factory\Employee as EmployeeFactory;
+use Payroll\PaymentMethod\Factory as MethodFactory;
+
 
 abstract class AddEmployee implements Transaction
 {

@@ -2,8 +2,8 @@
 
 namespace Payroll\PaymentClassification;
 
-use Illuminate\Database\Eloquent\Collection;
 use Payroll\Contract\SalesReceipt;
+use Illuminate\Database\Eloquent\Collection;
 
 class CommissionedClassification extends PaymentClassification
 {

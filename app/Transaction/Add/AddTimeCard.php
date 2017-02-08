@@ -3,10 +3,10 @@
 namespace Payroll\Transaction\Add;
 
 use Payroll\Contract\Employee;
-use Payroll\Factory\Employee as EmployeeFactory;
-use Payroll\Factory\TimeCard as TimeCardFactory;
 use Payroll\Contract\TimeCard;
 use Payroll\Transaction\Transaction;
+use Payroll\Factory\Employee as EmployeeFactory;
+use Payroll\Factory\TimeCard as TimeCardFactory;
 
 class AddTimeCard implements Transaction
 {

@@ -3,11 +3,11 @@
 namespace Payroll\Transaction\Add;
 
 use Payroll\Contract\Employee;
+use Payroll\PaymentClassification\PaymentClassification;
+use Payroll\PaymentSchedule\PaymentSchedule;
 use Payroll\Factory\Employee as EmployeeFactory;
 use Payroll\PaymentClassification\Factory as ClassificationFactory;
-use Payroll\PaymentClassification\PaymentClassification;
 use Payroll\PaymentSchedule\Factory as ScheduleFactory;
-use Payroll\PaymentSchedule\PaymentSchedule;
 
 class AddHourlyEmployee extends AddEmployee
 {

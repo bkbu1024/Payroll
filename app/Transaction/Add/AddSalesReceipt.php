@@ -4,11 +4,11 @@ namespace Payroll\Transaction\Add;
 
 use DateTime;
 use Exception;
+use Payroll\Transaction\Transaction;
 use Payroll\Contract\Employee;
+use Payroll\Contract\SalesReceipt;
 use Payroll\Factory\Employee as EmployeeFactory;
 use Payroll\Factory\SalesReceipt as SalesReceiptFactory;
-use Payroll\Contract\SalesReceipt;
-use Payroll\Transaction\Transaction;
 
 class AddSalesReceipt implements Transaction
 {

@@ -12,6 +12,7 @@ use Payroll\PaymentSchedule\PaymentSchedule;
 use Payroll\PaymentMethod\PaymentMethod;
 use Payroll\Contract\SalesReceipt;
 use Payroll\Contract\TimeCard;
+use Payroll\SalesReceipt as SalesReceiptModel;
 
 class Employee extends Model implements Contract\Employee
 {
@@ -193,7 +194,7 @@ class Employee extends Model implements Contract\Employee
      */
     protected function salesReceipts()
     {
-        return $this->hasMany(\Payroll\SalesReceipt::class);
+        return $this->hasMany(SalesReceiptModel::class);
     }
 
     /**
@@ -201,7 +202,7 @@ class Employee extends Model implements Contract\Employee
      */
     public function addSalesReceipt(SalesReceipt $salesReceipt)
     {
-        $receipt = new \Payroll\SalesReceipt();
+        $receipt = new SalesReceiptModel();
         $receipt->setEmployeeId($salesReceipt->getEmployeeId());
         $receipt->setAmount($salesReceipt->getAmount());
         $receipt->setDate($salesReceipt->getDate());
