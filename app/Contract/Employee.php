@@ -94,4 +94,12 @@ interface Employee extends Identifiable, Nameable, HasTimeCards, HasSalesReceipt
     public function setPaymentSchedule(PaymentSchedule $paymentSchedule);
 
     // ------------------------ END getters and setters
+
+    public static function all();
+
+    /**
+     * @param string $payDate
+     * @return bool
+     */
+    public function isPayDay($payDate);
 }

@@ -240,4 +240,9 @@ class Employee extends Model implements Contract\Employee
     {
         return $this->timeCards()->where('date', $date)->get()->first();
     }
+
+    public function isPayDay($payDate)
+    {
+        return $this->paymentSchedule->isPayDay($payDate);
+    }
 }
