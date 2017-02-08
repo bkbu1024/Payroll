@@ -4,6 +4,7 @@ namespace Payroll\Transaction;
 
 use Payroll\Employee;
 use Payroll\Contract\Paycheck;
+use Payroll\Factory\Employee as EmployeeFactory;
 use Payroll\Factory\Paycheck as PaycheckFactory;
 
 class PayDay implements Transaction
@@ -29,7 +30,8 @@ class PayDay implements Transaction
 
     public function execute()
     {
-        $employees = Employee::all();
+        $emp = EmployeeFactory::createEmployee();
+        $employees = $emp->getAll();
 
         foreach ($employees as $employee) {
             /**

@@ -296,4 +296,12 @@ class Employee extends Model implements Contract\Employee
     {
         return $this->hasMany(PaycheckModel::class);
     }
+
+    /**
+     * @return Collection|static[]
+     */
+    public function getAll()
+    {
+        return Employee::all();
+    }
 }

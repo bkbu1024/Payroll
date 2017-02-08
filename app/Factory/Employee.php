@@ -10,7 +10,6 @@ class Employee
     const SALARIED = 'SALARIED';
     const HOURLY = 'HOURLY';
 
-
     /**
      * @return EmployeeModel
      */

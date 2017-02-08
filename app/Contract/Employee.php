@@ -96,7 +96,7 @@ interface Employee extends Identifiable, Nameable, HasTimeCards, HasSalesReceipt
 
     // ------------------------ END getters and setters
 
-    public static function all();
+    public function getAll();
 
     /**
      * @param string $payDate
