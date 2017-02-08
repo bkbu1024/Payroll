@@ -43,7 +43,7 @@ $factory->define(Payroll\Employee::class, function (Faker\Generator $faker, arra
 
         case Employee::COMMISSION:
             $data['salary'] = $faker->randomFloat(2, 1500, 3000);
-            $data['commission_rate'] = $faker->randomFloat(2, 10, 20);
+            $data['commission_rate'] = (array_get($attributes, 'commissionRate')) ? $attributes['commissionRate'] : $faker->randomFloat(2, 10, 20);
             break;
     }
 
@@ -55,5 +55,13 @@ $factory->define(Payroll\TimeCard::class, function (Faker\Generator $faker, arra
         'employee_id' => $attributes['employee_id'],
         'date' => $attributes['date'],
         'hours' => $attributes['hours'],
+    ];
+});
+
+$factory->define(Payroll\SalesReceipt::class, function (Faker\Generator $faker, array $attributes) {
+    return [
+        'employee_id' => $attributes['employee_id'],
+        'date' => $attributes['date'],
+        'amount' => $attributes['amount'],
     ];
 });

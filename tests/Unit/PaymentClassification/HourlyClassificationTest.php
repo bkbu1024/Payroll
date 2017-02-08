@@ -3,6 +3,7 @@
 namespace Unit\PaymentClassification;
 
 use Faker\Factory;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Payroll\Employee;
 use Payroll\Factory\Employee as EmployeeFactory;
 use Payroll\PaymentClassification\HourlyClassification;
@@ -11,6 +12,8 @@ use Payroll\TimeCard;
 
 class HourlyClassificationTest extends TestCase
 {
+    use DatabaseTransactions;
+
     public function testCalculatePayForTimeCard()
     {
         $faker = Factory::create();

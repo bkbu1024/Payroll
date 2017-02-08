@@ -31,5 +31,5 @@ abstract class PaymentClassification
     /**
      * @return float
      */
-    abstract public function calculatePay(Paycheck $payCheck);
+    abstract public function calculatePay(Paycheck $paycheck);
 }

@@ -33,10 +33,10 @@ class HourlyClassification extends PaymentClassification
     }
 
     /**
-     * @param Paycheck $payCheck
+     * @param Paycheck $paycheck
      * @return float
      */
-    public function calculatePay(Paycheck $payCheck)
+    public function calculatePay(Paycheck $paycheck)
     {
         $timeCards = $this->employee->getTimeCards();
         $netPay = 0;
@@ -45,7 +45,7 @@ class HourlyClassification extends PaymentClassification
             /**
              * @var TimeCard $timeCard
              */
-            if ($this->isInPayPeriod($timeCard->getDate(), $payCheck->getDate())) {
+            if ($this->isInPayPeriod($timeCard->getDate(), $paycheck->getDate())) {
                 $netPay += $this->calculatePayForTimeCard($timeCard);
             }
         }

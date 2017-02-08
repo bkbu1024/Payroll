@@ -2,6 +2,8 @@
 
 namespace Payroll\PaymentClassification;
 
+use Payroll\Contract\Paycheck;
+
 class SalariedClassification extends PaymentClassification
 {
     /**
@@ -27,10 +29,11 @@ class SalariedClassification extends PaymentClassification
     }
 
     /**
+     * @param Paycheck $paycheck
      * @return float
      */
-    public function calculatePay()
+    public function calculatePay(Paycheck $paycheck)
     {
-        return 0;
+        return $this->salary;
     }
 }
