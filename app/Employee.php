@@ -5,6 +5,7 @@ namespace Payroll;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Payroll\Contract\Paycheck;
+use Payroll\Paycheck as PaycheckModel;
 use Payroll\PaymentClassification\Factory as ClassificationFactory;
 use Payroll\PaymentClassification\PaymentClassification;
 use Payroll\PaymentMethod\HoldMethod;
@@ -14,6 +15,7 @@ use Payroll\PaymentMethod\PaymentMethod;
 use Payroll\Contract\SalesReceipt;
 use Payroll\Contract\TimeCard;
 use Payroll\SalesReceipt as SalesReceiptModel;
+use Payroll\TimeCard as TimeCardModel;
 
 class Employee extends Model implements Contract\Employee
 {
@@ -179,7 +181,7 @@ class Employee extends Model implements Contract\Employee
      */
     protected function timeCards()
     {
-        return $this->hasMany(\Payroll\TimeCard::class);
+        return $this->hasMany(TimeCardModel::class);
     }
 
     /**
@@ -225,7 +227,7 @@ class Employee extends Model implements Contract\Employee
      */
     public function addTimeCard(TimeCard $timeCard)
     {
-        $card = new \Payroll\TimeCard();
+        $card = new TimeCardModel();
         $card->setDate($timeCard->getDate());
         $card->setEmployeeId($timeCard->getEmployeeId());
         $card->setHours($timeCard->getHours());
@@ -248,19 +250,50 @@ class Employee extends Model implements Contract\Employee
      */
     public function isPayDay($payDate)
     {
-        return $this->paymentSchedule->isPayDay($payDate);
+        return $this->getPaymentSchedule()->isPayDay($payDate);
     }
 
     /**
      * @param Paycheck $paycheck
      */
-    public function payDay(Paycheck $paycheck)
+    public function payday(Paycheck $paycheck)
     {
-        $netPay = $this->paymentClassification->calculatePay();
+        $netPay = $this->getPaymentClassification()->calculatePay($paycheck);
         $paycheck->setNetPay($netPay);
         $paycheck->setEmployeeId($this->id);
-        $paycheck->setType($this->paymentMethod->getType());
-        $this->paymentMethod->pay();
+        $paycheck->setType($this->getPaymentMethod()->getType());
+        $this->addPaycheck($paycheck);
     }
 
+    /**
+     * @param Paycheck $paycheck
+     */
+    public function addPaycheck(Paycheck $paycheck)
+    {
+        $check = new PaycheckModel();
+        $check->setDate($paycheck->getDate());
+        $check->setEmployeeId($paycheck->getEmployeeId());
+        $check->setNetPay($paycheck->getNetPay());
+        $check->setType($paycheck->getType());
+
+        $this->timeCards()->save($check);
+    }
+
+    public function getPaycheckBy($date)
+    {
+        // TODO: Implement getPaycheckBy() method.
+    }
+
+    public function getPaychecks()
+    {
+        return $this->paychecks()->get();
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    protected function paychecks()
+    {
+        return $this->hasMany(PaycheckModel::class);
+    }
 }

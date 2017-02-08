@@ -2,6 +2,8 @@
 
 namespace Payroll\PaymentMethod;
 
+use Payroll\Contract\Paycheck;
+
 class MailMethod implements PaymentMethod
 {
     /**
@@ -26,7 +28,7 @@ class MailMethod implements PaymentMethod
         $this->address = $address;
     }
 
-    public function pay()
+    public function pay(Paycheck $paycheck)
     {
         // TODO: Implement pay() method.
     }

@@ -4,6 +4,7 @@ namespace Payroll\Tests\Unit\Transaction;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Payroll\Contract\Employee as EmployeeContract;
+use Payroll\Contract\Paycheck;
 use Payroll\Employee;
 use Payroll\Factory\Employee as EmployeeFactory;
 use Payroll\Tests\TestCase;
@@ -22,10 +23,10 @@ class PayDayTest extends TestCase
         $payDay->execute();
         $payCheck = $payDay->getPayCheck($employee->getId());
         $this->assertNotNull($payCheck);
-        
-        $this->assertEquals($payDate, $payCheck->getPayDate());
+
+        $this->assertEquals($payDate, $payCheck->getDate());
         $this->assertEquals($employee->getSalary(), $payCheck->getNetPay());
-        $this->assertEquals('HOLD', $payCheck->getPaymentMethod());
+        $this->assertEquals('HOLD', $payCheck->getType());
     }
 
     public function testPaySalariedEmployeeOnWrongDate()
@@ -58,7 +59,7 @@ class PayDayTest extends TestCase
          */
         $employee = factory(Employee::class)->create([
             'type' => EmployeeFactory::HOURLY,
-            'hourlyRate' => 12,
+            'hourly_rate' => 12,
         ]);
 
         factory(TimeCard::class)->create([
@@ -82,7 +83,7 @@ class PayDayTest extends TestCase
          */
         $employee = factory(Employee::class)->create([
             'type' => EmployeeFactory::HOURLY,
-            'hourlyRate' => 12,
+            'hourly_rate' => 12,
         ]);
 
         factory(TimeCard::class)->create([
@@ -108,7 +109,7 @@ class PayDayTest extends TestCase
         $payDay->execute();
 
         $payCheck = $payDay->getPayCheck($employee->getId());
-        $this->verifyHourlyPayCheck($payCheck, $payDate, (2 + 4 + 8) * 12);
+        $this->verifyHourlyPayCheck($payCheck, $payDate, 168);
     }
 
     public function testPayHourlyEmployeeOvertimeOneTimeCard()
@@ -118,7 +119,7 @@ class PayDayTest extends TestCase
          */
         $employee = factory(Employee::class)->create([
             'type' => EmployeeFactory::HOURLY,
-            'hourlyRate' => 12,
+            'hourly_rate' => 12,
         ]);
 
         $payDate = '2017-02-03'; // Friday
@@ -143,7 +144,7 @@ class PayDayTest extends TestCase
          */
         $employee = factory(Employee::class)->create([
             'type' => EmployeeFactory::HOURLY,
-            'hourlyRate' => 12,
+            'hourly_rate' => 12,
         ]);
 
         $payDate = '2017-02-01'; // Not friday
@@ -168,7 +169,7 @@ class PayDayTest extends TestCase
          */
         $employee = factory(Employee::class)->create([
             'type' => EmployeeFactory::HOURLY,
-            'hourlyRate' => 12,
+            'hourly_rate' => 12,
         ]);
 
         $payDate = '2017-02-10'; // Friday
@@ -193,11 +194,11 @@ class PayDayTest extends TestCase
         $this->verifyHourlyPayCheck($payCheck, $payDate, (4 * 12));
     }
 
-    protected function verifyHourlyPayCheck($payCheck, $payDate, $netPay)
+    protected function verifyHourlyPayCheck(Paycheck $payCheck, $payDate, $netPay)
     {
         $this->assertNotNull($payCheck);
-        $this->assertEquals($payDate, $payCheck->getPayDate());
+        $this->assertEquals($payDate, $payCheck->getDate());
         $this->assertEquals($netPay, $payCheck->getNetPay());
-        $this->assertEquals('HOLD', $payCheck->getPaymentMethod());
+        $this->assertEquals('HOLD', $payCheck->getType());
     }
 }

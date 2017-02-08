@@ -2,10 +2,11 @@
 
 namespace Payroll\Contract;
 
+use Payroll\Contract\Base\CanSave;
 use Payroll\Contract\Base\Identifiable;
 use Payroll\Contract\Relation\HasEmployee;
 
-interface Paycheck extends Identifiable, HasEmployee
+interface Paycheck extends Identifiable, HasEmployee, CanSave
 {
     public function getDate();
     public function setDate($date);

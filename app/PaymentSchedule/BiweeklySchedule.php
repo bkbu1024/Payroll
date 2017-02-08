@@ -15,6 +15,7 @@ class BiweeklySchedule implements PaymentSchedule
 
     /**
      * @param string $payDate
+     * @return bool
      */
     protected function isDateBelongsToSecondFridaysInMonth($payDate)
     {

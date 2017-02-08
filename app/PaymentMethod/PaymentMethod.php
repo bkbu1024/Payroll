@@ -2,9 +2,11 @@
 
 namespace Payroll\PaymentMethod;
 
+use Payroll\Contract\Paycheck;
+
 interface PaymentMethod
 {
-    public function pay();
+    public function pay(Paycheck $paycheck);
 
     /**
      * @return string

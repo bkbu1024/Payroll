@@ -5,13 +5,14 @@ namespace Payroll\Contract;
 use Payroll\Contract\Base\CanSave;
 use Payroll\Contract\Base\Identifiable;
 use Payroll\Contract\Base\Nameable;
+use Payroll\Contract\Relation\HasPaychecks;
 use Payroll\Contract\Relation\HasSalesReceipts;
 use Payroll\Contract\Relation\HasTimeCards;
 use Payroll\PaymentClassification\PaymentClassification;
 use Payroll\PaymentMethod\PaymentMethod;
 use Payroll\PaymentSchedule\PaymentSchedule;
 
-interface Employee extends Identifiable, Nameable, HasTimeCards, HasSalesReceipts, CanSave
+interface Employee extends Identifiable, Nameable, HasTimeCards, HasSalesReceipts, CanSave, HasPaychecks
 {
     /**
      * @return string
@@ -103,5 +104,5 @@ interface Employee extends Identifiable, Nameable, HasTimeCards, HasSalesReceipt
      */
     public function isPayDay($payDate);
 
-    public function payDay(Paycheck $paycheck);
+    public function payday(Paycheck $paycheck);
 }
