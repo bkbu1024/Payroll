@@ -2,7 +2,7 @@
 
 namespace Payroll\Tests\Integration\Transaction\Change;
 
-use Payroll\Factory\Employee as EmployeeFactory;
+use Payroll\Factory\Model\Employee as EmployeeFactory;
 use Payroll\PaymentClassification\SalariedClassification;
 use Payroll\PaymentSchedule\MonthlySchedule;
 use Payroll\PaymentSchedule\WeeklySchedule;

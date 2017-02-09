@@ -6,7 +6,7 @@ use Faker\Factory;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Payroll\Contract\Employee as EmployeeContract;
 use Payroll\Contract\Paycheck;
-use Payroll\Factory\PayDay as PayDayFactory;
+use Payroll\Factory\Transaction\PayDay as PayDayFactory;
 use Payroll\Tests\TestCase;
 use Payroll\Transaction\Add\AddHourlyEmployee;
 use Payroll\Transaction\Add\AddSalariedEmployee;

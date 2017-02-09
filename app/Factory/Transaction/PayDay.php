@@ -1,6 +1,6 @@
 <?php
 
-namespace Payroll\Factory;
+namespace Payroll\Factory\Transaction;
 
 use Payroll\Transaction\PayDay as PayDayTransaction;
 

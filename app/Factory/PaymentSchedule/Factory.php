@@ -1,9 +1,12 @@
 <?php
 
-namespace Payroll\PaymentSchedule;
+namespace Payroll\Factory\PaymentSchedule;
 
 use Exception;
 use Payroll\Contract\Employee;
+use Payroll\PaymentSchedule\BiweeklySchedule;
+use Payroll\PaymentSchedule\MonthlySchedule;
+use Payroll\PaymentSchedule\WeeklySchedule;
 
 class Factory
 {

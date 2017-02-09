@@ -1,6 +1,10 @@
 <?php
 
-namespace Payroll\PaymentMethod;
+namespace Payroll\Factory\PaymentMethod;
+
+use Payroll\PaymentMethod\DirectMethod;
+use Payroll\PaymentMethod\HoldMethod;
+use Payroll\PaymentMethod\MailMethod;
 
 class Factory
 {

@@ -2,6 +2,7 @@
 
 namespace Payroll\Tests\Integration\Transaction\Add;
 
+use DateTime;
 use Exception;
 use Faker\Factory;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -12,6 +13,7 @@ use Payroll\Tests\TestCase;
 use Payroll\Transaction\Add\AddCommissionedEmployee;
 use Payroll\Transaction\Add\AddSalariedEmployee;
 use Payroll\Transaction\Add\AddSalesReceipt;
+use Payroll\Transaction\Add\Factory as AddTransactionFactory;
 
 class AddSalesReceiptTest extends TestCase
 {
@@ -30,7 +32,7 @@ class AddSalesReceiptTest extends TestCase
 
         $amount = $faker->randomFloat(2, 320, 1250);
         $transaction = new AddSalesReceipt(
-            (new \DateTime())->format('Y-m-d'),
+            (new DateTime())->format('Y-m-d'),
             $amount,
             $employee);
 
@@ -45,7 +47,7 @@ class AddSalesReceiptTest extends TestCase
         /**
          * @var SalesReceipt $salesReceipt
          */
-        $salesReceipt = $paymentClassification->getSalesReceipt((new \DateTime())->format('Y-m-d'));
+        $salesReceipt = $paymentClassification->getSalesReceipt((new DateTime())->format('Y-m-d'));
         $this->assertEquals($amount, $salesReceipt->getAmount());
         $this->assertEquals($employee->getId(), $salesReceipt->getEmployeeId());
     }
@@ -56,15 +58,16 @@ class AddSalesReceiptTest extends TestCase
         /**
          * @var Employee
          */
-        $employee = (new AddSalariedEmployee(
-            $faker->name, $faker->address,
-            $faker->randomFloat(2, 1000, 3000)))->execute();
+        $employee = AddTransactionFactory::create([
+            'name' => $faker->name, 'address' => $faker->address,
+            'salary' => $faker->randomFloat(2, 1000, 3000)
+        ])->execute();
 
         $amount = $faker->randomFloat(2, 320, 1250);
 
         try {
             $transaction = new AddSalesReceipt(
-                (new \DateTime())->format('Y-m-d'),
+                (new DateTime())->format('Y-m-d'),
                 $amount,
                 $employee);
 

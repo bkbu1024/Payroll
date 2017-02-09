@@ -4,8 +4,8 @@ namespace Payroll\Transaction;
 
 use Payroll\Contract\Employee;
 use Payroll\Contract\Paycheck;
-use Payroll\Factory\Employee as EmployeeFactory;
-use Payroll\Factory\Paycheck as PaycheckFactory;
+use Payroll\Factory\Model\Employee as EmployeeFactory;
+use Payroll\Factory\Model\Paycheck as PaycheckFactory;
 
 class PayDay implements Transaction
 {

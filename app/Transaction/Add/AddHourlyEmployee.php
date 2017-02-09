@@ -5,9 +5,9 @@ namespace Payroll\Transaction\Add;
 use Payroll\Contract\Employee;
 use Payroll\PaymentClassification\PaymentClassification;
 use Payroll\PaymentSchedule\PaymentSchedule;
-use Payroll\Factory\Employee as EmployeeFactory;
-use Payroll\PaymentClassification\Factory as ClassificationFactory;
-use Payroll\PaymentSchedule\Factory as ScheduleFactory;
+use Payroll\Factory\Model\Employee as EmployeeFactory;
+use Payroll\Factory\PaymentClassification\Factory as ClassificationFactory;
+use Payroll\Factory\PaymentSchedule\Factory as ScheduleFactory;
 
 class AddHourlyEmployee extends AddEmployee
 {
@@ -20,12 +20,12 @@ class AddHourlyEmployee extends AddEmployee
      * AddSalariedEmployee constructor.
      * @param $name
      * @param $address
-     * @param $salary
+     * @param $hourlyRate
      */
-    public function __construct($name, $address, $salary)
+    public function __construct($name, $address, $hourlyRate)
     {
         parent::__construct($name, $address);
-        $this->hourlyRate = $salary;
+        $this->hourlyRate = $hourlyRate;
     }
 
     /**

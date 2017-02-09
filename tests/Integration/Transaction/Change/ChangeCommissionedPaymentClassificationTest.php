@@ -3,7 +3,7 @@
 namespace Payroll\Tests\Integration\Transaction\Change;
 
 use Payroll\Contract\Employee;
-use Payroll\Factory\Employee as Employee1;
+use Payroll\Factory\Model\Employee as Employee1;
 use Payroll\PaymentClassification\CommissionedClassification;
 use Payroll\PaymentSchedule\BiweeklySchedule;
 use Payroll\Transaction\Add\AddEmployee;

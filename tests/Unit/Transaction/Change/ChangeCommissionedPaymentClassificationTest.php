@@ -2,7 +2,7 @@
 
 namespace Payroll\Tests\Unit\Transaction\Change;
 
-use Payroll\Factory\Employee;
+use Payroll\Factory\Model\Employee;
 use Payroll\PaymentClassification\CommissionedClassification;
 use Payroll\PaymentClassification\HourlyClassification;
 use Payroll\PaymentSchedule\BiweeklySchedule;

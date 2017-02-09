@@ -3,7 +3,7 @@
 namespace Payroll\Transaction\Change;
 
 use Payroll\PaymentMethod\PaymentMethod;
-use Payroll\PaymentMethod\Factory as MethodFactory;
+use Payroll\Factory\PaymentMethod\Factory as MethodFactory;
 
 class ChangeHoldMethod extends ChangePaymentMethod
 {

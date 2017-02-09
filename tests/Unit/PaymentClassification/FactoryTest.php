@@ -4,9 +4,9 @@ namespace Unit\PaymentClassification;
 
 use Exception;
 use Payroll\Employee;
-use Payroll\Factory\Employee as EmployeeFactory;
+use Payroll\Factory\Model\Employee as EmployeeFactory;
 use Payroll\PaymentClassification\CommissionedClassification;
-use Payroll\PaymentClassification\Factory;
+use Payroll\Factory\PaymentClassification\Factory;
 use Payroll\PaymentClassification\HourlyClassification;
 use Payroll\PaymentClassification\SalariedClassification;
 use Payroll\Tests\TestCase;

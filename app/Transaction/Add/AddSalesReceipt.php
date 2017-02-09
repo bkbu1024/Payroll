@@ -7,8 +7,8 @@ use Exception;
 use Payroll\Transaction\Transaction;
 use Payroll\Contract\Employee;
 use Payroll\Contract\SalesReceipt;
-use Payroll\Factory\Employee as EmployeeFactory;
-use Payroll\Factory\SalesReceipt as SalesReceiptFactory;
+use Payroll\Factory\Model\Employee as EmployeeFactory;
+use Payroll\Factory\Model\SalesReceipt as SalesReceiptFactory;
 
 class AddSalesReceipt implements Transaction
 {

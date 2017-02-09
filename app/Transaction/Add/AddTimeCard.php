@@ -5,8 +5,8 @@ namespace Payroll\Transaction\Add;
 use Payroll\Contract\Employee;
 use Payroll\Contract\TimeCard;
 use Payroll\Transaction\Transaction;
-use Payroll\Factory\Employee as EmployeeFactory;
-use Payroll\Factory\TimeCard as TimeCardFactory;
+use Payroll\Factory\Model\Employee as EmployeeFactory;
+use Payroll\Factory\Model\TimeCard as TimeCardFactory;
 
 class AddTimeCard implements Transaction
 {

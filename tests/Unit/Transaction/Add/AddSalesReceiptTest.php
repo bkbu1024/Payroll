@@ -6,7 +6,7 @@ use Faker\Factory;
 use Faker\Generator;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Payroll\Employee;
-use Payroll\Factory\Employee as EmployeeFactory;
+use Payroll\Factory\Model\Employee as EmployeeFactory;
 use Payroll\PaymentClassification\CommissionedClassification;
 use Payroll\Tests\TestCase;
 use Payroll\Transaction\Add\AddSalesReceipt;

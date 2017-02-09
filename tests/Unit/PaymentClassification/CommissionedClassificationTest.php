@@ -6,12 +6,10 @@ use Faker\Factory;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Payroll\Contract\SalesReceipt;
 use Payroll\Employee;
-use Payroll\Factory\Employee as EmployeeFactory;
+use Payroll\Factory\Model\Employee as EmployeeFactory;
 use Payroll\PaymentClassification\CommissionedClassification;
-use Payroll\PaymentClassification\HourlyClassification;
 use Payroll\SalesReceipt as SalesReceiptModel;
 use Payroll\Tests\TestCase;
-use Payroll\TimeCard;
 
 class CommissionedClassificationTest extends TestCase
 {

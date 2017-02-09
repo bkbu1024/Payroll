@@ -1,6 +1,6 @@
 <?php
 
-namespace Payroll\Factory;
+namespace Payroll\Factory\Model;
 
 use Payroll\TimeCard as TimeCardModel;
 

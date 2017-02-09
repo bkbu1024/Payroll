@@ -1,9 +1,12 @@
 <?php
 
-namespace Payroll\PaymentClassification;
+namespace Payroll\Factory\PaymentClassification;
 
 use Payroll\Contract\Employee;
 use Exception;
+use Payroll\PaymentClassification\CommissionedClassification;
+use Payroll\PaymentClassification\HourlyClassification;
+use Payroll\PaymentClassification\SalariedClassification;
 
 class Factory
 {

@@ -4,7 +4,7 @@ namespace Tests\Unit\PaymentMethod;
 
 use Faker\Factory as FakerFactory;
 use Payroll\PaymentMethod\DirectMethod;
-use Payroll\PaymentMethod\Factory as MethodFactory;
+use Payroll\Factory\PaymentMethod\Factory as MethodFactory;
 use Payroll\PaymentMethod\HoldMethod;
 use Payroll\PaymentMethod\MailMethod;
 use Payroll\Tests\TestCase;

@@ -2,7 +2,7 @@
 
 namespace Payroll\Tests\Integration\Transaction\Change;
 
-use Payroll\Factory\Employee;
+use Payroll\Factory\Model\Employee;
 use Payroll\PaymentClassification\HourlyClassification;
 use Payroll\PaymentSchedule\WeeklySchedule;
 use Payroll\Transaction\Add\AddCommissionedEmployee;
