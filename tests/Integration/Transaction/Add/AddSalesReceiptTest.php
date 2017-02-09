@@ -7,15 +7,12 @@ use Exception;
 use Faker\Factory;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Payroll\Contract\SalesReceipt;
-use Payroll\Employee;
 use Payroll\Contract\Employee as EmployeeContract;
 use Payroll\PaymentClassification\CommissionedClassification;
 use Payroll\Tests\TestCase;
-use Payroll\Transaction\Add\AddCommissionedEmployee;
-use Payroll\Transaction\Add\AddSalariedEmployee;
-use Payroll\Transaction\Add\AddSalesReceipt;
 use Payroll\Factory\Transaction\Add\Employee as AddTransactionFactory;
 use Payroll\Factory\Transaction\Add\SalesReceipt as AddSalesReceiptFactory;
+use Payroll\Factory\Transaction\Add\Employee as AddEmployeeFactory;
 
 class AddSalesReceiptTest extends TestCase
 {
