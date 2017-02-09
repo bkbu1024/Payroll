@@ -7,7 +7,7 @@ use Payroll\Factory\Transaction\Change\PaymentClassification as PaymentClassific
 use Payroll\PaymentClassification\SalariedClassification;
 use Payroll\PaymentSchedule\MonthlySchedule;
 use Payroll\PaymentSchedule\WeeklySchedule;
-use Payroll\Transaction\Add\AddHourlyEmployee;
+use Payroll\Factory\Transaction\Add\Employee as AddEmployeeFactory;
 
 class ChangeSalariedPaymentClassificationTest extends AbstractChangeEmployeeTestCase
 {
@@ -17,10 +17,12 @@ class ChangeSalariedPaymentClassificationTest extends AbstractChangeEmployeeTest
         $address = $this->faker->address;
         $hourlyRate = $this->faker->randomFloat(2, 12, 35);
 
-        $this->employee = (new AddHourlyEmployee(
-            $name,
-            $address,
-            $hourlyRate))->execute();
+        $transaction = AddEmployeeFactory::create([
+            'name' => $name, 'address' => $address,
+            'hourlyRate' => $hourlyRate
+        ]);
+
+        $this->employee = $transaction->execute();
     }
 
     protected function change()
@@ -46,6 +48,4 @@ class ChangeSalariedPaymentClassificationTest extends AbstractChangeEmployeeTest
         $this->assertTrue($paymentSchedule instanceof MonthlySchedule);
         $this->assertEquals(EmployeeFactory::SALARIED, $this->changedEmployee->getType());
     }
-
-
 }
