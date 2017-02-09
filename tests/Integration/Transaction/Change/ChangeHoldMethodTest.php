@@ -8,21 +8,18 @@ use Payroll\Factory\Transaction\Change\PaymentMethod as PaymentMethodFactory;
 use Payroll\PaymentMethod\HoldMethod;
 use Payroll\PaymentMethod\PaymentMethod;
 use Payroll\Tests\TestCase;
-use Payroll\Transaction\Add\AddHourlyEmployee;
-use Payroll\Transaction\Change\ChangeHoldMethod;
+use Payroll\Factory\Transaction\Add\Employee as AddEmployeeFactory;
 
 class ChangeHoldMethodTest extends TestCase
 {
     public function testExecute()
     {
-        $faker = Factory::create();
-        $address = $faker->address;
+        $transaction = AddEmployeeFactory::create([
+            'name' => $this->faker->name, 'address' => $this->faker->address,
+            'hourlyRate' => 15
+        ]);
 
-        $employee = (new AddHourlyEmployee(
-            $faker->name,
-            $address,
-            $faker->randomFloat(2, 10, 30)))->execute();
-
+        $employee = $transaction->execute();
         $transaction = PaymentMethodFactory::create($employee);
         /**
          * @var Employee
