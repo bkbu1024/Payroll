@@ -24,8 +24,10 @@ class AddTimecardTest extends TestCase
          */
         $employee = (new AddHourlyEmployee($faker->name, $faker->address, $faker->randomFloat(2, 10, 35)))->execute();
 
-        $transaction = new AddTimeCard((new \DateTime())->format('Y-m-d'), 8.0, $employee);
+        $transaction = AddTimeCardFactory::create($employee, date('Y-m-d'), 8.0);
         $transaction->execute();
+        //$transaction = new AddTimeCard((new \DateTime())->format('Y-m-d'), 8.0, $employee);
+        //$transaction->execute();
 
         /**
          * @var HourlyClassification $paymentClassification

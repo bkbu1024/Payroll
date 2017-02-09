@@ -8,7 +8,7 @@ use Payroll\Contract\Employee;
 use Payroll\Paycheck;
 use Payroll\Tests\TestCase;
 use Payroll\Transaction\Add\AddHourlyEmployee;
-use Payroll\Transaction\Add\AddTimeCard;
+use Payroll\Factory\Transaction\Add\TimeCard as AddTimeCardFactory;
 
 class HourlyClassificationTest extends TestCase
 {
@@ -23,10 +23,18 @@ class HourlyClassificationTest extends TestCase
          * @var Employee $employee
          */
         $employee = (new AddHourlyEmployee($faker->name, $faker->address, $hourlyRate))->execute();
-        (new AddTimeCard('2017-01-12', 10, $employee))->execute();
-        (new AddTimeCard('2017-02-02', 5, $employee))->execute();
-        (new AddTimeCard('2017-02-03', 8, $employee))->execute();
-        (new AddTimeCard('2017-02-05', 8, $employee))->execute();
+
+        $transaction = AddTimeCardFactory::create($employee, '2017-01-12', 10);
+        $transaction->execute();
+
+        $transaction = AddTimeCardFactory::create($employee, '2017-02-02', 5);
+        $transaction->execute();
+
+        $transaction = AddTimeCardFactory::create($employee, '2017-02-03', 8);
+        $transaction->execute();
+
+        $transaction = AddTimeCardFactory::create($employee, '2017-02-05', 8);
+        $transaction->execute();
 
         $paycheck = new Paycheck([
             'date' => '2017-02-03'
@@ -45,10 +53,18 @@ class HourlyClassificationTest extends TestCase
          * @var Employee $employee
          */
         $employee = (new AddHourlyEmployee($faker->name, $faker->address, $hourlyRate))->execute();
-        (new AddTimeCard('2017-01-12', 10, $employee))->execute();
-        (new AddTimeCard('2017-02-02', 10, $employee))->execute();
-        (new AddTimeCard('2017-02-03', 12, $employee))->execute();
-        (new AddTimeCard('2017-02-05', 8, $employee))->execute();
+
+        $transaction = AddTimeCardFactory::create($employee, '2017-01-12', 10);
+        $transaction->execute();
+
+        $transaction = AddTimeCardFactory::create($employee, '2017-02-02', 10);
+        $transaction->execute();
+
+        $transaction = AddTimeCardFactory::create($employee, '2017-02-03', 12);
+        $transaction->execute();
+
+        $transaction = AddTimeCardFactory::create($employee, '2017-02-05', 8);
+        $transaction->execute();
 
         $paycheck = new Paycheck([
             'date' => '2017-02-03'
@@ -67,10 +83,18 @@ class HourlyClassificationTest extends TestCase
          * @var Employee $employee
          */
         $employee = (new AddHourlyEmployee($faker->name, $faker->address, $hourlyRate))->execute();
-        (new AddTimeCard('2017-01-02', 10, $employee))->execute();
-        (new AddTimeCard('2017-01-03', 12, $employee))->execute();
-        (new AddTimeCard('2017-01-12', 10, $employee))->execute();
-        (new AddTimeCard('2017-02-05', 8, $employee))->execute();
+
+        $transaction = AddTimeCardFactory::create($employee, '2017-01-02', 10);
+        $transaction->execute();
+
+        $transaction = AddTimeCardFactory::create($employee, '2017-01-03', 12);
+        $transaction->execute();
+
+        $transaction = AddTimeCardFactory::create($employee, '2017-01-12', 10);
+        $transaction->execute();
+
+        $transaction = AddTimeCardFactory::create($employee, '2017-02-05', 8);
+        $transaction->execute();
 
         $paycheck = new Paycheck([
             'date' => '2017-02-03'
