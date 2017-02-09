@@ -4,6 +4,7 @@ namespace Payroll\Integration\Unit\Transaction\Change;
 
 use Faker\Factory;
 use Payroll\Employee;
+use Payroll\Factory\Transaction\Change\PaymentMethod;
 use Payroll\PaymentMethod\MailMethod;
 use Payroll\Tests\TestCase;
 use Payroll\Transaction\Add\AddHourlyEmployee;
@@ -21,7 +22,8 @@ class ChangeMailMethodTest extends TestCase
             $address,
             $faker->randomFloat(2, 10, 30)))->execute();
 
-        $transaction = new ChangeMailMethod($employee, $address);
+        $transaction = PaymentMethod::create($employee, compact('address'));
+
         /**
          * @var Employee
          */

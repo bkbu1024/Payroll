@@ -4,6 +4,7 @@ namespace Payroll\Integration\Unit\Transaction\Change;
 
 use Faker\Factory;
 use Payroll\Employee;
+use Payroll\Factory\Transaction\Change\PaymentMethod as PaymentMethodFactory;
 use Payroll\PaymentMethod\HoldMethod;
 use Payroll\PaymentMethod\PaymentMethod;
 use Payroll\Tests\TestCase;
@@ -22,7 +23,7 @@ class ChangeHoldMethodTest extends TestCase
             $address,
             $faker->randomFloat(2, 10, 30)))->execute();
 
-        $transaction = new ChangeHoldMethod($employee);
+        $transaction = PaymentMethodFactory::create($employee);
         /**
          * @var Employee
          */

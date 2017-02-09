@@ -164,7 +164,6 @@ class PayDayTest extends TestCase
     
     public function testPayHourlyEmployeeWithTimeCardsSpanningTwoPayPeriods()
     {
-        $this->markTestSkipped();
         /**
          * @var EmployeeContract $employee
          */

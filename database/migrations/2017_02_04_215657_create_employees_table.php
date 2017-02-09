@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use Payroll\Factory\Employee as EmployeeFactory;
+use Payroll\Factory\Model\Employee as EmployeeFactory;
 
 class CreateEmployeesTable extends Migration
 {

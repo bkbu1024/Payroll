@@ -4,6 +4,7 @@ namespace Payroll\Tests\Integration\Transaction\Change;
 
 use Faker\Factory;
 use Payroll\Employee;
+use Payroll\Factory\Transaction\Change\PaymentMethod;
 use Payroll\PaymentMethod\DirectMethod;
 use Payroll\Tests\TestCase;
 use Payroll\Transaction\Add\AddHourlyEmployee;
@@ -23,7 +24,8 @@ class ChangeDirectMethodTest extends TestCase
 
         $bank = $faker->company;
         $account = $faker->bankAccountNumber;
-        $transaction = new ChangeDirectMethod($employee, $bank, $account);
+        $transaction = PaymentMethod::create($employee, compact('bank', 'account'));
+
         /**
          * @var Employee
          */
