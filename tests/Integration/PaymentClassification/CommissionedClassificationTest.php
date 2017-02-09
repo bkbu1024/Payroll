@@ -7,7 +7,6 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Payroll\Contract\Employee;
 use Payroll\Paycheck;
 use Payroll\Tests\TestCase;
-use Payroll\Transaction\Add\AddCommissionedEmployee;
 use Payroll\Factory\Transaction\Add\SalesReceipt as AddSalesReceiptFactory;
 use Payroll\Factory\Transaction\Add\Employee as AddEmployeeFactory;
 
@@ -54,13 +53,16 @@ class CommissionedClassificationTest extends TestCase
 
     public function testCalculatePayNoSalesReceipt()
     {
-        $faker = Factory::create();
         $salary = 1100;
 
         /**
          * @var Employee $employee
          */
-        $employee = (new AddCommissionedEmployee($faker->name, $faker->address, $salary, 10))->execute();
+        $transaction = AddEmployeeFactory::create([
+            'name' => $this->faker->name, 'address' => $this->faker->address,
+            'salary' => $salary, 'commissionRate' => 10]);
+
+        $employee = $transaction->execute();
 
         $transaction = AddSalesReceiptFactory::create($employee, '2017-01-02', 1000);
         $transaction->execute();
