@@ -7,7 +7,6 @@ use Payroll\PaymentClassification\HourlyClassification;
 use Payroll\PaymentClassification\SalariedClassification;
 use Payroll\PaymentSchedule\MonthlySchedule;
 use Payroll\PaymentSchedule\WeeklySchedule;
-use Payroll\Transaction\Add\AddEmployee;
 use Payroll\Transaction\Change\ChangeHourlyPaymentClassification;
 
 class ChangeHourlyPaymentClassificationTest extends AbstractChangeEmployeeTestCase

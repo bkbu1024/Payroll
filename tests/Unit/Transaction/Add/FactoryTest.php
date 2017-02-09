@@ -9,7 +9,7 @@ use Payroll\Tests\TestCase;
 use Payroll\Transaction\Add\AddCommissionedEmployee;
 use Payroll\Transaction\Add\AddHourlyEmployee;
 use Payroll\Transaction\Add\AddSalariedEmployee;
-use Payroll\Transaction\Add\Factory as AddTransactionFactory;
+use Payroll\Factory\Transaction\Add\Employee as AddTransactionFactory;
 
 class FactoryTest extends TestCase
 {

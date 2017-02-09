@@ -1,11 +1,13 @@
 <?php
 
-namespace Payroll\Transaction\Add;
+namespace Payroll\Factory\Transaction\Add;
 
 use Exception;
-use Payroll\Transaction\Transaction;
+use Payroll\Transaction\Add\AddCommissionedEmployee;
+use Payroll\Transaction\Add\AddHourlyEmployee;
+use Payroll\Transaction\Add\AddSalariedEmployee;
 
-class Factory
+class Employee
 {
     /**
      * @param string[] $data

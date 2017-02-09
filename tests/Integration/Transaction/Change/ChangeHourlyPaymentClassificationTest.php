@@ -3,11 +3,10 @@
 namespace Payroll\Tests\Integration\Transaction\Change;
 
 use Payroll\Factory\Model\Employee;
+use Payroll\Factory\Transaction\Change\PaymentClassification as PaymentClassificationFactory;
 use Payroll\PaymentClassification\HourlyClassification;
 use Payroll\PaymentSchedule\WeeklySchedule;
 use Payroll\Transaction\Add\AddCommissionedEmployee;
-use Payroll\Transaction\Add\AddEmployee;
-use Payroll\Transaction\Change\ChangeHourlyPaymentClassification;
 
 class ChangeHourlyPaymentClassificationTest extends AbstractChangeEmployeeTestCase
 {
@@ -20,7 +19,7 @@ class ChangeHourlyPaymentClassificationTest extends AbstractChangeEmployeeTestCa
             $this->faker->randomFloat(2, 10, 30)))->execute();
 
         $this->data['hourlyRate'] = $this->faker->randomFloat(2, 10, 33);
-        $transaction = new ChangeHourlyPaymentClassification($this->employee, $this->data['hourlyRate']);
+        $transaction = PaymentClassificationFactory::create($this->employee, $this->data);
         $this->changedEmployee = $transaction->execute();
     }
 

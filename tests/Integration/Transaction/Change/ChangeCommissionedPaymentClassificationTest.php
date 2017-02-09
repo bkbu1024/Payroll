@@ -4,11 +4,10 @@ namespace Payroll\Tests\Integration\Transaction\Change;
 
 use Payroll\Contract\Employee;
 use Payroll\Factory\Model\Employee as Employee1;
+use Payroll\Factory\Transaction\Change\PaymentClassification as PaymentClassificationFactory;
 use Payroll\PaymentClassification\CommissionedClassification;
 use Payroll\PaymentSchedule\BiweeklySchedule;
-use Payroll\Transaction\Add\AddEmployee;
 use Payroll\Transaction\Add\AddHourlyEmployee;
-use Payroll\Transaction\Change\ChangeCommissionedPaymentClassification;
 
 class ChangeCommissionedPaymentClassificationTest extends AbstractChangeEmployeeTestCase
 {
@@ -24,8 +23,8 @@ class ChangeCommissionedPaymentClassificationTest extends AbstractChangeEmployee
     protected function change()
     {
         $this->data['salary'] = $this->faker->randomFloat(2, 800, 2200);
-        $this->data['commissionRate '] = $this->faker->randomFloat(2, 10, 32);
-        $transaction = new ChangeCommissionedPaymentClassification($this->employee, $this->data['salary'], $this->data['commissionRate ']);
+        $this->data['commissionRate'] = $this->faker->randomFloat(2, 10, 32);
+        $transaction = PaymentClassificationFactory::create($this->employee, $this->data);
 
         /**
          * @var Employee
@@ -41,7 +40,7 @@ class ChangeCommissionedPaymentClassificationTest extends AbstractChangeEmployee
         $paymentClassification = $this->changedEmployee->getPaymentClassification();
         $this->assertTrue($paymentClassification instanceof CommissionedClassification);
         $this->assertEquals($this->data['salary'], $paymentClassification->getSalary());
-        $this->assertEquals($this->data['commissionRate '], $paymentClassification->getCommissionRate());
+        $this->assertEquals($this->data['commissionRate'], $paymentClassification->getCommissionRate());
 
         /**
          * @var BiweeklySchedule $paymentSchedule

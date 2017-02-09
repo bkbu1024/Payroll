@@ -7,7 +7,6 @@ use Payroll\PaymentClassification\CommissionedClassification;
 use Payroll\PaymentClassification\HourlyClassification;
 use Payroll\PaymentSchedule\BiweeklySchedule;
 use Payroll\PaymentSchedule\WeeklySchedule;
-use Payroll\Transaction\Add\AddEmployee;
 use Payroll\Transaction\Change\ChangeCommissionedPaymentClassification;
 
 class ChangeCommissionedPaymentClassificationTest extends AbstractChangeEmployeeTestCase
