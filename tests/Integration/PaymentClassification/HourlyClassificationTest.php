@@ -2,12 +2,10 @@
 
 namespace Integration\PaymentClassification;
 
-use Faker\Factory;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Payroll\Contract\Employee;
 use Payroll\Paycheck;
 use Payroll\Tests\TestCase;
-use Payroll\Transaction\Add\AddHourlyEmployee;
 use Payroll\Factory\Transaction\Add\TimeCard as AddTimeCardFactory;
 use Payroll\Factory\Transaction\Add\Employee as AddEmployeeFactory;
 
@@ -85,7 +83,6 @@ class HourlyClassificationTest extends TestCase
 
     public function testCalculatePayNoTimeCards()
     {
-        $faker = Factory::create();
         $hourlyRate = 15;
 
         /**

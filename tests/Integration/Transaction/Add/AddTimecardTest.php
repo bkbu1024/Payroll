@@ -3,12 +3,10 @@
 namespace Payroll\Tests\Integration\Transaction\Add;
 
 use Exception;
-use Faker\Factory;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Payroll\Employee;
 use Payroll\PaymentClassification\HourlyClassification;
 use Payroll\Tests\TestCase;
-use Payroll\Transaction\Add\AddHourlyEmployee;
 use Payroll\Factory\Transaction\Add\TimeCard as AddTimeCardFactory;
 use Payroll\Factory\Transaction\Add\Employee as AddEmployeeFactory;
 
@@ -18,12 +16,15 @@ class AddTimecardTest extends TestCase
 
     public function testExecute()
     {
-        $faker = Factory::create();
         /**
          * @var Employee
          */
-        $employee = (new AddHourlyEmployee($faker->name, $faker->address, $faker->randomFloat(2, 10, 35)))->execute();
+        $transaction = AddEmployeeFactory::create([
+            'name' => $this->faker->name, 'address' => $this->faker->address,
+            'hourlyRate' => 15
+        ]);
 
+        $employee = $transaction->execute();
         $transaction = AddTimeCardFactory::create($employee, date('Y-m-d'), 8.0);
         $transaction->execute();
 
@@ -40,7 +41,6 @@ class AddTimecardTest extends TestCase
 
     public function testExecuteInvalidUser()
     {
-        $faker = Factory::create();
         /**
          * @var Employee
          */

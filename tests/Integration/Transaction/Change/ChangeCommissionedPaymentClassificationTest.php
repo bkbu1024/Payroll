@@ -7,7 +7,7 @@ use Payroll\Factory\Model\Employee as Employee1;
 use Payroll\Factory\Transaction\Change\PaymentClassification as PaymentClassificationFactory;
 use Payroll\PaymentClassification\CommissionedClassification;
 use Payroll\PaymentSchedule\BiweeklySchedule;
-use Payroll\Transaction\Add\AddHourlyEmployee;
+use Payroll\Factory\Transaction\Add\Employee as AddEmployeeFactory;
 
 class ChangeCommissionedPaymentClassificationTest extends AbstractChangeEmployeeTestCase
 {
@@ -17,7 +17,12 @@ class ChangeCommissionedPaymentClassificationTest extends AbstractChangeEmployee
         $address = $this->faker->address;
         $hourlyRate = $this->faker->randomFloat(2, 10, 30);
 
-        $this->employee = (new AddHourlyEmployee($name, $address, $hourlyRate))->execute();
+        $transaction = AddEmployeeFactory::create([
+            'name' => $name, 'address' => $address,
+            'hourlyRate' => $hourlyRate
+        ]);
+
+        $this->employee = $transaction->execute();
     }
 
     protected function change()
