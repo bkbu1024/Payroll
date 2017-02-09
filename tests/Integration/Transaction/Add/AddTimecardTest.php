@@ -10,7 +10,7 @@ use Payroll\PaymentClassification\HourlyClassification;
 use Payroll\Tests\TestCase;
 use Payroll\Transaction\Add\AddHourlyEmployee;
 use Payroll\Transaction\Add\AddSalariedEmployee;
-use Payroll\Transaction\Add\AddTimeCard;
+use Payroll\Factory\Transaction\Add\TimeCard as AddTimeCardFactory;
 
 class AddTimecardTest extends TestCase
 {
@@ -49,7 +49,7 @@ class AddTimecardTest extends TestCase
         $employee = (new AddSalariedEmployee($faker->name, $faker->address, $faker->randomFloat(2, 1000, 3500)))->execute();
 
         try {
-            $transaction = new AddTimeCard((new \DateTime())->format('Y-m-d'), 8.0, $employee);
+            $transaction = AddTimeCardFactory::create($employee, date('Y-m-d'), 8.0);
             $transaction->execute();
             $this->fail();
         } catch (Exception $ex) {
