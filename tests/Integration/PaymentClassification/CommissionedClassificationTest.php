@@ -9,6 +9,7 @@ use Payroll\Paycheck;
 use Payroll\Tests\TestCase;
 use Payroll\Transaction\Add\AddCommissionedEmployee;
 use Payroll\Factory\Transaction\Add\SalesReceipt as AddSalesReceiptFactory;
+use Payroll\Factory\Transaction\Add\Employee as AddEmployeeFactory;
 
 class CommissionedClassificationTest extends TestCase
 {
@@ -22,7 +23,11 @@ class CommissionedClassificationTest extends TestCase
         /**
          * @var Employee $employee
          */
-        $employee = (new AddCommissionedEmployee($faker->name, $faker->address, $salary, 10))->execute();
+        $transaction = AddEmployeeFactory::create([
+            'name' => $faker->name, 'address' => $faker->address,
+            'salary' => $salary, 'commissionRate' => 10]);
+
+        $employee = $transaction->execute();
 
         $transaction = AddSalesReceiptFactory::create($employee, '2017-01-01', 1000);
         $transaction->execute();

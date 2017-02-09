@@ -4,6 +4,7 @@ namespace Payroll\Factory\Transaction\Add;
 
 use Exception;
 use Payroll\Transaction\Add\AddCommissionedEmployee;
+use Payroll\Transaction\Add\AddEmployee;
 use Payroll\Transaction\Add\AddHourlyEmployee;
 use Payroll\Transaction\Add\AddSalariedEmployee;
 

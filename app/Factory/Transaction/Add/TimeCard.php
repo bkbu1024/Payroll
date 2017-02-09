@@ -2,18 +2,18 @@
 
 namespace Payroll\Factory\Transaction\Add;
 
-use Payroll\Contract\Employee;
+use Payroll\Contract\Employee as EmployeeContract;
 use Payroll\Transaction\Add\AddTimeCard;
 
 class TimeCard
 {
     /**
-     * @param Employee $employee
+     * @param EmployeeContract $employee
      * @param string $date
      * @param float $hours
      * @return AddTimeCard
      */
-    public static function create(Employee $employee, $date, $hours)
+    public static function create(EmployeeContract $employee, $date, $hours)
     {
         return new AddTimeCard($date, $hours, $employee);
     }

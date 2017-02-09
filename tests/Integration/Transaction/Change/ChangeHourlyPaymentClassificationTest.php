@@ -6,17 +6,18 @@ use Payroll\Factory\Model\Employee;
 use Payroll\Factory\Transaction\Change\PaymentClassification as PaymentClassificationFactory;
 use Payroll\PaymentClassification\HourlyClassification;
 use Payroll\PaymentSchedule\WeeklySchedule;
-use Payroll\Transaction\Add\AddCommissionedEmployee;
+use Payroll\Factory\Transaction\Add\Employee as AddEmployeeFactory;
 
 class ChangeHourlyPaymentClassificationTest extends AbstractChangeEmployeeTestCase
 {
     protected function setEmployee()
     {
-        $this->employee = (new AddCommissionedEmployee(
-            $this->faker->name,
-            $this->faker->address,
-            $this->faker->randomFloat(2, 700, 2500),
-            $this->faker->randomFloat(2, 10, 30)))->execute();
+        $transaction = AddEmployeeFactory::create([
+            'name' => $this->faker->name, 'address' => $this->faker->address,
+            'salary' => $this->faker->randomFloat(2, 700, 2500),
+            'commissionRate' => $this->faker->randomFloat(2, 10, 30)]);
+
+        $this->employee = $transaction->execute();
 
         $this->data['hourlyRate'] = $this->faker->randomFloat(2, 10, 33);
         $transaction = PaymentClassificationFactory::create($this->employee, $this->data);
