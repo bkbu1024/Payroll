@@ -7,21 +7,20 @@ use Payroll\Employee;
 use Payroll\Factory\Transaction\Change\PaymentMethod;
 use Payroll\PaymentMethod\DirectMethod;
 use Payroll\Tests\TestCase;
-use Payroll\Transaction\Add\AddHourlyEmployee;
-use Payroll\Transaction\Change\ChangeDirectMethod;
+use Payroll\Factory\Transaction\Add\Employee as AddEmployeeFactory;
 
 class ChangeDirectMethodTest extends TestCase
 {
     public function testExecute()
     {
         $faker = Factory::create();
-        $address = $faker->address;
 
-        $employee = (new AddHourlyEmployee(
-            $faker->name,
-            $address,
-            $faker->randomFloat(2, 10, 30)))->execute();
+        $transaction = AddEmployeeFactory::create([
+            'name' => $this->faker->name, 'address' => $this->faker->address,
+            'hourlyRate' => 15
+        ]);
 
+        $employee = $transaction->execute();
         $bank = $faker->company;
         $account = $faker->bankAccountNumber;
         $transaction = PaymentMethod::create($employee, compact('bank', 'account'));
