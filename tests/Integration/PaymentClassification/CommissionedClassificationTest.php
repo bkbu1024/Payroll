@@ -8,9 +8,7 @@ use Payroll\Contract\Employee;
 use Payroll\Paycheck;
 use Payroll\Tests\TestCase;
 use Payroll\Transaction\Add\AddCommissionedEmployee;
-use Payroll\Transaction\Add\AddHourlyEmployee;
-use Payroll\Transaction\Add\AddSalesReceipt;
-use Payroll\Transaction\Add\AddTimeCard;
+use Payroll\Factory\Transaction\Add\SalesReceipt as AddSalesReceiptFactory;
 
 class CommissionedClassificationTest extends TestCase
 {
@@ -25,11 +23,21 @@ class CommissionedClassificationTest extends TestCase
          * @var Employee $employee
          */
         $employee = (new AddCommissionedEmployee($faker->name, $faker->address, $salary, 10))->execute();
-        (new AddSalesReceipt('2017-01-01', 1000, $employee))->execute();
-        (new AddSalesReceipt('2017-01-06', 1000, $employee))->execute();
-        (new AddSalesReceipt('2017-01-12', 1000, $employee))->execute();
-        (new AddSalesReceipt('2017-01-13', 1000, $employee))->execute();
-        (new AddSalesReceipt('2017-01-14', 1000, $employee))->execute();
+
+        $transaction = AddSalesReceiptFactory::create($employee, '2017-01-01', 1000);
+        $transaction->execute();
+
+        $transaction = AddSalesReceiptFactory::create($employee, '2017-01-06', 1000);
+        $transaction->execute();
+
+        $transaction = AddSalesReceiptFactory::create($employee, '2017-01-12', 1000);
+        $transaction->execute();
+
+        $transaction = AddSalesReceiptFactory::create($employee, '2017-01-13', 1000);
+        $transaction->execute();
+
+        $transaction = AddSalesReceiptFactory::create($employee, '2017-01-14', 1000);
+        $transaction->execute();
 
         $paycheck = new Paycheck([
             'date' => '2017-01-13'
@@ -48,10 +56,18 @@ class CommissionedClassificationTest extends TestCase
          * @var Employee $employee
          */
         $employee = (new AddCommissionedEmployee($faker->name, $faker->address, $salary, 10))->execute();
-        (new AddSalesReceipt('2017-01-02', 1000, $employee))->execute();
-        (new AddSalesReceipt('2017-01-03', 1200, $employee))->execute();
-        (new AddSalesReceipt('2017-01-12', 900, $employee))->execute();
-        (new AddSalesReceipt('2017-02-13', 850, $employee))->execute();
+
+        $transaction = AddSalesReceiptFactory::create($employee, '2017-01-02', 1000);
+        $transaction->execute();
+
+        $transaction = AddSalesReceiptFactory::create($employee, '2017-01-03', 1000);
+        $transaction->execute();
+
+        $transaction = AddSalesReceiptFactory::create($employee, '2017-01-12', 1000);
+        $transaction->execute();
+
+        $transaction = AddSalesReceiptFactory::create($employee, '2017-01-13', 1000);
+        $transaction->execute();
 
         $paycheck = new Paycheck([
             'date' => '2017-02-10'

@@ -8,12 +8,14 @@ use Faker\Factory;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Payroll\Contract\SalesReceipt;
 use Payroll\Employee;
+use Payroll\Contract\Employee as EmployeeContract;
 use Payroll\PaymentClassification\CommissionedClassification;
 use Payroll\Tests\TestCase;
 use Payroll\Transaction\Add\AddCommissionedEmployee;
 use Payroll\Transaction\Add\AddSalariedEmployee;
 use Payroll\Transaction\Add\AddSalesReceipt;
 use Payroll\Factory\Transaction\Add\Employee as AddTransactionFactory;
+use Payroll\Factory\Transaction\Add\SalesReceipt as AddSalesReceiptFactory;
 
 class AddSalesReceiptTest extends TestCase
 {
@@ -23,7 +25,7 @@ class AddSalesReceiptTest extends TestCase
     {
         $faker = Factory::create();
         /**
-         * @var Employee
+         * @var EmployeeContract
          */
         $employee = (new AddCommissionedEmployee(
             $faker->name, $faker->address,
@@ -31,11 +33,8 @@ class AddSalesReceiptTest extends TestCase
             $faker->randomFloat(2, 30, 125)))->execute();
 
         $amount = $faker->randomFloat(2, 320, 1250);
-        $transaction = new AddSalesReceipt(
-            (new DateTime())->format('Y-m-d'),
-            $amount,
-            $employee);
 
+        $transaction = AddSalesReceiptFactory::create($employee, date('Y-m-d'), $amount);
         $transaction->execute();
 
         /**
@@ -56,7 +55,7 @@ class AddSalesReceiptTest extends TestCase
     {
         $faker = Factory::create();
         /**
-         * @var Employee
+         * @var EmployeeContract
          */
         $employee = AddTransactionFactory::create([
             'name' => $faker->name, 'address' => $faker->address,
@@ -66,11 +65,7 @@ class AddSalesReceiptTest extends TestCase
         $amount = $faker->randomFloat(2, 320, 1250);
 
         try {
-            $transaction = new AddSalesReceipt(
-                (new DateTime())->format('Y-m-d'),
-                $amount,
-                $employee);
-
+            $transaction = AddSalesReceiptFactory::create($employee, date('Y-m-d'), $amount);
             $transaction->execute();
             $this->fail();
         } catch (Exception $ex) {
