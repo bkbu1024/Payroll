@@ -6,12 +6,12 @@ use Faker\Factory;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Payroll\Contract\Employee as EmployeeContract;
 use Payroll\Contract\Paycheck;
+use Payroll\Factory\Transaction\Add\Employee as AddEmployeeFactory;
 use Payroll\Factory\Transaction\Add\TimeCard as AddTimeCardFactory;
 use Payroll\Factory\Transaction\PayDay as PayDayFactory;
 use Payroll\Tests\TestCase;
 use Payroll\Transaction\Add\AddHourlyEmployee;
 use Payroll\Transaction\Add\AddSalariedEmployee;
-use Payroll\Transaction\Add\AddTimeCard;
 
 class PayDayTest extends TestCase
 {
@@ -26,7 +26,13 @@ class PayDayTest extends TestCase
 
     public function testPaySalariedEmployee()
     {
-        $employee = (new AddSalariedEmployee($this->faker->name, $this->faker->address, 2200))->execute();
+        $transaction = AddEmployeeFactory::create([
+            'name' => $this->faker->name, 'address' => $this->faker->address,
+            'salary' => 2200
+        ]);
+
+        $employee = $transaction->execute();
+
         $payDate = '2017-01-31';
         $payDay = PayDayFactory::createPayDay($payDate);
         $payDay->execute();
@@ -40,7 +46,12 @@ class PayDayTest extends TestCase
 
     public function testPaySalariedEmployeeOnWrongDate()
     {
-        $employee = (new AddSalariedEmployee($this->faker->name, $this->faker->address, 2200))->execute();
+        $transaction = AddEmployeeFactory::create([
+            'name' => $this->faker->name, 'address' => $this->faker->address,
+            'salary' => 2200
+        ]);
+
+        $employee = $transaction->execute();
         $payDate = '2017-01-27';
 
         $payDay = PayDayFactory::createPayDay($payDate);
@@ -52,7 +63,12 @@ class PayDayTest extends TestCase
 
     public function testPayHourlyEmployeeNoTimeCard()
     {
-        $employee = (new AddHourlyEmployee($this->faker->name, $this->faker->address, 15))->execute();
+        $transaction = AddEmployeeFactory::create([
+            'name' => $this->faker->name, 'address' => $this->faker->address,
+            'hourlyRate' => 15
+        ]);
+
+        $employee = $transaction->execute();
         $payDate = '2017-02-03'; // Friday
         $payDay = PayDayFactory::createPayDay($payDate);
         $payDay->execute();
@@ -66,7 +82,12 @@ class PayDayTest extends TestCase
         /**
          * @var EmployeeContract $employee
          */
-        $employee = (new AddHourlyEmployee($this->faker->name, $this->faker->address, 12))->execute();
+        $transaction = AddEmployeeFactory::create([
+            'name' => $this->faker->name, 'address' => $this->faker->address,
+            'hourlyRate' => 12
+        ]);
+
+        $employee = $transaction->execute();
         $transaction = AddTimeCardFactory::create($employee, '2017-02-01', 2);
         $transaction->execute();
 
@@ -83,7 +104,12 @@ class PayDayTest extends TestCase
         /**
          * @var EmployeeContract $employee
          */
-        $employee = (new AddHourlyEmployee($this->faker->name, $this->faker->address, 12))->execute();
+        $transaction = AddEmployeeFactory::create([
+            'name' => $this->faker->name, 'address' => $this->faker->address,
+            'hourlyRate' => 12
+        ]);
+
+        $employee = $transaction->execute();
         $transaction = AddTimeCardFactory::create($employee, '2017-01-31', 4);
         $transaction->execute();
 
@@ -107,7 +133,12 @@ class PayDayTest extends TestCase
         /**
          * @var EmployeeContract $employee
          */
-        $employee = (new AddHourlyEmployee($this->faker->name, $this->faker->address, 12))->execute();
+        $transaction = AddEmployeeFactory::create([
+            'name' => $this->faker->name, 'address' => $this->faker->address,
+            'hourlyRate' => 12
+        ]);
+
+        $employee = $transaction->execute();
         $transaction = AddTimeCardFactory::create($employee, $payDate, 9);
         $transaction->execute();
 
@@ -125,7 +156,12 @@ class PayDayTest extends TestCase
         /**
          * @var EmployeeContract $employee
          */
-        $employee = (new AddHourlyEmployee($this->faker->name, $this->faker->address, 12))->execute();
+        $transaction = AddEmployeeFactory::create([
+            'name' => $this->faker->name, 'address' => $this->faker->address,
+            'hourlyRate' => 12
+        ]);
+
+        $employee = $transaction->execute();
         $transaction = AddTimeCardFactory::create($employee, $payDate, 9);
         $transaction->execute();
 
@@ -144,7 +180,12 @@ class PayDayTest extends TestCase
         /**
          * @var EmployeeContract $employee
          */
-        $employee = (new AddHourlyEmployee($this->faker->name, $this->faker->address, 12))->execute();
+        $transaction = AddEmployeeFactory::create([
+            'name' => $this->faker->name, 'address' => $this->faker->address,
+            'hourlyRate' => 12
+        ]);
+
+        $employee = $transaction->execute();
         $transaction = AddTimeCardFactory::create($employee, $payDate, 4);
         $transaction->execute();
 

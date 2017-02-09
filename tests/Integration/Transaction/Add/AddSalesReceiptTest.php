@@ -29,12 +29,6 @@ class AddSalesReceiptTest extends TestCase
             'salary' => 1200, 'commissionRate' => 10]);
 
         $employee = $transaction->execute();
-
-        /*$employee = (new AddCommissionedEmployee(
-            $faker->name, $faker->address,
-            $faker->randomFloat(2, 10, 35),
-            $faker->randomFloat(2, 30, 125)))->execute();*/
-
         $amount = $faker->randomFloat(2, 320, 1250);
 
         $transaction = AddSalesReceiptFactory::create($employee, date('Y-m-d'), $amount);
