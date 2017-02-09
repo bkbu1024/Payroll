@@ -9,6 +9,7 @@ use Payroll\Paycheck;
 use Payroll\Tests\TestCase;
 use Payroll\Transaction\Add\AddHourlyEmployee;
 use Payroll\Factory\Transaction\Add\TimeCard as AddTimeCardFactory;
+use Payroll\Factory\Transaction\Add\Employee as AddEmployeeFactory;
 
 class HourlyClassificationTest extends TestCase
 {
@@ -16,13 +17,17 @@ class HourlyClassificationTest extends TestCase
 
     public function testCalculatePay()
     {
-        $faker = Factory::create();
         $hourlyRate = 15;
 
         /**
          * @var Employee $employee
          */
-        $employee = (new AddHourlyEmployee($faker->name, $faker->address, $hourlyRate))->execute();
+        $transaction = AddEmployeeFactory::create([
+            'name' => $this->faker->name, 'address' => $this->faker->address,
+            'hourlyRate' => $hourlyRate
+        ]);
+
+        $employee = $transaction->execute();
 
         $transaction = AddTimeCardFactory::create($employee, '2017-01-12', 10);
         $transaction->execute();
@@ -46,13 +51,17 @@ class HourlyClassificationTest extends TestCase
 
     public function testCalculatePayWithOvertime()
     {
-        $faker = Factory::create();
         $hourlyRate = 15;
 
         /**
          * @var Employee $employee
          */
-        $employee = (new AddHourlyEmployee($faker->name, $faker->address, $hourlyRate))->execute();
+        $transaction = AddEmployeeFactory::create([
+            'name' => $this->faker->name, 'address' => $this->faker->address,
+            'hourlyRate' => $hourlyRate
+        ]);
+
+        $employee = $transaction->execute();
 
         $transaction = AddTimeCardFactory::create($employee, '2017-01-12', 10);
         $transaction->execute();
@@ -82,7 +91,12 @@ class HourlyClassificationTest extends TestCase
         /**
          * @var Employee $employee
          */
-        $employee = (new AddHourlyEmployee($faker->name, $faker->address, $hourlyRate))->execute();
+        $transaction = AddEmployeeFactory::create([
+            'name' => $this->faker->name, 'address' => $this->faker->address,
+            'hourlyRate' => $hourlyRate
+        ]);
+
+        $employee = $transaction->execute();
 
         $transaction = AddTimeCardFactory::create($employee, '2017-01-02', 10);
         $transaction->execute();

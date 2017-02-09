@@ -10,8 +10,6 @@ use Payroll\Factory\Transaction\Add\Employee as AddEmployeeFactory;
 use Payroll\Factory\Transaction\Add\TimeCard as AddTimeCardFactory;
 use Payroll\Factory\Transaction\PayDay as PayDayFactory;
 use Payroll\Tests\TestCase;
-use Payroll\Transaction\Add\AddHourlyEmployee;
-use Payroll\Transaction\Add\AddSalariedEmployee;
 
 class PayDayTest extends TestCase
 {
