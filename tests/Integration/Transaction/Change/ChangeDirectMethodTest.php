@@ -13,16 +13,14 @@ class ChangeDirectMethodTest extends TestCase
 {
     public function testExecute()
     {
-        $faker = Factory::create();
-
         $transaction = AddEmployeeFactory::create([
             'name' => $this->faker->name, 'address' => $this->faker->address,
             'hourlyRate' => 15
         ]);
 
         $employee = $transaction->execute();
-        $bank = $faker->company;
-        $account = $faker->bankAccountNumber;
+        $bank = $this->faker->company;
+        $account = $this->faker->bankAccountNumber;
         $transaction = PaymentMethod::create($employee, compact('bank', 'account'));
 
         /**
