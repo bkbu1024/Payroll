@@ -20,12 +20,12 @@ class ChangeSalariedPaymentClassification extends ChangePaymentClassification
      * ChangeHourlyPaymentClassification constructor.
      *
      * @param Employee $employee
-     * @param $hourlyRate
+     * @param $salary
      */
-    public function __construct(Employee $employee, $hourlyRate)
+    public function __construct(Employee $employee, $salary)
     {
         parent::__construct($employee);
-        $this->salary = $hourlyRate;
+        $this->salary = $salary;
     }
 
     /**

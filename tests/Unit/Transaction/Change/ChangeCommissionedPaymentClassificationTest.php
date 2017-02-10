@@ -5,6 +5,7 @@ namespace Payroll\Tests\Unit\Transaction\Change;
 use Payroll\Factory\Model\Employee;
 use Payroll\PaymentClassification\CommissionedClassification;
 use Payroll\PaymentClassification\HourlyClassification;
+use Payroll\PaymentMethod\HoldMethod;
 use Payroll\PaymentSchedule\BiweeklySchedule;
 use Payroll\PaymentSchedule\WeeklySchedule;
 use Payroll\Transaction\Change\ChangeCommissionedPaymentClassification;
@@ -15,7 +16,16 @@ class ChangeCommissionedPaymentClassificationTest extends AbstractChangeEmployee
     {
         $salary = $this->faker->randomFloat(2, 800, 2200);
         $commissionRate = $this->faker->randomFloat(2, 10, 32);
-        $transaction = new ChangeCommissionedPaymentClassification($this->employee, $salary, $commissionRate);
+
+        $constructorArgs = [
+            $this->employee, $salary, $commissionRate
+        ];
+
+        $transaction = $this->getMockObject(ChangeCommissionedPaymentClassification::class, [
+            'getPaymentClassification' => ['return' => new CommissionedClassification($salary, $commissionRate), 'times' => 'once'],
+            'getPaymentSchedule' => ['return' => new BiweeklySchedule, 'times' => 'once'],
+            'getType' => ['return' => Employee::COMMISSION, 'times' => 'once']
+        ], $constructorArgs);
 
         $this->changedEmployee = $transaction->execute();
         $this->data['salary'] = $salary;
@@ -27,7 +37,7 @@ class ChangeCommissionedPaymentClassificationTest extends AbstractChangeEmployee
         parent::setEmployee();
         $this->data['hourlyRate'] = $this->faker->randomFloat(2, 10, 30);
         $this->employee->setHourlyRate($this->data['hourlyRate']);
-        $this->employee->setPaymentSchedule(new WeeklySchedule());
+        $this->employee->setPaymentSchedule(new WeeklySchedule);
         $this->employee->setPaymentClassification(
             new HourlyClassification($this->data['hourlyRate']));
     }
