@@ -2,6 +2,7 @@
 
 namespace Payroll;
 
+use DateTime;
 use Illuminate\Database\Eloquent\Model;
 
 class TimeCard extends Model implements \Payroll\Contract\TimeCard
