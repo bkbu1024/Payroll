@@ -15,6 +15,6 @@ class Employee
      */
     public static function createEmployee()
     {
-        return new EmployeeModel();
+        return new EmployeeModel;
     }
 }
