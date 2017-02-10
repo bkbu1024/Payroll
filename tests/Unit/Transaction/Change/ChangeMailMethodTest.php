@@ -21,7 +21,10 @@ class ChangeMailMethodTest extends AbstractChangeEmployeeTestCase
     protected function change()
     {
         $this->data['address'] = $this->faker->address;
-        $transaction = new ChangeMailMethod($this->employee, $this->data['address']);
+        $transaction = $this->getMockObject(ChangeMailMethod::class, [
+            'getPaymentMethod' => ['return' => new MailMethod($this->data['address']), 'times' => 'once']
+        ], [$this->employee, $this->data['address']]);
+
         /**
          * @var Employee
          */
