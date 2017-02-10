@@ -2,7 +2,6 @@
 
 namespace Payroll\PaymentClassification;
 
-use DateTime;
 use Payroll\Contract\Paycheck;
 use Payroll\Contract\SalesReceipt;
 use Illuminate\Database\Eloquent\Collection;

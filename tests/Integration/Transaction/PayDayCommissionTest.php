@@ -236,73 +236,73 @@ class PayDayCommissionTest extends AbstractPayDayTestCase
     }
 
     // @todo
-    public function testPayOneHourlyEmployeeWithTimeCardsSpanningTwoPayPeriods()
+    public function testPayOneCommissionedEmployeeWithSalesReceiptsSpanningTwoPayPeriods()
     {
         $payDate = '2017-02-10'; // Friday
-        $dateInPreviousPeriod = '2017-02-02';
+        $dateInPreviousPeriod = '2017-01-18';
 
         /**
          * @var EmployeeContract $employee
          */
         $transaction = AddEmployeeFactory::create([
             'name' => $this->faker->name, 'address' => $this->faker->address,
-            'hourlyRate' => 12
+            'salary' => 1000, 'commissionRate' => 20
         ]);
 
         $employee = $transaction->execute();
-        $transaction = AddTimeCardFactory::create($employee, $payDate, 4);
-        $transaction->execute();
+        $transactionSr = AddSalesReceiptFactory::create($employee, $payDate, 990);
+        $transactionSr->execute();
 
-        $transaction = AddTimeCardFactory::create($employee, $dateInPreviousPeriod, 5);
-        $transaction->execute();
+        $transactionSr = AddSalesReceiptFactory::create($employee, $dateInPreviousPeriod, 1990);
+        $transactionSr->execute();
 
         $payDay = PayDayFactory::createPayDay($payDate);
         $payDay->execute();
 
         $payCheck = $payDay->getPayCheck($employee->getId());
-        $this->verifyHourlyPayCheck($payCheck, $payDate, (4 * 12));
+        $this->verifyHourlyPayCheck($payCheck, $payDate, 1000 + 198);
     }
 
-    public function testPayMoreHourlyEmployeeWithTimeCardsSpanningTwoPayPeriods()
+    public function testPayMoreCommissionedEmployeeWithsalesCardsSpanningTwoPayPeriods()
     {
         $payDate = '2017-02-10'; // Friday
-        $dateInPreviousPeriod = '2017-02-02';
+        $dateInPreviousPeriod = '2017-01-18';
 
         /**
          * @var EmployeeContract $employee
          */
         $transaction = AddEmployeeFactory::create([
             'name' => $this->faker->name, 'address' => $this->faker->address,
-            'hourlyRate' => 12
+            'salary' => 1000, 'commissionRate' => 20
         ]);
 
         $transaction1 = AddEmployeeFactory::create([
             'name' => $this->faker->name, 'address' => $this->faker->address,
-            'hourlyRate' => 11
+            'salary' => 1200, 'commissionRate' => 15
         ]);
 
         $employee = $transaction->execute();
         $employee1 = $transaction1->execute();
 
-        $transactionTcOk = AddTimeCardFactory::create($employee, $payDate, 4);
-        $transactionTcOk->execute();
+        $transactionSr = AddSalesReceiptFactory::create($employee, $payDate, 990);
+        $transactionSr->execute();
 
-        $transactionTcNotOk = AddTimeCardFactory::create($employee, $dateInPreviousPeriod, 5);
-        $transactionTcNotOk->execute();
+        $transactionSr = AddSalesReceiptFactory::create($employee, $dateInPreviousPeriod, 1990);
+        $transactionSr->execute();
 
-        $transactionTcOk1 = AddTimeCardFactory::create($employee1, $payDate, 7);
-        $transactionTcOk1->execute();
+        $transactionSr = AddSalesReceiptFactory::create($employee1, $payDate, 1200);
+        $transactionSr->execute();
 
-        $transactionTcNotOk1 = AddTimeCardFactory::create($employee1, $dateInPreviousPeriod, 7);
-        $transactionTcNotOk1->execute();
+        $transactionSr = AddSalesReceiptFactory::create($employee1, $dateInPreviousPeriod, 1990);
+        $transactionSr->execute();
 
         $payDay = PayDayFactory::createPayDay($payDate);
         $payDay->execute();
 
         $payCheck = $payDay->getPayCheck($employee->getId());
-        $this->verifyHourlyPayCheck($payCheck, $payDate, (4 * 12));
+        $this->verifyHourlyPayCheck($payCheck, $payDate, 1000 + 198);
 
         $payCheck1 = $payDay->getPayCheck($employee1->getId());
-        $this->verifyHourlyPayCheck($payCheck1, $payDate, (7 * 11));
+        $this->verifyHourlyPayCheck($payCheck1, $payDate, 1200 + 180);
     }
 }

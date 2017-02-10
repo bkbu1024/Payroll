@@ -2,8 +2,6 @@
 
 namespace Payroll\PaymentMethod;
 
-use Payroll\Contract\Paycheck;
-
 class DirectMethod implements PaymentMethod
 {
     /**
@@ -40,11 +38,6 @@ class DirectMethod implements PaymentMethod
     {
         $this->bank = $bank;
         $this->account = $account;
-    }
-
-    public function pay(Paycheck $paycheck)
-    {
-        // TODO: Implement pay() method.
     }
 
     public function getType()
