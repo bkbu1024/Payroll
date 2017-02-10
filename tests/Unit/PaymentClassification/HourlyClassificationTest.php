@@ -28,31 +28,12 @@ class HourlyClassificationTest extends TestCase
 
     public function testCalculatePayForTimeCardWithOvertime()
     {
-        /**
-         * @var Employee $employee
-         */
-        $employee = factory(Employee::class)->create([
-            'name'  => $this->faker->name,
-            'address' => $this->faker->address,
-            'hourly_rate' => 15,
-            'type' => EmployeeFactory::HOURLY
-        ]);
-
-        /**
-         * @var TimeCard $timeCard
-         */
-        $timeCard = factory(TimeCard::class)->create([
-            'employee_id' => $employee->getId(),
-            'date' => date('Y-m-d'),
-            'hours' => 10
-        ]);
-
-        $classification = new HourlyClassification($employee->getHourlyRate());
+        $timeCard = $this->getMockObject(TimeCard::class, ['getHours' => ['return' => 10]]);
+        $classification = new HourlyClassification(15);
         $netPay = $this->invokeMethod($classification, 'calculatePayForTimeCard', [$timeCard]);
-
         $this->assertEquals(8 * 15 + (2 * (15 * 1.5)), $netPay);
 
-        $timeCard->setHours(12);
+        $timeCard = $this->getMockObject(TimeCard::class, ['getHours' => ['return' => 12]]);
         $netPay = $this->invokeMethod($classification, 'calculatePayForTimeCard', [$timeCard]);
         $this->assertEquals(8 * 15 + (4 * (15 * 1.5)), $netPay);
     }
