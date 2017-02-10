@@ -19,7 +19,10 @@ class ChangeHoldMethodTest extends AbstractChangeEmployeeTestCase
 
     protected function change()
     {
-        $transaction = new ChangeHoldMethod($this->employee);
+        $transaction = $this->getMockObject(ChangeHoldMethod::class, [
+            'getPaymentMethod' => ['return' => new HoldMethod, 'times' => 'once']
+        ], [$this->employee]);
+
         $this->changedEmployee = $transaction->execute();
     }
 }

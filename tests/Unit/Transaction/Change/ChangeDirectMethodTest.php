@@ -22,7 +22,14 @@ class ChangeDirectMethodTest extends AbstractChangeEmployeeTestCase
     {
         $this->data['bank'] = $this->faker->company;
         $this->data['account'] = $this->faker->bankAccountNumber;
-        $transaction = new ChangeDirectMethod($this->employee, $this->data['bank'], $this->data['account']);
+        $constructorArgs = [
+            $this->employee, $this->data['bank'], $this->data['account']
+        ];
+
+        $transaction = $this->getMockObject(ChangeDirectMethod::class, [
+            'getPaymentMethod' => ['return' => new DirectMethod($this->data['bank'], $this->data['account']), 'times' => 'once']
+        ], $constructorArgs);
+
         $this->changedEmployee = $transaction->execute();
     }
 }
