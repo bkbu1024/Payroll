@@ -2,9 +2,11 @@
 
 namespace Payroll;
 
+use DateTime;
 use Illuminate\Database\Eloquent\Model;
+use Payroll\Contract\SalesReceipt as SalesReceiptContract;
 
-class SalesReceipt extends Model implements Contract\SalesReceipt
+class SalesReceipt extends Model implements SalesReceiptContract
 {
     /**
      * @var array
@@ -60,5 +62,19 @@ class SalesReceipt extends Model implements Contract\SalesReceipt
     public function setAmount($amount)
     {
         $this->amount = $amount;
+    }
+
+    /**
+     * @param string $payDate
+     * @return bool
+     */
+    public function isInPayPeriod($payDate)
+    {
+        $endDate = new DateTime($payDate);
+        $startDate = clone $endDate;
+        $startDate = $startDate->modify('-13 days');
+
+        return (strtotime($this->getDate()) >= $startDate->getTimestamp()
+            && strtotime($this->getDate()) <= $endDate->getTimestamp());
     }
 }

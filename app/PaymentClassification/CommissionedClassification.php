@@ -58,27 +58,12 @@ class CommissionedClassification extends PaymentClassification
             /**
              * @var SalesReceipt $salesReceipt
              */
-            if ($this->isInPayPeriod($salesReceipt->getDate(), $paycheck->getDate())) {
+            if ($salesReceipt->isInPayPeriod($paycheck->getDate())) {
                 $netPay += $this->calculatePayForSalesReceipt($salesReceipt);
             }
         }
 
         return $netPay;
-    }
-
-    /**
-     * @param string $salesReceiptDate
-     * @param string $payDate
-     * @return bool
-     */
-    public function isInPayPeriod($salesReceiptDate, $payDate)
-    {
-        $endDate = new DateTime($payDate);
-        $startDate = clone $endDate;
-        $startDate = $startDate->modify('-13 days');
-
-        return (strtotime($salesReceiptDate) >= $startDate->getTimestamp()
-            && strtotime($salesReceiptDate) <= $endDate->getTimestamp());
     }
 
     /**

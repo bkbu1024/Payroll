@@ -5,6 +5,7 @@ namespace Integration\PaymentClassification;
 use Faker\Factory;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Payroll\Contract\Employee;
+use Payroll\Factory\Model\Paycheck as PaycheckFactory;
 use Payroll\Paycheck;
 use Payroll\Tests\TestCase;
 use Payroll\Factory\Transaction\Add\SalesReceipt as AddSalesReceiptFactory;
@@ -16,14 +17,13 @@ class CommissionedClassificationTest extends TestCase
 
     public function testCalculatePay()
     {
-        $faker = Factory::create();
         $salary = 1200;
 
         /**
          * @var Employee $employee
          */
         $transaction = AddEmployeeFactory::create([
-            'name' => $faker->name, 'address' => $faker->address,
+            'name' => $this->faker->name, 'address' => $this->faker->address,
             'salary' => $salary, 'commissionRate' => 10]);
 
         $employee = $transaction->execute();
@@ -43,10 +43,7 @@ class CommissionedClassificationTest extends TestCase
         $transaction = AddSalesReceiptFactory::create($employee, '2017-01-14', 1000);
         $transaction->execute();
 
-        $paycheck = new Paycheck([
-            'date' => '2017-01-13'
-        ]);
-
+        $paycheck = PaycheckFactory::create('2017-01-13');
         $netPay = $employee->getPaymentClassification()->calculatePay($paycheck);
         $this->assertEquals($salary + 400, $netPay);
     }

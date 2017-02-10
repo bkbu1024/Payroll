@@ -26,4 +26,10 @@ interface SalesReceipt extends Identifiable, HasEmployee
      * @param float $amount
      */
     public function setAmount($amount);
+
+    /**
+     * @param string $payDate
+     * @return bool
+     */
+    public function isInPayPeriod($payDate);
 }

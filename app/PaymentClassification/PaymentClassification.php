@@ -29,6 +29,7 @@ abstract class PaymentClassification
     }
 
     /**
+     * @param Paycheck $paycheck
      * @return float
      */
     abstract public function calculatePay(Paycheck $paycheck);
