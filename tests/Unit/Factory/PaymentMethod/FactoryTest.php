@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\PaymentMethod;
+namespace Tests\Unit\Factory\PaymentMethod;
 
 use Faker\Factory as FakerFactory;
 use Payroll\PaymentMethod\DirectMethod;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Unit\PaymentClassification;
+namespace Tests\Unit\Factory\PaymentClassification;
 
 use Exception;
 use Payroll\Employee;
