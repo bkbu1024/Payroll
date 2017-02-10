@@ -3,6 +3,7 @@
 namespace Payroll\Tests\Unit\Transaction\Change;
 
 use Payroll\Factory\Model\Employee as EmployeeFactory;
+use Payroll\Factory\Model\Employee;
 use Payroll\PaymentClassification\HourlyClassification;
 use Payroll\PaymentClassification\SalariedClassification;
 use Payroll\PaymentSchedule\MonthlySchedule;
@@ -14,7 +15,15 @@ class ChangeSalariedPaymentClassificationTest extends AbstractChangeEmployeeTest
     protected function change()
     {
         $salary = $this->faker->randomFloat(2, 1000, 3000);
-        $transaction = new ChangeSalariedPaymentClassification($this->employee, $salary);
+        $constructorArgs = [
+            $this->employee, $salary
+        ];
+
+        $transaction = $this->getMockObject(ChangeSalariedPaymentClassification::class, [
+            'getPaymentClassification' => ['return' => new SalariedClassification($salary), 'times' => 'once'],
+            'getPaymentSchedule' => ['return' => new MonthlySchedule, 'times' => 'once'],
+            'getType' => ['return' => Employee::SALARIED, 'times' => 'once']
+        ], $constructorArgs);
 
         $this->changedEmployee = $transaction->execute();
         $this->data['salary'] = $salary;
