@@ -3,10 +3,8 @@
 namespace Payroll\Tests\Integration\Transaction;
 
 use Payroll\Contract\Employee as EmployeeContract;
-use Payroll\Factory\Model\Employee;
 use Payroll\Factory\Transaction\Add\Employee as AddEmployeeFactory;
 use Payroll\Factory\Transaction\Add\SalesReceipt as AddSalesReceiptFactory;
-use Payroll\Factory\Transaction\Add\TimeCard as AddTimeCardFactory;
 use Payroll\Factory\Transaction\PayDay as PayDayFactory;
 
 class PayDayCommissionTest extends AbstractPayDayTestCase
@@ -24,10 +22,10 @@ class PayDayCommissionTest extends AbstractPayDayTestCase
         $payDay->execute();
 
         $payCheck = $payDay->getPayCheck($employee->getId());
-        $this->verifyCommissionPayCheck($payCheck, $payDate, 1200);
+        $this->verifyPayCheck($payCheck, $payDate, 1200);
     }
 
-    public function testPayMoreCommissionEmployeeNoTimeCard()
+    public function testPayMoreCommissionEmployeeNoSalesReceipts()
     {
         $transaction = AddEmployeeFactory::create([
             'name' => $this->faker->name, 'address' => $this->faker->address,
@@ -47,10 +45,10 @@ class PayDayCommissionTest extends AbstractPayDayTestCase
         $payDay->execute();
 
         $payCheck = $payDay->getPayCheck($employee->getId());
-        $this->verifyCommissionPayCheck($payCheck, $payDate, 1200);
+        $this->verifyPayCheck($payCheck, $payDate, 1200);
 
         $payCheck1 = $payDay->getPayCheck($employee1->getId());
-        $this->verifyCommissionPayCheck($payCheck1, $payDate, 1500);
+        $this->verifyPayCheck($payCheck1, $payDate, 1500);
     }
 
     public function testPayOneCommissionEmployeeOneSalesReceipt()
@@ -72,7 +70,7 @@ class PayDayCommissionTest extends AbstractPayDayTestCase
         $payDay->execute();
 
         $payCheck = $payDay->getPayCheck($employee->getId());
-        $this->verifyHourlyPayCheck($payCheck, $payDate, 1200 +  158.4);
+        $this->verifyPayCheck($payCheck, $payDate, 1200 +  158.4);
     }
 
     public function testPayOneCommissionEmployeeMoreSalesReceipt()
@@ -97,7 +95,7 @@ class PayDayCommissionTest extends AbstractPayDayTestCase
         $payDay->execute();
 
         $payCheck = $payDay->getPayCheck($employee->getId());
-        $this->verifyHourlyPayCheck($payCheck, $payDate, 1200 + 158.4 + 132);
+        $this->verifyPayCheck($payCheck, $payDate, 1200 + 158.4 + 132);
     }
 
     public function testPayMoreCommissionEmployeeOneSalesReceipt()
@@ -129,10 +127,10 @@ class PayDayCommissionTest extends AbstractPayDayTestCase
         $payDay->execute();
 
         $payCheck = $payDay->getPayCheck($employee->getId());
-        $this->verifyHourlyPayCheck($payCheck, $payDate, 1200 + 158.4);
+        $this->verifyPayCheck($payCheck, $payDate, 1200 + 158.4);
 
         $payCheck1 = $payDay->getPayCheck($employee1->getId());
-        $this->verifyHourlyPayCheck($payCheck1, $payDate, 1300 + 110);
+        $this->verifyPayCheck($payCheck1, $payDate, 1300 + 110);
     }
 
     public function testPayMoreCommissionEmployeeMoreSalesReceipt()
@@ -170,10 +168,10 @@ class PayDayCommissionTest extends AbstractPayDayTestCase
         $payDay->execute();
 
         $payCheck = $payDay->getPayCheck($employee->getId());
-        $this->verifyHourlyPayCheck($payCheck, $payDate, 1200 + 158.4 + 132);
+        $this->verifyPayCheck($payCheck, $payDate, 1200 + 158.4 + 132);
 
         $payCheck1 = $payDay->getPayCheck($employee1->getId());
-        $this->verifyHourlyPayCheck($payCheck1, $payDate, 1300 + 132 + 110);
+        $this->verifyPayCheck($payCheck1, $payDate, 1300 + 132 + 110);
     }
 
     public function testPayOneCommissionEmployeeOnWrongDate()
@@ -260,7 +258,7 @@ class PayDayCommissionTest extends AbstractPayDayTestCase
         $payDay->execute();
 
         $payCheck = $payDay->getPayCheck($employee->getId());
-        $this->verifyHourlyPayCheck($payCheck, $payDate, 1000 + 198);
+        $this->verifyPayCheck($payCheck, $payDate, 1000 + 198);
     }
 
     public function testPayMoreCommissionedEmployeeWithsalesCardsSpanningTwoPayPeriods()
@@ -300,9 +298,9 @@ class PayDayCommissionTest extends AbstractPayDayTestCase
         $payDay->execute();
 
         $payCheck = $payDay->getPayCheck($employee->getId());
-        $this->verifyHourlyPayCheck($payCheck, $payDate, 1000 + 198);
+        $this->verifyPayCheck($payCheck, $payDate, 1000 + 198);
 
         $payCheck1 = $payDay->getPayCheck($employee1->getId());
-        $this->verifyHourlyPayCheck($payCheck1, $payDate, 1200 + 180);
+        $this->verifyPayCheck($payCheck1, $payDate, 1200 + 180);
     }
 }

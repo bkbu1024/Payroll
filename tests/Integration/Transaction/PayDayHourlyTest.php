@@ -24,7 +24,7 @@ class PayDayHourlyTest extends AbstractPayDayTestCase
         $payDay->execute();
 
         $payCheck = $payDay->getPayCheck($employee->getId());
-        $this->verifyHourlyPayCheck($payCheck, $payDate, 0);
+        $this->verifyPayCheck($payCheck, $payDate, 0);
     }
 
     public function testPayMoreHourlyEmployeeNoTimeCard()
@@ -39,7 +39,7 @@ class PayDayHourlyTest extends AbstractPayDayTestCase
         $payDay = PayDayFactory::createPayDay($payDate);
         $payDay->execute();
 
-        $this->verityMoreHourlyPayChecks($employees, $payDay, $payDate, $netPays);
+        $this->verifyMorePayChecks($employees, $payDay, $payDate, $netPays);
     }
 
     public function testPayOneHourlyEmployeeOneTimeCard()
@@ -61,7 +61,7 @@ class PayDayHourlyTest extends AbstractPayDayTestCase
         $payDay->execute();
 
         $payCheck = $payDay->getPayCheck($employee->getId());
-        $this->verifyHourlyPayCheck($payCheck, $payDate, 24);
+        $this->verifyPayCheck($payCheck, $payDate, 24);
     }
 
     public function testPayMoreHourlyEmployeeOneTimeCard()
@@ -86,7 +86,7 @@ class PayDayHourlyTest extends AbstractPayDayTestCase
         $payDay = PayDayFactory::createPayDay($payDate);
         $payDay->execute();
 
-        $this->verityMoreHourlyPayChecks($employees, $payDay, $payDate, $netPays);
+        $this->verifyMorePayChecks($employees, $payDay, $payDate, $netPays);
     }
 
     public function testPayOneHourlyEmployeeMoreTimeCard()
@@ -114,7 +114,7 @@ class PayDayHourlyTest extends AbstractPayDayTestCase
         $payDay->execute();
 
         $payCheck = $payDay->getPayCheck($employee->getId());
-        $this->verifyHourlyPayCheck($payCheck, $payDate, 168);
+        $this->verifyPayCheck($payCheck, $payDate, 168);
     }
 
     public function testPayMoreHourlyEmployeeMoreTimeCard()
@@ -146,7 +146,7 @@ class PayDayHourlyTest extends AbstractPayDayTestCase
         $payDay = PayDayFactory::createPayDay($payDate);
         $payDay->execute();
 
-        $this->verityMoreHourlyPayChecks($employees, $payDay, $payDate, $netPays);
+        $this->verifyMorePayChecks($employees, $payDay, $payDate, $netPays);
     }
 
     public function testPayOneHourlyEmployeeOvertimeOneTimeCard()
@@ -168,7 +168,7 @@ class PayDayHourlyTest extends AbstractPayDayTestCase
         $payDay->execute();
 
         $payCheck = $payDay->getPayCheck($employee->getId());
-        $this->verifyHourlyPayCheck($payCheck, $payDate, (8 * 12 + (1 * (12 * 1.5))));
+        $this->verifyPayCheck($payCheck, $payDate, (8 * 12 + (1 * (12 * 1.5))));
     }
 
     public function testPayMoreHourlyEmployeeOvertimeOneTimeCard()
@@ -200,10 +200,10 @@ class PayDayHourlyTest extends AbstractPayDayTestCase
         $payDay->execute();
 
         $payCheck = $payDay->getPayCheck($employee->getId());
-        $this->verifyHourlyPayCheck($payCheck, $payDate, (8 * 12 + (1 * (12 * 1.5))));
+        $this->verifyPayCheck($payCheck, $payDate, (8 * 12 + (1 * (12 * 1.5))));
 
         $payCheck1 = $payDay->getPayCheck($employee1->getId());
-        $this->verifyHourlyPayCheck($payCheck1, $payDate, (8 * 15 + (4 * (15 * 1.5))));
+        $this->verifyPayCheck($payCheck1, $payDate, (8 * 15 + (4 * (15 * 1.5))));
     }
 
     public function testPayOneHourlyEmployeeOnWrongDate()
@@ -289,7 +289,7 @@ class PayDayHourlyTest extends AbstractPayDayTestCase
         $payDay->execute();
 
         $payCheck = $payDay->getPayCheck($employee->getId());
-        $this->verifyHourlyPayCheck($payCheck, $payDate, (4 * 12));
+        $this->verifyPayCheck($payCheck, $payDate, (4 * 12));
     }
 
     public function testPayMoreHourlyEmployeeWithTimeCardsSpanningTwoPayPeriods()
@@ -329,9 +329,9 @@ class PayDayHourlyTest extends AbstractPayDayTestCase
         $payDay->execute();
 
         $payCheck = $payDay->getPayCheck($employee->getId());
-        $this->verifyHourlyPayCheck($payCheck, $payDate, (4 * 12));
+        $this->verifyPayCheck($payCheck, $payDate, (4 * 12));
 
         $payCheck1 = $payDay->getPayCheck($employee1->getId());
-        $this->verifyHourlyPayCheck($payCheck1, $payDate, (7 * 11));
+        $this->verifyPayCheck($payCheck1, $payDate, (7 * 11));
     }
 }

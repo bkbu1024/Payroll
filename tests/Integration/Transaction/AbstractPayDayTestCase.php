@@ -9,17 +9,12 @@ use Payroll\Factory\Transaction\Add\Employee as AddEmployeeFactory;
 
 class AbstractPayDayTestCase extends TestCase
 {
-    protected function verifyHourlyPayCheck(Paycheck $payCheck, $payDate, $netPay)
+    protected function verifyPayCheck(Paycheck $payCheck, $payDate, $netPay)
     {
         $this->assertNotNull($payCheck);
         $this->assertEquals($payDate, $payCheck->getDate());
         $this->assertEquals($netPay, $payCheck->getNetPay());
         $this->assertEquals('HOLD', $payCheck->getType());
-    }
-
-    protected function verifyCommissionPayCheck(Paycheck $payCheck, $payDate, $netPay)
-    {
-        $this->verifyHourlyPayCheck($payCheck, $payDate, $netPay);
     }
 
     protected function getEmployees($count, $type)
@@ -60,11 +55,11 @@ class AbstractPayDayTestCase extends TestCase
         }
     }
 
-    protected function verityMoreHourlyPayChecks($employees, $payDay, $payDate, $netPays)
+    protected function verifyMorePayChecks($employees, $payDay, $payDate, $netPays)
     {
         foreach ($employees as $employee) {
             $payCheck = $payDay->getPayCheck($employee->getId());
-            $this->verifyHourlyPayCheck($payCheck, $payDate, $netPays[$employee->getId()]);
+            $this->verifyPayCheck($payCheck, $payDate, $netPays[$employee->getId()]);
         }
     }
 }
