@@ -5,7 +5,6 @@ namespace Payroll\Tests\Unit\Transaction\Add;
 use Payroll\Factory\Model\Employee;
 use Payroll\PaymentClassification\HourlyClassification;
 use Payroll\PaymentSchedule\WeeklySchedule;
-use Payroll\Transaction\Add\AddEmployee;
 use Payroll\Transaction\Add\AddHourlyEmployee;
 
 class AddHourlyEmployeeTest extends AbstractAddEmployeeTestCase
@@ -14,10 +13,20 @@ class AddHourlyEmployeeTest extends AbstractAddEmployeeTestCase
     {
         $this->data['hourlyRate'] = $this->faker->randomFloat(2, 12, 30);
 
-        $transaction = new AddHourlyEmployee(
+        $constructorArgs = [
             $this->data['name'],
             $this->data['address'],
-            $this->data['hourlyRate']);
+            $this->data['hourlyRate']];
+
+        $transaction = $this->getMockObject(AddHourlyEmployee::class, [
+            'getPaymentClassification' => [
+                'return' => new HourlyClassification($this->data['hourlyRate']),
+                'times' => 'once'],
+            'getPaymentSchedule' => [
+                'return' => new WeeklySchedule,
+                'times' => 'once'
+            ]
+        ], $constructorArgs);
 
         $this->employee = $transaction->execute();
     }

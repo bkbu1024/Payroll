@@ -5,7 +5,6 @@ namespace Payroll\Tests\Unit\Transaction\Add;
 use Payroll\Factory\Model\Employee;
 use Payroll\PaymentClassification\CommissionedClassification;
 use Payroll\PaymentSchedule\BiweeklySchedule;
-use Payroll\PaymentSchedule\WeeklySchedule;
 use Payroll\Transaction\Add\AddCommissionedEmployee;
 
 class AddCommissionedEmployeeTest extends AbstractAddEmployeeTestCase
