@@ -26,4 +26,10 @@ interface TimeCard extends Identifiable, HasEmployee
      * @param float $hours
      */
     public function setHours($hours);
+
+    /**
+     * @param string $payDate
+     * @return bool
+     */
+    public function isInPayPeriod($payDate);
 }

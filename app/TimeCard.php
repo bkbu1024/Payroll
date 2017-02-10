@@ -61,4 +61,18 @@ class TimeCard extends Model implements \Payroll\Contract\TimeCard
     {
         $this->hours = $hours;
     }
+
+    /**
+     * @param string $payDate
+     * @return bool
+     */
+    public function isInPayPeriod($payDate)
+    {
+        $endDate = new DateTime($payDate);
+        $startDate = clone $endDate;
+        $startDate = $startDate->modify('-6 days');
+
+        return (strtotime($this->getDate()) >= $startDate->getTimestamp()
+            && strtotime($this->getDate()) <= $endDate->getTimestamp());
+    }
 }

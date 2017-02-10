@@ -45,27 +45,12 @@ class HourlyClassification extends PaymentClassification
             /**
              * @var TimeCard $timeCard
              */
-            if ($this->isInPayPeriod($timeCard->getDate(), $paycheck->getDate())) {
+            if ($timeCard->isInPayPeriod($paycheck->getDate())) {
                 $netPay += $this->calculatePayForTimeCard($timeCard);
             }
         }
 
         return $netPay;
-    }
-
-    /**
-     * @param string $timeCardDate
-     * @param string $payDate
-     * @return bool
-     */
-    protected function isInPayPeriod($timeCardDate, $payDate)
-    {
-        $endDate = new DateTime($payDate);
-        $startDate = clone $endDate;
-        $startDate = $startDate->modify('-6 days');
-
-        return (strtotime($timeCardDate) >= $startDate->getTimestamp()
-            && strtotime($timeCardDate) <= $endDate->getTimestamp());
     }
 
     /**

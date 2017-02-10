@@ -2,7 +2,6 @@
 
 namespace Integration\PaymentClassification;
 
-use Faker\Factory;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Payroll\Contract\Employee;
 use Payroll\Factory\Model\Paycheck as PaycheckFactory;

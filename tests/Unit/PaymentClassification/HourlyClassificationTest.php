@@ -2,7 +2,6 @@
 
 namespace Unit\PaymentClassification;
 
-use Faker\Factory;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Payroll\Employee;
 use Payroll\Factory\Model\Employee as EmployeeFactory;
@@ -16,45 +15,25 @@ class HourlyClassificationTest extends TestCase
 
     public function testCalculatePayForTimeCard()
     {
-        $faker = Factory::create();
-        /**
-         * @var Employee $employee
-         */
-        $employee = factory(Employee::class)->create([
-            'name'  => $faker->name,
-            'address' => $faker->address,
-            'hourly_rate' => 15,
-            'type' => EmployeeFactory::HOURLY
-        ]);
+        $timeCard = $this->getMockObject(TimeCard::class, ['getHours' => ['return' => 5]]);
 
-        /**
-         * @var TimeCard $timeCard
-         */
-        $timeCard = factory(TimeCard::class)->create([
-            'employee_id' => $employee->getId(),
-            'date' => date('Y-m-d'),
-            'hours' => 5
-        ]);
-
-        $classification = new HourlyClassification($employee->getHourlyRate());
+        $classification = new HourlyClassification(15);
         $netPay = $this->invokeMethod($classification, 'calculatePayForTimeCard', [$timeCard]);
-
         $this->assertEquals(75, $netPay);
 
-        $timeCard->setHours(7.5);
+        $timeCard = $this->getMockObject(TimeCard::class, ['getHours' => ['return' => 7.5]]);
         $netPay = $this->invokeMethod($classification, 'calculatePayForTimeCard', [$timeCard]);
         $this->assertEquals(112.5, $netPay);
     }
 
     public function testCalculatePayForTimeCardWithOvertime()
     {
-        $faker = Factory::create();
         /**
          * @var Employee $employee
          */
         $employee = factory(Employee::class)->create([
-            'name'  => $faker->name,
-            'address' => $faker->address,
+            'name'  => $this->faker->name,
+            'address' => $this->faker->address,
             'hourly_rate' => 15,
             'type' => EmployeeFactory::HOURLY
         ]);
