@@ -2,11 +2,8 @@
 
 namespace Unit\PaymentClassification;
 
-use Faker\Factory;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Payroll\Contract\SalesReceipt;
 use Payroll\Employee;
-use Payroll\Factory\Model\Employee as EmployeeFactory;
 use Payroll\PaymentClassification\CommissionedClassification;
 use Payroll\SalesReceipt as SalesReceiptModel;
 use Payroll\Tests\TestCase;
@@ -17,34 +14,42 @@ class CommissionedClassificationTest extends TestCase
 
     public function testCalculatePayForSalesReceipt()
     {
-        $faker = Factory::create();
         /**
-         * @var Employee $employee
+         | Sales Receipt Amount = 500
+         | Commission Rate = 10%
+         | ----------
+         | Pay for this one = 50
          */
-        $employee = factory(Employee::class)->create([
-            'name'  => $faker->name,
-            'address' => $faker->address,
-            'salary' => 1200,
-            'type' => EmployeeFactory::COMMISSION,
-            'commission_rate' => 10
+
+        $mocks = $this->getMockObjects([
+            SalesReceiptModel::class => [
+                'getAmount' => ['return' => 500]
+            ],
+            Employee::class => [
+                'getCommissionRate' => ['return' => 10]
+            ]
         ]);
 
-        /**
-         * @var SalesReceipt $salesReceipt
-         */
-        $salesReceipt = factory(SalesReceiptModel::class)->create([
-            'employee_id' => $employee->getId(),
-            'date' => date('Y-m-d'),
-            'amount' => 500
-        ]);
+        $employee = $mocks[Employee::class];
+        $salesReceipt = $mocks[SalesReceiptModel::class];
 
-        $classification = new CommissionedClassification($employee->getSalary(), $employee->getCommissionRate());
+        $classification = new CommissionedClassification(1000, $employee->getCommissionRate());
         $classification->setEmployee($employee);
         $netPay = $this->invokeMethod($classification, 'calculatePayForSalesReceipt', [$salesReceipt]);
 
         $this->assertEquals(50, $netPay);
 
-        $salesReceipt->setAmount(1125);
+        /*
+         | Sales Receipt Amount = 1125
+         | Commission Rate = 10%
+         | ----------
+         | Pay for this one = 112.5
+         */
+
+        $salesReceipt = $this->getMockObject(SalesReceiptModel::class, [
+            'getAmount' => ['return' => 1125]
+        ]);
+
         $netPay = $this->invokeMethod($classification, 'calculatePayForSalesReceipt', [$salesReceipt]);
         $this->assertEquals(112.5, $netPay);
     }

@@ -2,6 +2,7 @@
 
 namespace Unit\Factory\Transaction\Add;
 
+use Exception;
 use Payroll\Factory\Transaction\Add\Employee as AddEmployeeFactory;
 use Payroll\Tests\TestCase;
 use Payroll\Transaction\Add\AddCommissionedEmployee;
@@ -53,7 +54,7 @@ class EmployeeTest extends TestCase
         try {
             AddEmployeeFactory::create($this->baseData);
             $this->fail();
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             $this->assertEquals('Never should reach here', $ex->getMessage());
         }
     }
