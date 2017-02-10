@@ -5,8 +5,8 @@ namespace Payroll\Tests\Unit\Transaction\Add;
 use Payroll\Factory\Model\Employee;
 use Payroll\PaymentClassification\CommissionedClassification;
 use Payroll\PaymentSchedule\BiweeklySchedule;
+use Payroll\PaymentSchedule\WeeklySchedule;
 use Payroll\Transaction\Add\AddCommissionedEmployee;
-use Payroll\Transaction\Add\AddEmployee;
 
 class AddCommissionedEmployeeTest extends AbstractAddEmployeeTestCase
 {
@@ -15,11 +15,22 @@ class AddCommissionedEmployeeTest extends AbstractAddEmployeeTestCase
         $this->data['salary'] = $this->faker->randomFloat(2, 750, 2250);
         $this->data['commissionRate'] = $this->faker->randomFloat(2, 2, 15);
 
-        $transaction = new AddCommissionedEmployee(
+        // AddCommissionedEmployee
+        $constructorArgs = [
             $this->data['name'],
             $this->data['address'],
             $this->data['salary'],
-            $this->data['commissionRate']);
+            $this->data['commissionRate']];
+
+        $transaction = $this->getMockObject(AddCommissionedEmployee::class, [
+            'getPaymentClassification' => [
+                'return' => new CommissionedClassification($this->data['salary'], $this->data['commissionRate']),
+                'times' => 'once'],
+            'getPaymentSchedule' => [
+                'return' => new BiweeklySchedule,
+                'times' => 'once'
+            ]
+        ], $constructorArgs);
 
         $this->employee = $transaction->execute();
     }

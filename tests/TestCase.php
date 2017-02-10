@@ -30,11 +30,12 @@ abstract class TestCase extends BaseTestCase
         return $method->invokeArgs($object, $parameters);
     }
 
-    protected function getMockObjects(array $data)
+    protected function getMockObjects(array $data, array $constructorArgs = [])
     {
         $mocks = [];
         foreach ($data as $class => $methods) {
             $mock = $this->getMockBuilder($class)
+                ->setConstructorArgs($constructorArgs)
                 ->setMethods(array_keys($methods))
                 ->getMock();
 
@@ -56,13 +57,13 @@ abstract class TestCase extends BaseTestCase
      * @param array $methods
      * @return mixed
      */
-    protected function getMockObject($class, array $methods)
+    protected function getMockObject($class, array $methods, array $constructorArgs = [])
     {
         $data = [
             $class => $methods
         ];
 
-        $objects = $this->getMockObjects($data);
+        $objects = $this->getMockObjects($data, $constructorArgs);
         return $objects[$class];
 
     }
