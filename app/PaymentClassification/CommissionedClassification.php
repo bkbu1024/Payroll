@@ -54,6 +54,7 @@ class CommissionedClassification extends PaymentClassification
         $salesReceipts = $this->employee->getSalesReceipts();
         $netPay = $this->employee->getSalary();
 
+
         foreach ($salesReceipts as $salesReceipt) {
             /**
              * @var SalesReceipt $salesReceipt
@@ -74,7 +75,7 @@ class CommissionedClassification extends PaymentClassification
     {
         $amount = $salesReceipt->getAmount();
 
-        return $amount * (1 / $this->employee->getCommissionRate());
+        return $amount * ($this->employee->getCommissionRate() / 100);
     }
 
     /**

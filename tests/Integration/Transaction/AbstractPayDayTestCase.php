@@ -17,6 +17,11 @@ class AbstractPayDayTestCase extends TestCase
         $this->assertEquals('HOLD', $payCheck->getType());
     }
 
+    protected function verifyCommissionPayCheck(Paycheck $payCheck, $payDate, $netPay)
+    {
+        $this->verifyHourlyPayCheck($payCheck, $payDate, $netPay);
+    }
+
     protected function getEmployees($count, $type)
     {
         $employees = [];
