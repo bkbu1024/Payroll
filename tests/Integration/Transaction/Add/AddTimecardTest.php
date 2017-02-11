@@ -28,6 +28,8 @@ class AddTimecardTest extends TestCase
         $transaction = AddTimeCardFactory::create($employee, date('Y-m-d'), 8.0);
         $transaction->execute();
 
+
+
         /**
          * @var HourlyClassification $paymentClassification
          */
@@ -37,6 +39,8 @@ class AddTimecardTest extends TestCase
         $timeCard = $paymentClassification->getTimeCard((new \DateTime())->format('Y-m-d'));
         $this->assertEquals(8.0, $timeCard->hours);
         $this->assertEquals($employee->getId(), $timeCard->employee_id);
+
+        $this->assertDatabaseHas('time_cards', $timeCard->toArray());
     }
 
     public function testExecuteInvalidUser()

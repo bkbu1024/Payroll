@@ -46,6 +46,8 @@ class AddSalesReceiptTest extends TestCase
         $salesReceipt = $paymentClassification->getSalesReceipt((new DateTime())->format('Y-m-d'));
         $this->assertEquals($amount, $salesReceipt->getAmount());
         $this->assertEquals($employee->getId(), $salesReceipt->getEmployeeId());
+
+        $this->assertDatabaseHas('sales_receipts', $salesReceipt->toArray());
     }
 
     public function testExecuteInvalidEmployee()

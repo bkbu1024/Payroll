@@ -32,4 +32,9 @@ interface SalesReceipt extends Identifiable, HasEmployee
      * @return bool
      */
     public function isInPayPeriod($payDate);
+
+    /**
+     * @return array
+     */
+    public function toArray();
 }

@@ -4,8 +4,9 @@ namespace Payroll;
 
 use DateTime;
 use Illuminate\Database\Eloquent\Model;
+use Payroll\Contract\TimeCard as TimeCardContract;
 
-class TimeCard extends Model implements \Payroll\Contract\TimeCard
+class TimeCard extends Model implements TimeCardContract
 {
     /**
      * @var array
