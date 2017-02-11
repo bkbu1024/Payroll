@@ -13,11 +13,6 @@ abstract class AbstractChangeEmployeeTestCase extends TestCase
     use DatabaseTransactions;
 
     /**
-     * @var \Faker\Generator
-     */
-    protected $faker = null;
-
-    /**
      * @var array
      */
     protected $data = [];

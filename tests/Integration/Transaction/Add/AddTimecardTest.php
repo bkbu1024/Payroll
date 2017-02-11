@@ -28,8 +28,6 @@ class AddTimecardTest extends TestCase
         $transaction = AddTimeCardFactory::create($employee, date('Y-m-d'), 8.0);
         $transaction->execute();
 
-
-
         /**
          * @var HourlyClassification $paymentClassification
          */

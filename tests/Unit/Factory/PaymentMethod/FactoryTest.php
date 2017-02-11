@@ -11,13 +11,6 @@ use Payroll\Tests\TestCase;
 
 class FactoryTest extends TestCase
 {
-    protected $faker = null;
-
-    public function __construct()
-    {
-        $this->faker = FakerFactory::create();
-    }
-
     public function testCreateByDataMail()
     {
         $method = MethodFactory::createByData([

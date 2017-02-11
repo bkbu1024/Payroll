@@ -11,11 +11,6 @@ abstract class AbstractChangeEmployeeTestCase extends TestCase
     use DatabaseTransactions;
 
     /**
-     * @var \Faker\Generator
-     */
-    protected $faker = null;
-
-    /**
      * @var array
      */
     protected $data = [];
@@ -29,11 +24,6 @@ abstract class AbstractChangeEmployeeTestCase extends TestCase
      * @var Employee
      */
     protected $changedEmployee = null;
-
-    public function __construct()
-    {
-        $this->faker = Factory::create();
-    }
 
     abstract protected function setEmployee();
 

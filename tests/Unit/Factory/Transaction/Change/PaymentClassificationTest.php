@@ -14,8 +14,6 @@ use Payroll\Transaction\Change\ChangeSalariedPaymentClassification;
 
 class PaymentClassificationTest extends TestCase
 {
-    protected $faker;
-
     public function __construct()
     {
         $this->faker = Factory::create();

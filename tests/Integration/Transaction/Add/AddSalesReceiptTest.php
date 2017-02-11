@@ -20,16 +20,15 @@ class AddSalesReceiptTest extends TestCase
 
     public function testExecute()
     {
-        $faker = Factory::create();
         /**
          * @var EmployeeContract
          */
         $transaction = AddEmployeeFactory::create([
-            'name' => $faker->name, 'address' => $faker->address,
+            'name' => $this->faker->name, 'address' => $this->faker->address,
             'salary' => 1200, 'commissionRate' => 10]);
 
         $employee = $transaction->execute();
-        $amount = $faker->randomFloat(2, 320, 1250);
+        $amount = $this->faker->randomFloat(2, 320, 1250);
 
         $transaction = AddSalesReceiptFactory::create($employee, date('Y-m-d'), $amount);
         $transaction->execute();
@@ -52,16 +51,15 @@ class AddSalesReceiptTest extends TestCase
 
     public function testExecuteInvalidEmployee()
     {
-        $faker = Factory::create();
         /**
          * @var EmployeeContract
          */
         $employee = AddTransactionFactory::create([
-            'name' => $faker->name, 'address' => $faker->address,
-            'salary' => $faker->randomFloat(2, 1000, 3000)
+            'name' => $this->faker->name, 'address' => $this->faker->address,
+            'salary' => $this->faker->randomFloat(2, 1000, 3000)
         ])->execute();
 
-        $amount = $faker->randomFloat(2, 320, 1250);
+        $amount = $this->faker->randomFloat(2, 320, 1250);
 
         try {
             $transaction = AddSalesReceiptFactory::create($employee, date('Y-m-d'), $amount);
