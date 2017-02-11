@@ -14,4 +14,5 @@ interface Paycheck extends Identifiable, HasEmployee, CanSave
     public function setNetPay($netPay);
     public function getType();
     public function setType($type);
+    public function toArray();
 }

@@ -195,6 +195,7 @@ class PayDayCommissionTest extends AbstractPayDayTestCase
 
         $payCheck = $payDay->getPayCheck($employee->getId());
         $this->assertNull($payCheck);
+        $this->assertDatabaseMissing('paychecks', ['employee_id' => $employee->getId()]);
     }
 
     public function testPayMoreCommissionEmployeeOnWrongDate()
@@ -228,12 +229,13 @@ class PayDayCommissionTest extends AbstractPayDayTestCase
 
         $payCheck = $payDay->getPayCheck($employee->getId());
         $this->assertNull($payCheck);
+        $this->assertDatabaseMissing('paychecks', ['employee_id' => $employee->getId()]);
 
         $payCheck1 = $payDay->getPayCheck($employee1->getId());
         $this->assertNull($payCheck1);
+        $this->assertDatabaseMissing('paychecks', ['employee_id' => $employee1->getId()]);
     }
 
-    // @todo
     public function testPayOneCommissionedEmployeeWithSalesReceiptsSpanningTwoPayPeriods()
     {
         $payDate = '2017-02-10'; // Friday
@@ -259,9 +261,10 @@ class PayDayCommissionTest extends AbstractPayDayTestCase
 
         $payCheck = $payDay->getPayCheck($employee->getId());
         $this->verifyPayCheck($payCheck, $payDate, 1000 + 198);
+        $this->assertDatabaseHas('paychecks', $payCheck->toArray());
     }
 
-    public function testPayMoreCommissionedEmployeeWithsalesCardsSpanningTwoPayPeriods()
+    public function testPayMoreCommissionedEmployeeWithSalesCardsSpanningTwoPayPeriods()
     {
         $payDate = '2017-02-10'; // Friday
         $dateInPreviousPeriod = '2017-01-18';
@@ -299,8 +302,10 @@ class PayDayCommissionTest extends AbstractPayDayTestCase
 
         $payCheck = $payDay->getPayCheck($employee->getId());
         $this->verifyPayCheck($payCheck, $payDate, 1000 + 198);
+        $this->assertDatabaseHas('paychecks', $payCheck->toArray());
 
         $payCheck1 = $payDay->getPayCheck($employee1->getId());
         $this->verifyPayCheck($payCheck1, $payDate, 1200 + 180);
+        $this->assertDatabaseHas('paychecks', $payCheck1->toArray());
     }
 }
