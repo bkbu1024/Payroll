@@ -104,5 +104,14 @@ interface Employee extends Identifiable, Nameable, HasTimeCards, HasSalesReceipt
      */
     public function isPayDay($payDate);
 
+    /**
+     * @param Paycheck $paycheck
+     * @return void
+     */
     public function payday(Paycheck $paycheck);
+
+    /**
+     * @return array
+     */
+    public function toArray();
 }
