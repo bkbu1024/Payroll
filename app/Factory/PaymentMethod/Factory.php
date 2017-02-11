@@ -8,6 +8,10 @@ use Payroll\PaymentMethod\MailMethod;
 
 class Factory
 {
+    const MAIL_METHOD = 'MAIL';
+    const DIRECT_METHOD = 'DIRECT';
+    const HOLD_METHOD = 'HOLD';
+
     /**
      * @param array $data
      * @return PaymentMethod

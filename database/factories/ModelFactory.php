@@ -30,6 +30,7 @@ $factory->define(Payroll\Employee::class, function (Faker\Generator $faker, arra
         'name' => $faker->name,
         'address' => $faker->address,
         'type' => $attributes['type'],
+        'payment_method' => Payroll\Factory\PaymentMethod\Factory::HOLD_METHOD
     ];
 
     switch ($attributes['type']) {

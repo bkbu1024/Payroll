@@ -18,6 +18,7 @@ abstract class ChangePaymentMethod extends ChangeEmployee
     protected function change()
     {
         $this->employee->setPaymentMethod($this->getPaymentMethod());
+        $this->employee->save();
 
         return $this->employee;
     }

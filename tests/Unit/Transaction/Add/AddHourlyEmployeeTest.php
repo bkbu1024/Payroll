@@ -29,6 +29,7 @@ class AddHourlyEmployeeTest extends AbstractAddEmployeeTestCase
         ], $constructorArgs);
 
         $this->employee = $transaction->execute();
+        $this->setPaymentMethod();
     }
 
     protected function assertTypeSpecificData()

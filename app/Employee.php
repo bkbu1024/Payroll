@@ -167,6 +167,7 @@ class Employee extends Model implements Contract\Employee
     public function setPaymentMethod(PaymentMethod $paymentMethod)
     {
         $this->paymentMethod = $paymentMethod;
+        $this->payment_method = $paymentMethod->getType();
     }
 
     /**

@@ -4,6 +4,7 @@ namespace Payroll\Transaction\Add;
 
 use Payroll\Contract\Employee;
 use Payroll\PaymentClassification\PaymentClassification;
+use Payroll\PaymentMethod\PaymentMethod;
 use Payroll\PaymentSchedule\PaymentSchedule;
 use Payroll\Factory\Model\Employee as EmployeeFactory;
 use Payroll\Factory\PaymentClassification\Factory as ClassificationFactory;

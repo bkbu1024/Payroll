@@ -5,7 +5,6 @@ namespace Payroll\Tests\Unit\Transaction\Add;
 use Payroll\Factory\Model\Employee as EmployeeFactory;
 use Payroll\PaymentClassification\SalariedClassification;
 use Payroll\PaymentSchedule\MonthlySchedule;
-use Payroll\PaymentSchedule\WeeklySchedule;
 use Payroll\Transaction\Add\AddSalariedEmployee;
 
 class AddSalariedEmployeeTest extends AbstractAddEmployeeTestCase
@@ -30,6 +29,7 @@ class AddSalariedEmployeeTest extends AbstractAddEmployeeTestCase
         ], $constructorArgs);
 
         $this->employee = $transaction->execute();
+        $this->setPaymentMethod();
     }
 
     protected function assertTypeSpecificData()

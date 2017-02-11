@@ -3,6 +3,7 @@
 namespace Payroll\Tests\Unit\Transaction\Add;
 
 use Payroll\Contract\Employee;
+use Payroll\Factory\PaymentMethod\Factory;
 use Payroll\Tests\TestCase;
 use Payroll\PaymentMethod\HoldMethod;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -30,7 +31,10 @@ abstract class AbstractAddEmployeeTestCase extends TestCase
         ];
     }
 
-    abstract protected function setEmployee();
+    protected function setPaymentMethod()
+    {
+        $this->employee->setPaymentMethod(Factory::createByData());
+    }
 
     abstract protected function assertTypeSpecificData();
 
