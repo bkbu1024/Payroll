@@ -261,7 +261,6 @@ class PayDayCommissionTest extends AbstractPayDayTestCase
 
         $payCheck = $payDay->getPayCheck($employee->getId());
         $this->verifyPayCheck($payCheck, $payDate, 1000 + 198);
-        $this->assertDatabaseHas('paychecks', $payCheck->toArray());
     }
 
     public function testPayMoreCommissionedEmployeeWithSalesCardsSpanningTwoPayPeriods()
@@ -302,10 +301,8 @@ class PayDayCommissionTest extends AbstractPayDayTestCase
 
         $payCheck = $payDay->getPayCheck($employee->getId());
         $this->verifyPayCheck($payCheck, $payDate, 1000 + 198);
-        $this->assertDatabaseHas('paychecks', $payCheck->toArray());
 
         $payCheck1 = $payDay->getPayCheck($employee1->getId());
         $this->verifyPayCheck($payCheck1, $payDate, 1200 + 180);
-        $this->assertDatabaseHas('paychecks', $payCheck1->toArray());
     }
 }
