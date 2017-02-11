@@ -25,4 +25,10 @@ class ChangeHoldMethodTest extends AbstractChangeEmployeeTestCase
 
         $this->changedEmployee = $transaction->execute();
     }
+
+    protected function setEmployee()
+    {
+        parent::setEmployee();
+        $this->employee->setType('SALARIED');
+    }
 }

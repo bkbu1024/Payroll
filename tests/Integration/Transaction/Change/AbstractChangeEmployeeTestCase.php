@@ -44,7 +44,9 @@ abstract class AbstractChangeEmployeeTestCase extends TestCase
     public function testExecute()
     {
         $this->setEmployee();
+        $this->employee->save();
         $this->change();
+        $this->assertDatabaseHas('employees', $this->changedEmployee->toArray());
         $this->assertTypeSpecificData();
     }
 }

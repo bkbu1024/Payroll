@@ -36,6 +36,7 @@ class ChangeHourlyPaymentClassificationTest extends AbstractChangeEmployeeTestCa
 
         $this->employee->setPaymentClassification(new SalariedClassification($this->data['salary']));
         $this->employee->setPaymentSchedule(new MonthlySchedule);
+        $this->employee->setType('SALARIED');
     }
 
     protected function assertTypeSpecificData()

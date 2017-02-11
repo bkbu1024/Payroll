@@ -40,6 +40,7 @@ class ChangeCommissionedPaymentClassificationTest extends AbstractChangeEmployee
         $this->employee->setPaymentSchedule(new WeeklySchedule);
         $this->employee->setPaymentClassification(
             new HourlyClassification($this->data['hourlyRate']));
+        $this->employee->setType('HOURLY');
     }
 
     protected function assertTypeSpecificData()
