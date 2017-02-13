@@ -2,10 +2,11 @@
 
 namespace Payroll\PaymentClassification;
 
-use DateTime;
+use Payroll\Contract\Employee;
 use Payroll\Contract\Paycheck;
 use Payroll\Contract\TimeCard;
 use Illuminate\Database\Eloquent\Collection;
+use Payroll\Factory\PaymentClassification\Factory;
 
 class HourlyClassification extends PaymentClassification
 {
@@ -91,5 +92,21 @@ class HourlyClassification extends PaymentClassification
     public function timeCards()
     {
         return $this->employee->getTimeCards();
+    }
+
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+        return Factory::HOURLY;
+    }
+
+    /**
+     * @param Employee $employee
+     */
+    public function setEmployeeData(Employee $employee)
+    {
+        $employee->setHourlyRate($this->hourlyRate);
     }
 }

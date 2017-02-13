@@ -46,6 +46,6 @@ class ChangeSalariedPaymentClassificationTest extends AbstractChangeEmployeeTest
          */
         $paymentSchedule = $this->changedEmployee->getPaymentSchedule();
         $this->assertTrue($paymentSchedule instanceof MonthlySchedule);
-        $this->assertEquals(EmployeeFactory::SALARIED, $this->changedEmployee->getType());
+        $this->assertEquals(EmployeeFactory::SALARIED, $this->changedEmployee->getPaymentClassification()->getType());
     }
 }

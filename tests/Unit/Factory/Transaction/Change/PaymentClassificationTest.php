@@ -25,7 +25,7 @@ class PaymentClassificationTest extends TestCase
          * @var EmployeeContract $employee
          */
         $employee = factory(Employee::class)->create([
-            'type' => EmployeeFactory::SALARIED
+            'payment_classification' => EmployeeFactory::SALARIED
         ]);
 
         $transaction = PaymentClassification::create($employee, [
@@ -41,7 +41,7 @@ class PaymentClassificationTest extends TestCase
          * @var EmployeeContract $employee
          */
         $employee = factory(Employee::class)->create([
-            'type' => EmployeeFactory::COMMISSION
+            'payment_classification' => EmployeeFactory::COMMISSION
         ]);
 
         $transaction = PaymentClassification::create($employee, [
@@ -58,7 +58,7 @@ class PaymentClassificationTest extends TestCase
          * @var EmployeeContract $employee
          */
         $employee = factory(Employee::class)->create([
-            'type' => EmployeeFactory::HOURLY
+            'payment_classification' => EmployeeFactory::HOURLY
         ]);
 
         $transaction = PaymentClassification::create($employee, [
@@ -74,7 +74,7 @@ class PaymentClassificationTest extends TestCase
          * @var EmployeeContract $employee
          */
         $employee = factory(Employee::class)->create([
-            'type' => EmployeeFactory::COMMISSION
+            'payment_classification' => EmployeeFactory::COMMISSION
         ]);
 
         try {

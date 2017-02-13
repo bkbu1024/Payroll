@@ -35,11 +35,6 @@ interface Employee extends Identifiable, Nameable, HasTimeCards, HasSalesReceipt
     public function getCommissionRate();
 
     /**
-     * @return string
-     */
-    public function getType();
-
-    /**
      * @return PaymentClassification
      */
     public function getPaymentClassification();
@@ -73,11 +68,6 @@ interface Employee extends Identifiable, Nameable, HasTimeCards, HasSalesReceipt
      * @param float $commissionRate
      */
     public function setCommissionRate($commissionRate);
-
-    /**
-     * @param string $type
-     */
-    public function setType($type);
 
     /**
      * @param PaymentClassification $paymentClassification

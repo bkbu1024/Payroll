@@ -2,6 +2,7 @@
 
 namespace Payroll\Tests\Unit\Transaction\Change;
 
+use Payroll\PaymentClassification\SalariedClassification;
 use Payroll\PaymentMethod\HoldMethod;
 use Payroll\PaymentMethod\PaymentMethod;
 use Payroll\Transaction\Change\ChangeHoldMethod;
@@ -29,6 +30,7 @@ class ChangeHoldMethodTest extends AbstractChangeEmployeeTestCase
     protected function setEmployee()
     {
         parent::setEmployee();
-        $this->employee->setType('SALARIED');
+        $this->employee->setPaymentClassification(
+            new SalariedClassification($this->faker->randomFloat(2, 1200, 3500)));
     }
 }

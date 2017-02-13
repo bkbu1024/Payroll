@@ -52,6 +52,6 @@ class ChangeCommissionedPaymentClassificationTest extends AbstractChangeEmployee
          */
         $paymentSchedule = $this->changedEmployee->getPaymentSchedule();
         $this->assertTrue($paymentSchedule instanceof BiweeklySchedule);
-        $this->assertEquals(Employee1::COMMISSION, $this->changedEmployee->getType());
+        $this->assertEquals(Employee1::COMMISSION, $this->changedEmployee->getPaymentClassification()->getType());
     }
 }

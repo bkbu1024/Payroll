@@ -2,9 +2,11 @@
 
 namespace Payroll\PaymentClassification;
 
+use Payroll\Contract\Employee;
 use Payroll\Contract\Paycheck;
 use Payroll\Contract\SalesReceipt;
 use Illuminate\Database\Eloquent\Collection;
+use Payroll\Factory\PaymentClassification\Factory;
 
 class CommissionedClassification extends PaymentClassification
 {
@@ -101,5 +103,22 @@ class CommissionedClassification extends PaymentClassification
     public function getSalesReceipts()
     {
         return $this->employee->getSalesReceipts();
+    }
+
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+        return Factory::COMMISSIONED;
+    }
+
+    /**
+     * @param Employee $employee
+     */
+    public function setEmployeeData(Employee $employee)
+    {
+        $employee->setSalary($this->salary);
+        $employee->setCommissionRate($this->commissionRate);
     }
 }

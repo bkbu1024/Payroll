@@ -2,6 +2,7 @@
 
 namespace Payroll\Tests\Unit\Transaction\Change;
 
+use Payroll\PaymentClassification\SalariedClassification;
 use Payroll\PaymentMethod\DirectMethod;
 use Payroll\Transaction\Change\ChangeDirectMethod;
 
@@ -36,6 +37,7 @@ class ChangeDirectMethodTest extends AbstractChangeEmployeeTestCase
     protected function setEmployee()
     {
         parent::setEmployee();
-        $this->employee->setType('SALARIED');
+        $this->employee->setPaymentClassification(
+            new SalariedClassification($this->faker->randomFloat(2, 1200, 3500)));
     }
 }

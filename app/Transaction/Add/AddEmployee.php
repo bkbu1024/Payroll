@@ -48,17 +48,7 @@ abstract class AddEmployee implements Transaction
      */
     public function execute()
     {
-        $classification = $this->getPaymentClassification();
-        $schedule = $this->getPaymentSchedule();
-
-
-        $employee = $this->createEmployee();
-        $employee->setPaymentClassification($classification);
-        $employee->setPaymentSchedule($schedule);
-
-        $classification->setEmployee($employee);
-
-        return $employee;
+        return $this->createEmployee();
     }
 
     /**
@@ -66,12 +56,19 @@ abstract class AddEmployee implements Transaction
      */
     protected function createEmployee()
     {
+        $classification = $this->getPaymentClassification();
+        $schedule = $this->getPaymentSchedule();
+        $method = MethodFactory::createByData();
+
         $employee = EmployeeFactory::createEmployee();
         $employee->setName($this->name);
         $employee->setAddress($this->address);
 
-        $method = MethodFactory::createByData();
+        $employee->setPaymentClassification($classification);
+        $employee->setPaymentSchedule($schedule);
+
         $employee->setPaymentMethod($method);
+        $classification->setEmployee($employee);
 
         return $employee;
     }

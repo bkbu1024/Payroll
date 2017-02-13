@@ -39,7 +39,7 @@ class AddCommissionedEmployeeTest extends AbstractAddEmployeeTestCase
     {
         $this->assertEquals($this->data['salary'], $this->employee->getSalary());
         $this->assertEquals($this->data['commissionRate'], $this->employee->getCommissionRate());
-        $this->assertEquals(Employee::COMMISSION, $this->employee->getType());
+        $this->assertEquals(Employee::COMMISSION, $this->employee->getPaymentClassification()->getType());
 
         $this->assertTrue($this->employee->getPaymentSchedule() instanceof BiweeklySchedule);
         $this->assertTrue($this->employee->getPaymentClassification() instanceof CommissionedClassification);

@@ -51,7 +51,7 @@ class FactoryTest extends TestCase
 
     public function testCreateScheduleBySalariedEmployee()
     {
-        $employee = factory(Employee::class)->create(['type' => EmployeeFactory::SALARIED]);
+        $employee = factory(Employee::class)->create(['payment_classification' => EmployeeFactory::SALARIED]);
 
         $classification = Factory::createScheduleByEmployee($employee);
         $this->assertTrue($classification instanceof MonthlySchedule);
@@ -59,7 +59,7 @@ class FactoryTest extends TestCase
 
     public function testCreateScheduleByCommissionedEmployee()
     {
-        $employee = factory(Employee::class)->create(['type' => EmployeeFactory::COMMISSION]);
+        $employee = factory(Employee::class)->create(['payment_classification' => EmployeeFactory::COMMISSION]);
 
         $classification = Factory::createScheduleByEmployee($employee);
         $this->assertTrue($classification instanceof BiweeklySchedule);
@@ -67,7 +67,7 @@ class FactoryTest extends TestCase
 
     public function testCreateScheduleByHourlyEmployee()
     {
-        $employee = factory(Employee::class)->create(['type' => EmployeeFactory::HOURLY]);
+        $employee = factory(Employee::class)->create(['payment_classification' => EmployeeFactory::HOURLY]);
 
         $classification = Factory::createScheduleByEmployee($employee);
         $this->assertTrue($classification instanceof WeeklySchedule);

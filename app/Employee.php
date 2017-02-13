@@ -60,11 +60,6 @@ class Employee extends Model implements Contract\Employee
         return $this->commission_rate;
     }
 
-    public function getType()
-    {
-        return $this->type;
-    }
-
     public function getAddress()
     {
         return $this->address;
@@ -100,13 +95,6 @@ class Employee extends Model implements Contract\Employee
         $this->commission_rate = $commissionRate;
     }
 
-    public function setType($type)
-    {
-        $this->type = $type;
-    }
-
-
-
     // --------------- END getters and setters
 
     /**
@@ -127,6 +115,8 @@ class Employee extends Model implements Contract\Employee
     public function setPaymentClassification(PaymentClassification $paymentClassification)
     {
         $this->paymentClassification = $paymentClassification;
+        $this->payment_classification = $paymentClassification->getType();
+        $paymentClassification->setEmployeeData($this);
     }
 
     /**

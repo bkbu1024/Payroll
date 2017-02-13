@@ -43,7 +43,7 @@ class AddTimeCard implements Transaction
      */
     public function execute()
     {
-        if ($this->employee->getType() != EmployeeFactory::HOURLY) {
+        if ($this->employee->getPaymentClassification()->getType() != EmployeeFactory::HOURLY) {
             throw new \Exception('Tried to add time card to non-hourly employee');
         }
 

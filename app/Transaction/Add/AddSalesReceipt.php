@@ -44,7 +44,7 @@ class AddSalesReceipt implements Transaction
      */
     public function execute()
     {
-        if ($this->employee->getType() != EmployeeFactory::COMMISSION) {
+        if ($this->employee->getPaymentClassification()->getType() != EmployeeFactory::COMMISSION) {
             throw new Exception('Tried to add sales receipt to non-commissioned employee');
         }
 

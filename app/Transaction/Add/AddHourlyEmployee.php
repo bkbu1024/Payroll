@@ -54,7 +54,6 @@ class AddHourlyEmployee extends AddEmployee
     {
         $employee = parent::createEmployee();
         $employee->setHourlyRate($this->hourlyRate);
-        $employee->setType(EmployeeFactory::HOURLY);
         $employee->save();
 
         return $employee;

@@ -55,7 +55,6 @@ class AddSalariedEmployee extends AddEmployee
     {
         $employee = parent::createEmployee();
         $employee->setSalary($this->salary);
-        $employee->setType(EmployeeFactory::SALARIED);
         $employee->save();
 
         return $employee;

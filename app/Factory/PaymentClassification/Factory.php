@@ -10,6 +10,10 @@ use Payroll\PaymentClassification\SalariedClassification;
 
 class Factory
 {
+    const COMMISSIONED = 'COMMISSION';
+    const SALARIED = 'SALARIED';
+    const HOURLY = 'HOURLY';
+
     /**
      * @param Employee $employee
      * @return CommissionedClassification|HourlyClassification|SalariedClassification

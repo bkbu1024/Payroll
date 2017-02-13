@@ -21,7 +21,6 @@ class ChangeHourlyPaymentClassificationTest extends AbstractChangeEmployeeTestCa
         $transaction = $this->getMockObject(ChangeHourlyPaymentClassification::class, [
             'getPaymentClassification' => ['return' => new HourlyClassification($hourlyRate), 'times' => 'once'],
             'getPaymentSchedule' => ['return' => new WeeklySchedule, 'times' => 'once'],
-            'getType' => ['return' => Employee::HOURLY, 'times' => 'once']
         ], $constructorArgs);
 
         $this->changedEmployee = $transaction->execute();
@@ -36,7 +35,6 @@ class ChangeHourlyPaymentClassificationTest extends AbstractChangeEmployeeTestCa
 
         $this->employee->setPaymentClassification(new SalariedClassification($this->data['salary']));
         $this->employee->setPaymentSchedule(new MonthlySchedule);
-        $this->employee->setType('SALARIED');
     }
 
     protected function assertTypeSpecificData()
@@ -54,6 +52,6 @@ class ChangeHourlyPaymentClassificationTest extends AbstractChangeEmployeeTestCa
         $paymentSchedule = $this->changedEmployee->getPaymentSchedule();
         $this->assertTrue($paymentSchedule instanceof WeeklySchedule);
 
-        $this->assertEquals(Employee::HOURLY, $this->changedEmployee->getType());
+        $this->assertEquals(Employee::HOURLY, $this->changedEmployee->getPaymentClassification()->getType());
     }
 }

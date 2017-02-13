@@ -29,11 +29,11 @@ $factory->define(Payroll\Employee::class, function (Faker\Generator $faker, arra
     $data = [
         'name' => $faker->name,
         'address' => $faker->address,
-        'type' => $attributes['type'],
+        'payment_classification' => $attributes['payment_classification'],
         'payment_method' => Payroll\Factory\PaymentMethod\Factory::HOLD_METHOD
     ];
 
-    switch ($attributes['type']) {
+    switch ($attributes['payment_classification']) {
         case Employee::SALARIED:
             $data['salary'] = $faker->randomFloat(2, 1500, 3000);
             break;

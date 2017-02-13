@@ -42,6 +42,6 @@ class ChangeHourlyPaymentClassificationTest extends AbstractChangeEmployeeTestCa
         $paymentSchedule = $this->changedEmployee->getPaymentSchedule();
         $this->assertTrue($paymentSchedule instanceof WeeklySchedule);
 
-        $this->assertEquals(Employee::HOURLY, $this->changedEmployee->getType());
+        $this->assertEquals(Employee::HOURLY, $this->changedEmployee->getPaymentClassification()->getType());
     }
 }

@@ -3,6 +3,7 @@
 namespace Payroll\Tests\Unit\Transaction\Change;
 
 use Payroll\Employee;
+use Payroll\PaymentClassification\SalariedClassification;
 use Payroll\PaymentMethod\MailMethod;
 use Payroll\Transaction\Change\ChangeMailMethod;
 
@@ -34,6 +35,7 @@ class ChangeMailMethodTest extends AbstractChangeEmployeeTestCase
     protected function setEmployee()
     {
         parent::setEmployee();
-        $this->employee->setType('SALARIED');
+        $this->employee->setPaymentClassification(
+            new SalariedClassification($this->faker->randomFloat(2, 1200, 3500)));
     }
 }

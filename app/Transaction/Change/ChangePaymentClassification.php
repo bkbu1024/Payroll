@@ -29,7 +29,6 @@ abstract class ChangePaymentClassification extends ChangeEmployee
     {
         $this->employee->setPaymentClassification($this->getPaymentClassification());
         $this->employee->setPaymentSchedule($this->getPaymentSchedule());
-        $this->employee->setType($this->getType());
         $this->employee->save();
 
         return $this->employee;
