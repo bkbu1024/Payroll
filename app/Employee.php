@@ -20,6 +20,8 @@ use Payroll\TimeCard as TimeCardModel;
 
 class Employee extends Model implements Contract\Employee
 {
+    protected $fillable = ['name', 'address', 'salary', 'hourly_rate', 'commission_rate', 'payment_classification', 'payment_method'];
+
     /**
      * @var PaymentClassification
      */

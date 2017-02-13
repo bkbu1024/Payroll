@@ -2,8 +2,10 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Payroll\Employee;
 use Payroll\Factory\Transaction\Add\Employee as AddEmployeeTransactionFactory;
 use Payroll\Factory\Model\Employee as EmployeeFactory;
+use Payroll\Factory\Transaction\Change\Composition as CompositionFactory;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,7 +31,7 @@ Route::get('/employees', function () {
     return $employees;
 });
 
-Route::get('/employee/{employee}', function (\Payroll\Employee $employee) {
+Route::get('/employee/{employee}', function (Employee $employee) {
     return $employee;
 });
 
@@ -40,9 +42,18 @@ Route::post('/employee', function (Request $request) {
     return $employee;
 });
 
-Route::delete('/employee/{employee}', function (\Payroll\Employee $employee) {
+Route::delete('/employee/{employee}', function (Employee $employee) {
     $original = $employee;
     $employee->delete();
 
     return $original;
+});
+
+Route::put('employee/{employee}', function (Request $request, Employee $employee) {
+    $transaction = CompositionFactory::create($employee, $request->all());
+    $transaction->execute();
+
+    $employee->update($request->all());
+
+    return $employee;
 });

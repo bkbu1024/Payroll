@@ -75,11 +75,35 @@ class ApiEmployeeTest extends TestCase
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertEquals($apiEmployee['name'], $last->getName());
 
-        try {
-            Employee::findOrFail($last->getId());
-            $this->fail();
-        } catch (ModelNotFoundException $ex) {
-            $this->assertTrue(true);
-        }
+        $this->assertDatabaseMissing('employees', ['id' => $last->getId()]);
+    }
+
+    public function testPutEmployee()
+    {
+        DB::table('employees')->truncate();
+        $employees = factory(Employee::class, 5)->create();
+        $last = $employees->last();
+
+        $data = [
+            'name' => 'Joó Martin',
+            'address' => 'Szombathely',
+            'payment_classification' => 'HOURLY',
+            'payment_method' => 'DIRECT',
+            'hourlyRate' => 12,
+            'bank' => 'OTP',
+            'account' => '123254637458'
+        ];
+
+        $response = $this->json('PUT', "/api/employee/{$last->getId()}", $data);
+        $apiEmployee = json_decode($response->getContent(), true);
+
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertNotEquals($apiEmployee['name'], $last->getName());
+        $this->assertEquals('Joó Martin', $apiEmployee['name']);
+        $this->assertEquals('Szombathely', $apiEmployee['address']);
+        $this->assertEquals('HOURLY', $apiEmployee['payment_classification']);
+        $this->assertEquals('DIRECT', $apiEmployee['payment_method']);
+
+        $this->assertDatabaseHas('employees', $apiEmployee);
     }
 }
