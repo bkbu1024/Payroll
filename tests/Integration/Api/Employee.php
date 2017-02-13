@@ -1,5 +1,10 @@
 <?php
 
+namespace Payroll\Tests\Integration\Api;
+
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\DB;
+use Payroll\Employee;
 use Payroll\Tests\TestCase;
 
 class ApiEmployeeTest extends TestCase
@@ -30,7 +35,7 @@ class ApiEmployeeTest extends TestCase
     {
         // GET employees
         DB::table('employees')->truncate();
-        $employees = factory(Payroll\Employee::class, 5)->create();
+        $employees = factory(Employee::class, 5)->create();
 
         $response = $this->json('GET', '/api/employees');
         $apiEmployees = json_decode($response->getContent(), true);
@@ -47,7 +52,7 @@ class ApiEmployeeTest extends TestCase
     {
         // GET employee/{employee}
         DB::table('employees')->truncate();
-        $employees = factory(Payroll\Employee::class, 5)->create();
+        $employees = factory(Employee::class, 5)->create();
         $last = $employees->last();
 
         $response = $this->json('GET', "/api/employee/{$last->getId()}");
@@ -61,7 +66,7 @@ class ApiEmployeeTest extends TestCase
     {
         // DELETE employee/{employee}
         DB::table('employees')->truncate();
-        $employees = factory(Payroll\Employee::class, 5)->create();
+        $employees = factory(Employee::class, 5)->create();
         $last = $employees->last();
 
         $response = $this->json('DELETE', "/api/employee/{$last->getId()}");
@@ -71,9 +76,9 @@ class ApiEmployeeTest extends TestCase
         $this->assertEquals($apiEmployee['name'], $last->getName());
 
         try {
-            \Payroll\Employee::findOrFail($last->getId());
+            Employee::findOrFail($last->getId());
             $this->fail();
-        } catch (Exception $ex) {
+        } catch (ModelNotFoundException $ex) {
             $this->assertTrue(true);
         }
     }
