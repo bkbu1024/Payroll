@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+use Payroll\Factory\Transaction\Add\Employee as AddEmployeeTransactionFactory;
+use Payroll\Factory\Model\Employee as EmployeeFactory;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,4 +18,18 @@ use Illuminate\Http\Request;
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::post('/employee', function (Request $request) {
+    $transaction = AddEmployeeTransactionFactory::create($request->all());
+    $employee = $transaction->execute();
+
+    return $employee;
+});
+
+Route::get('/employees', function () {
+    $emp = EmployeeFactory::createEmployee();
+    $employees = $emp->getAll();
+
+    return $employees;
 });
