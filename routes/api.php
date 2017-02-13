@@ -20,16 +20,22 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/employee', function (Request $request) {
-    $transaction = AddEmployeeTransactionFactory::create($request->all());
-    $employee = $transaction->execute();
-
-    return $employee;
-});
+// Employee
 
 Route::get('/employees', function () {
     $emp = EmployeeFactory::createEmployee();
     $employees = $emp->getAll();
 
     return $employees;
+});
+
+Route::get('/employee/{employee}', function (\Payroll\Employee $employee) {
+    return $employee;
+});
+
+Route::post('/employee', function (Request $request) {
+    $transaction = AddEmployeeTransactionFactory::create($request->all());
+    $employee = $transaction->execute();
+
+    return $employee;
 });

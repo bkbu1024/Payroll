@@ -41,4 +41,17 @@ class ApiEmployeeTest extends TestCase
             $this->assertEquals($employee['id'], $apiEmployees[$i]['id']);
         }
     }
+
+    public function testGetEmployee()
+    {
+        DB::table('employees')->truncate();
+        $employees = factory(Payroll\Employee::class, 5)->create();
+        $last = $employees->last();
+
+        $response = $this->json('GET', "/api/employee/{$last->getId()}");
+        $apiEmployee = json_decode($response->getContent(), true);
+
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertEquals($apiEmployee['name'], $last->getName());
+    }
 }
