@@ -39,3 +39,10 @@ Route::post('/employee', function (Request $request) {
 
     return $employee;
 });
+
+Route::delete('/employee/{employee}', function (\Payroll\Employee $employee) {
+    $original = $employee;
+    $employee->delete();
+
+    return $original;
+});

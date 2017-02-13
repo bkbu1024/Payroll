@@ -28,6 +28,7 @@ class ApiEmployeeTest extends TestCase
 
     public function testGetEmployees()
     {
+        // GET employees
         DB::table('employees')->truncate();
         $employees = factory(Payroll\Employee::class, 5)->create();
 
@@ -44,6 +45,7 @@ class ApiEmployeeTest extends TestCase
 
     public function testGetEmployee()
     {
+        // GET employee/{employee}
         DB::table('employees')->truncate();
         $employees = factory(Payroll\Employee::class, 5)->create();
         $last = $employees->last();
@@ -53,5 +55,26 @@ class ApiEmployeeTest extends TestCase
 
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertEquals($apiEmployee['name'], $last->getName());
+    }
+
+    public function testDeleteEmployee()
+    {
+        // DELETE employee/{employee}
+        DB::table('employees')->truncate();
+        $employees = factory(Payroll\Employee::class, 5)->create();
+        $last = $employees->last();
+
+        $response = $this->json('DELETE', "/api/employee/{$last->getId()}");
+        $apiEmployee = json_decode($response->getContent(), true);
+
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertEquals($apiEmployee['name'], $last->getName());
+
+        try {
+            \Payroll\Employee::findOrFail($last->getId());
+            $this->fail();
+        } catch (Exception $ex) {
+            $this->assertTrue(true);
+        }
     }
 }
